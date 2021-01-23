@@ -97,7 +97,7 @@
                                 <th class="text-center">ชื่อ-สกุล</th>
                                 <th class="text-center">เบอร์ติดต่อ</th>
                                 <th class="text-center">ป้ายทะเบียน</th>
-                                <!-- <th class="text-center">ชนิดงาน</th> -->
+                                <th class="text-center">ชนิดงาน</th>
                                 <!-- <th class="text-center">บริษัทประกัน</th> -->
                                 <th class="text-center">หมายเหตุ</th>
                                 <th class="text-center">สถานะ</th>
@@ -108,10 +108,10 @@
                               @foreach($data as $key => $row)
                                 <tr>
                                   <td class="text-center"> {{ $key + 1 }} </td>
-                                  <td class="text-center"> {{ $row->BPCus_name}} </td>
+                                  <td class="text-left"> {{ $row->BPCus_name}} </td>
                                   <td class="text-center"> {{ $row->BPCus_phone}} </td>
                                   <td class="text-center"> {{ $row->BPCar_regisCar}} </td>
-                                  <!-- <td class="text-center"> {{ $row->BPCus_claimLevel}} </td> -->
+                                  <td class="text-center"> {{ $row->BPCus_claimLevel}} </td>
                                   <!-- <td class="text-center">
                                    @if($row->BPCus_claimCompany == 'อื่นๆ') 
                                     {{ $row->BPCus_claimCompanyother}}
