@@ -22,6 +22,7 @@ class CreateStockBPCusesTable extends Migration
             $table->string('BPCus_claimType')->nullable();
             $table->string('BPCus_claimCompany')->nullable();
             $table->string('BPCus_claimCompanyother')->nullable();
+            $table->string('BPCus_claimNumber')->nullable(); //เลขเคลมประกัน
             $table->string('BPCus_note')->nullable();
             $table->string('BPCus_dateKeyin')->nullable();
             $table->string('BPCus_userKeyin')->nullable();

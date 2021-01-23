@@ -415,8 +415,9 @@
                                   </div>
                                   <label class="col-sm-4 col-form-label text-right"> เลขเคลมประกัน :</label>
                                   <div class="col-sm-6 mb-1">
-                                    <input type="text" name="BPCusclaimNo" class="form-control" placeholder="ป้อนเลขเคลมประกัน" value=""/>
+                                    <input type="text" name="BPCusclaimNo" class="form-control" placeholder="ป้อนเลขเคลมประกัน" value="{{$data->BPCus_claimNumber}}"/>
                                   </div>
+                                  <a href="#"><i class="fas fa-globe pr-1 fa-1x" style="margin-top:12px;"></i></a>
                                 </div>
                               </div>
                               <div class="col-6">
@@ -440,7 +441,7 @@
                                 </div>
                               </div>
                           </div>
-                          <input type="hidden" class="form-control" name="dateUpdate" value="{{$data->BPCus_changeStatus}}"/>
+                          <input type="hidden" class="form-control" name="dateUpdate" value="{{$data->BPCus_dateUpdated}}"/>
         </form>
                           <div class="row">
                             <div class="col-12">
@@ -538,7 +539,6 @@
                                               </thead>
                                               <tbody>
                                                 @foreach($dataCallClaim as $key => $row)
-                                                  @if($row->BPCall_type == 1)
                                                     <tr>
                                                     <td class="text-center">{{$key+1}}</td>
                                                     <td class="text-center">{{DateThai($row->BPCall_date)}}</td>
@@ -555,7 +555,6 @@
                                                         </form>
                                                     </td>
                                                     </tr>
-                                                  @endif
                                                 @endforeach
                                               </tbody>
                                             </table>
@@ -673,7 +672,6 @@
                                               </thead>
                                               <tbody>
                                                 @foreach($dataCallClaim2 as $key => $row)
-                                                  @if($row->BPCall_type == 2)
                                                     <tr>
                                                     <td class="text-center">{{$key+1}}</td>
                                                     <td class="text-center">{{DateThai($row->BPCall_date)}}</td>
@@ -690,7 +688,6 @@
                                                         </form>
                                                     </td>
                                                     </tr>
-                                                  @endif
                                                 @endforeach
                                               </tbody>
                                             </table>
@@ -755,7 +752,6 @@
                                               </thead>
                                               <tbody>
                                                 @foreach($dataCallClaim3 as $key => $row)
-                                                  @if($row->BPCall_type == 3)
                                                     <tr>
                                                     <td class="text-center">{{$key+1}}</td>
                                                     <td class="text-center">{{DateThai($row->BPCall_date)}}</td>
@@ -772,7 +768,6 @@
                                                         </form>
                                                     </td>
                                                     </tr>
-                                                  @endif
                                                 @endforeach
                                               </tbody>
                                             </table>
@@ -837,7 +832,6 @@
                                               </thead>
                                               <tbody>
                                                 @foreach($dataCallClaim4 as $key => $row)
-                                                  @if($row->BPCall_type == 4)
                                                     <tr>
                                                     <td class="text-center">{{$key+1}}</td>
                                                     <td class="text-center">{{DateThai($row->BPCall_date)}}</td>
@@ -854,7 +848,6 @@
                                                         </form>
                                                     </td>
                                                     </tr>
-                                                  @endif
                                                 @endforeach
                                               </tbody>
                                             </table>
@@ -919,7 +912,6 @@
                                               </thead>
                                               <tbody>
                                                 @foreach($dataCallClaim5 as $key => $row)
-                                                  @if($row->BPCall_type == 5)
                                                     <tr>
                                                     <td class="text-center">{{$key+1}}</td>
                                                     <td class="text-center">{{DateThai($row->BPCall_date)}}</td>
@@ -936,7 +928,6 @@
                                                         </form>
                                                     </td>
                                                     </tr>
-                                                  @endif
                                                 @endforeach
                                               </tbody>
                                             </table>

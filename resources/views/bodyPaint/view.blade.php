@@ -360,9 +360,9 @@
       </div>
   </form>
 
-   <!-- Pop up เพิ่มรูปภาพ -->
+   <!-- Pop up รายละเอียด -->
    <div class="modal fade" id="modal-view">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         
       </div>

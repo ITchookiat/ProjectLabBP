@@ -173,9 +173,52 @@ class BodyPaintController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        dd($id);
+        if($request->type == 1){
+            $data = DB::table('stock_BP_cuses')
+            ->join('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
+            ->where('stock_BP_cuses.BPCus_id',$id)
+            ->first();
+
+            $dataCallClaim = DB::table('body_calls') //งานโทรอนุมัติประกัน
+            ->where('body_calls.BPCus_id',$id)
+            ->where('body_calls.BPCall_type',1)
+            ->get();
+
+            $dataCallClaim2 = DB::table('body_calls') //งานโทรอะไหล่ครบ
+            ->where('body_calls.BPCus_id',$id)
+            ->where('body_calls.BPCall_type',2)
+            ->get();
+
+            $dataCallClaim3 = DB::table('body_calls') //งานโทรซ่อมตัวถัง
+            ->where('body_calls.BPCus_id',$id)
+            ->where('body_calls.BPCall_type',3)
+            ->get();
+
+            $dataCallClaim4 = DB::table('body_calls') //งานโทรพ่นสี
+            ->where('body_calls.BPCus_id',$id)
+            ->where('body_calls.BPCall_type',4)
+            ->get();
+
+            $dataCallClaim5 = DB::table('body_calls') //งานโทรขัดสี ก่อนส่งมอบ
+            ->where('body_calls.BPCus_id',$id)
+            ->where('body_calls.BPCall_type',5)
+            ->get();
+
+            $dataPart = DB::table('body_parts')
+            ->where('body_parts.BPCus_id',$id)
+            ->get();
+
+            $dataImage = DB::table('body_images')
+            ->where('body_images.BPCus_id',$id)
+            ->get();
+
+            $type = 8;
+            return view('bodyPaint.option',
+                compact('data','dataCallClaim','dataCallClaim2','dataCallClaim3','dataCallClaim4','dataCallClaim5',
+                'dataPart','dataImage','type'));
+        }
     }
 
     /**
@@ -264,6 +307,7 @@ class BodyPaintController extends Controller
                 $user->BPCus_claimType = $request->get('BPclaimtype');
                 $user->BPCus_claimCompany = $request->get('BPclaimcompany');
                 $user->BPCus_claimCompanyother = $request->get('BPclaimcompanyother');
+                $user->BPCus_claimNumber = $request->get('BPCusclaimNo');
                 $user->BPCus_note = $request->get('BPnote');
                 $user->BPCus_userUpdated = $request->get('UserUpdate');
                 $user->BPCus_dateUpdated = date('H:i:s');

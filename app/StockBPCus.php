@@ -10,7 +10,7 @@ class StockBPCus extends Model
     protected $table = 'stock_BP_cuses';
     protected $primaryKey = 'BPCus_id';
     protected $fillable = ['BPCus_name','BPCus_phone','BPCus_address','BPCus_claimLevel','BPCus_claimType',
-                            'BPCus_claimCompany','BPCus_claimCompanyother','BPCus_note','BPCus_dateKeyin',
+                            'BPCus_claimCompany','BPCus_claimCompanyother','BPCus_claimNumber','BPCus_note','BPCus_dateKeyin',
                             'BPCus_userKeyin','BPCus_status','BPCus_changeStatus','BPCus_userUpdated','BPCus_dateUpdated',];
 
     public function BPcall()
