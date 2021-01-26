@@ -251,7 +251,7 @@
                                           $nowCldate = date_create($ifdate);
                                           $ClDateDiff = date_diff($Cldate,$nowCldate);
                                         @endphp
-                                        เหลือ @if($ClDateDiff->y != 0) {{$ClDateDiff->y}} ปี @endif @if($ClDateDiff->m != 0){{$ClDateDiff->m}} เดือน @endif {{$ClDateDiff->d}} วัน
+                                        เหลือ {{$ClDateDiff->format('%a วัน')}}
                                       @else
                                         เลยเวลาซ่อมแล้ว
                                       @endif
@@ -413,11 +413,11 @@
                                       <input type="text" id="BPclaimcompanyother" name="BPclaimcompanyother" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}" style="display:none"/>
                                     @endif
                                   </div>
-                                  <label class="col-sm-4 col-form-label text-right"> เลขเคลมประกัน :</label>
+                                  <label class="col-sm-4 col-form-label text-right"> เลขที่เคลม :</label>
                                   <div class="col-sm-6 mb-1">
                                     <input type="text" name="BPCusclaimNo" class="form-control" placeholder="ป้อนเลขเคลมประกัน" value="{{$data->BPCus_claimNumber}}"/>
                                   </div>
-                                  <a href="#"><i class="fas fa-globe pr-1 fa-1x" style="margin-top:12px;"></i></a>
+                                  <!-- <a href="#"><i class="fas fa-globe pr-1 fa-1x" style="margin-top:12px;"></i></a> -->
                                 </div>
                               </div>
                               <div class="col-6">
@@ -433,6 +433,10 @@
                                   <label class="col-sm-3 col-form-label text-right"> รุ่นรถ :</label>
                                   <div class="col-sm-7 mb-1">
                                     <input type="text" name="BPCuscarmodel" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$data->BPCar_carModel}}"/>
+                                  </div>
+                                  <label class="col-sm-3 col-form-label text-right"> สีรถ :</label>
+                                  <div class="col-sm-7 mb-1">
+                                    <input type="text" name="BPCuscarcolor" class="form-control" placeholder="ป้อนสีรถ" value="{{$data->BPCar_carColor}}"/>
                                   </div>
                                   <label class="col-sm-3 col-form-label text-right">หมายเหตุ :</label>
                                   <div class="col-sm-7 mb-1">

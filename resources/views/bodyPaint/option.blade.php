@@ -11,6 +11,8 @@
         //return "$strDay-$strMonthThai-$strYear";
     }
     //dd($type);
+    date_default_timezone_set('Asia/Bangkok');
+    $ifdate = date('Y-m-d');
 @endphp
   <section class="content">
     @if($type == 1 or $type == 2 or $type == 3 or $type == 4 or $type == 5) {{-- ฟอร์มเพิ่มงานโทรแจ้ง --}}
@@ -234,190 +236,447 @@
             </div>
         </form>
     @elseif($type == 8) {{-- หน้าดูรายละเอียด --}}
-    <div class="modal-header bg-info">
-        <div class="col text-center">
-            <h5 class="modal-title">
-                <i class="fas fa-info-circle"></i> 
-                ข้อมูลรายละเอียด
-            </h5>
-        </div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">x</span>
-        </button>
-        </div>
-        <div class="modal-body">
-            <div class="row text-sm">
-                <div class="col-6">
-                    <div class="form-group row mb-5">
-                        <label class="col-sm-4 col-form-label text-right"> ชื่อ-สกุล :</label>
-                        <div class="col-sm-6 mb-1">
-                        <input type="text" name="BPCusname" class="form-control" placeholder="ป้อนชื่อสกุล" value="{{$data->BPCus_name}}"/>
-                        </div>
-                        <label class="col-sm-4 col-form-label text-right"> เบอร์ติดต่อ :</label>
-                        <div class="col-sm-6 mb-1">
-                        <input type="text" name="BPCusphone" class="form-control" placeholder="ป้อนเบอร์ติดต่อ" value="{{$data->BPCus_phone}}"/>
-                        </div>
-                        <label class="col-sm-4 col-form-label text-right">ชนิดงาน : </label>
-                        <div class="col-sm-6 mb-1">
-                        <select id="BPclaimlevel" name="BPclaimlevel" class="form-control">
-                            <option value="" selected>--- เลือกชนิดงาน ---</option>
-                            <option value="เบา" {{ ($data->BPCus_claimLevel === 'เบา') ? 'selected' : '' }}>เบา</option>
-                            <option value="กลาง" {{ ($data->BPCus_claimLevel === 'กลาง') ? 'selected' : '' }}>กลาง</option>
-                            <option value="หนัก" {{ ($data->BPCus_claimLevel === 'หนัก') ? 'selected' : '' }}>หนัก</option>
-                        </select>
-                        </div>
-                        <label class="col-sm-4 col-form-label text-right">ประเภทประกัน :</label>
-                        <div class="col-sm-6 mb-1">
-                        <select id="BPclaimtype" name="BPclaimtype" class="form-control">
-                            <option value="" selected>--- เลือกประเภทประกัน ---</option>
-                            <option value="MPI" {{ ($data->BPCus_claimType === 'MPI') ? 'selected' : '' }}>MPI</option>
-                            <option value="Non MPI" {{ ($data->BPCus_claimType === 'Non MPI') ? 'selected' : '' }}>Non MPI</option>
-                        </select>
-                        </div>
-                        <label class="col-sm-4 col-form-label text-right">บริษัทประกัน :</label>
-                        <div class="col-sm-6 mb-1">
-                        <select id="BPclaimcompany" name="BPclaimcompany" class="form-control">
-                            <option value="" selected>--- เลือกบริษัทประกัน ---</option>
-                            <option value="วิริยะประกันภัย" {{ ($data->BPCus_claimCompany === 'วิริยะประกันภัย') ? 'selected' : '' }}>วิริยะประกันภัย</option>
-                            <option value="ธนชาตประกันภัย" {{ ($data->BPCus_claimCompany === 'ธนชาตประกันภัย') ? 'selected' : '' }}>ธนชาตประกันภัย</option>
-                            <option value="กรุงเทพประกันภัย" {{ ($data->BPCus_claimCompany === 'กรุงเทพประกันภัย') ? 'selected' : '' }}>กรุงเทพประกันภัย</option>
-                            <option value="เมืองไทยประกันภัย" {{ ($data->BPCus_claimCompany === 'เมืองไทยประกันภัย') ? 'selected' : '' }}>เมืองไทยประกันภัย</option>
-                            <option value="สินมั่นคงประกันภัย" {{ ($data->BPCus_claimCompany === 'สินมั่นคงประกันภัย') ? 'selected' : '' }}>สินมั่นคงประกันภัย</option>
-                            <option value="ทิพยประกันภัย" {{ ($data->BPCus_claimCompany === 'ทิพยประกันภัย') ? 'selected' : '' }}>ทิพยประกันภัย</option>
-                            <option value="ประกันภัยไทยวิวัฒน์" {{ ($data->BPCus_claimCompany === 'ประกันภัยไทยวิวัฒน์') ? 'selected' : '' }}>ประกันภัยไทยวิวัฒน์</option>
-                            <option value="มิตซุย สุมิโตโม อินชัวรันซ์" {{ ($data->BPCus_claimCompany === 'มิตซุย สุมิโตโม อินชัวรันซ์') ? 'selected' : '' }}>มิตซุย สุมิโตโม อินชัวรันซ์</option>
-                            <option value="ไทยศรีประกันภัย" {{ ($data->BPCus_claimCompany === 'ไทยศรีประกันภัย') ? 'selected' : '' }}>ไทยศรีประกันภัย</option>
-                            <option value="สินทรัพย์ประกันภัย" {{ ($data->BPCus_claimCompany === 'สินทรัพย์ประกันภัย') ? 'selected' : '' }}>สินทรัพย์ประกันภัย</option>
-                            <option value="อาคเนย์ประกันภัย" {{ ($data->BPCus_claimCompany === 'อาคเนย์ประกันภัย') ? 'selected' : '' }}>อาคเนย์ประกันภัย</option>
-                            <option value="แอลเอ็มจีประกันภัย" {{ ($data->BPCus_claimCompany === 'แอลเอ็มจีประกันภัย') ? 'selected' : '' }}>แอลเอ็มจีประกันภัย</option>
-                            <option value="คุ้มภัยโตเกียวมารีนประกันภัย" {{ ($data->BPCus_claimCompany === 'คุ้มภัยโตเกียวมารีนประกันภัย') ? 'selected' : '' }}>คุ้มภัยโตเกียวมารีนประกันภัย</option>
-                            <option value="มิตรแท้ประกันภัย" {{ ($data->BPCus_claimCompany === 'มิตรแท้ประกันภัย') ? 'selected' : '' }}>มิตรแท้ประกันภัย</option>
-                            <option value="เอเชียประกันภัย" {{ ($data->BPCus_claimCompany === 'เอเชียประกันภัย') ? 'selected' : '' }}>เอเชียประกันภัย</option>
-                            <option value="เทเวศประกันภัย" {{ ($data->BPCus_claimCompany === 'เทเวศประกันภัย') ? 'selected' : '' }}>เทเวศประกันภัย</option>
-                            <option value="อื่นๆ" {{ ($data->BPCus_claimCompany === 'อื่นๆ') ? 'selected' : '' }}>อื่นๆ</option>
-                        </select>
-                        @if($data->BPCus_claimCompany === 'อื่นๆ')
-                            <input type="text" id="BPclaimcompanyother" name="BPclaimcompanyother" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}"/>
-                        @else
-                            <input type="text" id="BPclaimcompanyother" name="BPclaimcompanyother" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}" style="display:none"/>
-                        @endif
-                        </div>
-                        <label class="col-sm-4 col-form-label text-right"> เลขเคลมประกัน :</label>
-                        <div class="col-sm-6 mb-1">
-                        <input type="text" name="BPCusclaimNo" class="form-control" placeholder="ป้อนเลขเคลมประกัน" value="{{$data->BPCus_claimNumber}}"/>
-                        </div>
-                    </div>
+            <div class="modal-header bg-info">
+                <div class="col text-center">
+                    <h5 class="modal-title">
+                        <i class="fas fa-info-circle"></i> 
+                        ข้อมูลรายละเอียด
+                    </h5>
                 </div>
-                <div class="col-6">
-                    <div class="form-group row mb-1">
-                        <label class="col-sm-3 col-form-label text-right">ป้ายทะเบียน : </label>
-                        <div class="col-sm-7 mb-1">
-                        <input type="text" name="BPCusregiscar" class="form-control" placeholder="ป้อนป้ายทะเบียน" value="{{$data->BPCar_regisCar}}"/>
-                        </div>
-                        <label class="col-sm-3 col-form-label text-right"> ยี่ห้อรถ :</label>
-                        <div class="col-sm-7 mb-1">
-                        <input type="text" name="BPCuscarbrand" class="form-control" placeholder="ป้อนยี่ห้อรถ" value="{{$data->BPCar_carBrand}}"/>
-                        </div>
-                        <label class="col-sm-3 col-form-label text-right"> รุ่นรถ :</label>
-                        <div class="col-sm-7 mb-1">
-                        <input type="text" name="BPCuscarmodel" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$data->BPCar_carModel}}"/>
-                        </div>
-                        <label class="col-sm-3 col-form-label text-right">หมายเหตุ :</label>
-                        <div class="col-sm-7 mb-1">
-                        <textarea class="form-control" name="BPnote" rows="3" placeholder="ป้อนหมายเหตุ...">{{$data->BPCus_note}}</textarea>
-                        </div>
-                    </div>
-                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header bg-info">
-                            <h5 class="text-center"><i class="fas fa-phone-square-alt"></i> รายการโทรแจ้ง
-                            </h5>
+            <div class="modal-body">
+                <div class="row text-sm">
+                    <div class="col-6">
+                        <div class="form-group row mb-5">
+                            <label class="col-sm-4 col-form-label text-right"> ชื่อ-สกุล :</label>
+                            <div class="col-sm-6 mb-1">
+                            <input type="text" name="BPCusname" class="form-control" placeholder="ป้อนชื่อสกุล" value="{{$data->BPCus_name}}"/>
+                            </div>
+                            <label class="col-sm-4 col-form-label text-right"> เบอร์ติดต่อ :</label>
+                            <div class="col-sm-6 mb-1">
+                            <input type="text" name="BPCusphone" class="form-control" placeholder="ป้อนเบอร์ติดต่อ" value="{{$data->BPCus_phone}}"/>
+                            </div>
+                            <label class="col-sm-4 col-form-label text-right">ชนิดงาน : </label>
+                            <div class="col-sm-6 mb-1">
+                            <select id="BPclaimlevel" name="BPclaimlevel" class="form-control">
+                                <option value="" selected>--- เลือกชนิดงาน ---</option>
+                                <option value="เบา" {{ ($data->BPCus_claimLevel === 'เบา') ? 'selected' : '' }}>เบา</option>
+                                <option value="กลาง" {{ ($data->BPCus_claimLevel === 'กลาง') ? 'selected' : '' }}>กลาง</option>
+                                <option value="หนัก" {{ ($data->BPCus_claimLevel === 'หนัก') ? 'selected' : '' }}>หนัก</option>
+                            </select>
+                            </div>
+                            <label class="col-sm-4 col-form-label text-right">ประเภทประกัน :</label>
+                            <div class="col-sm-6 mb-1">
+                            <select id="BPclaimtype" name="BPclaimtype" class="form-control">
+                                <option value="" selected>--- เลือกประเภทประกัน ---</option>
+                                <option value="MPI" {{ ($data->BPCus_claimType === 'MPI') ? 'selected' : '' }}>MPI</option>
+                                <option value="Non MPI" {{ ($data->BPCus_claimType === 'Non MPI') ? 'selected' : '' }}>Non MPI</option>
+                            </select>
+                            </div>
+                            <label class="col-sm-4 col-form-label text-right">บริษัทประกัน :</label>
+                            <div class="col-sm-6 mb-1">
+                            <select id="BPclaimcompany" name="BPclaimcompany" class="form-control">
+                                <option value="" selected>--- เลือกบริษัทประกัน ---</option>
+                                <option value="วิริยะประกันภัย" {{ ($data->BPCus_claimCompany === 'วิริยะประกันภัย') ? 'selected' : '' }}>วิริยะประกันภัย</option>
+                                <option value="ธนชาตประกันภัย" {{ ($data->BPCus_claimCompany === 'ธนชาตประกันภัย') ? 'selected' : '' }}>ธนชาตประกันภัย</option>
+                                <option value="กรุงเทพประกันภัย" {{ ($data->BPCus_claimCompany === 'กรุงเทพประกันภัย') ? 'selected' : '' }}>กรุงเทพประกันภัย</option>
+                                <option value="เมืองไทยประกันภัย" {{ ($data->BPCus_claimCompany === 'เมืองไทยประกันภัย') ? 'selected' : '' }}>เมืองไทยประกันภัย</option>
+                                <option value="สินมั่นคงประกันภัย" {{ ($data->BPCus_claimCompany === 'สินมั่นคงประกันภัย') ? 'selected' : '' }}>สินมั่นคงประกันภัย</option>
+                                <option value="ทิพยประกันภัย" {{ ($data->BPCus_claimCompany === 'ทิพยประกันภัย') ? 'selected' : '' }}>ทิพยประกันภัย</option>
+                                <option value="ประกันภัยไทยวิวัฒน์" {{ ($data->BPCus_claimCompany === 'ประกันภัยไทยวิวัฒน์') ? 'selected' : '' }}>ประกันภัยไทยวิวัฒน์</option>
+                                <option value="มิตซุย สุมิโตโม อินชัวรันซ์" {{ ($data->BPCus_claimCompany === 'มิตซุย สุมิโตโม อินชัวรันซ์') ? 'selected' : '' }}>มิตซุย สุมิโตโม อินชัวรันซ์</option>
+                                <option value="ไทยศรีประกันภัย" {{ ($data->BPCus_claimCompany === 'ไทยศรีประกันภัย') ? 'selected' : '' }}>ไทยศรีประกันภัย</option>
+                                <option value="สินทรัพย์ประกันภัย" {{ ($data->BPCus_claimCompany === 'สินทรัพย์ประกันภัย') ? 'selected' : '' }}>สินทรัพย์ประกันภัย</option>
+                                <option value="อาคเนย์ประกันภัย" {{ ($data->BPCus_claimCompany === 'อาคเนย์ประกันภัย') ? 'selected' : '' }}>อาคเนย์ประกันภัย</option>
+                                <option value="แอลเอ็มจีประกันภัย" {{ ($data->BPCus_claimCompany === 'แอลเอ็มจีประกันภัย') ? 'selected' : '' }}>แอลเอ็มจีประกันภัย</option>
+                                <option value="คุ้มภัยโตเกียวมารีนประกันภัย" {{ ($data->BPCus_claimCompany === 'คุ้มภัยโตเกียวมารีนประกันภัย') ? 'selected' : '' }}>คุ้มภัยโตเกียวมารีนประกันภัย</option>
+                                <option value="มิตรแท้ประกันภัย" {{ ($data->BPCus_claimCompany === 'มิตรแท้ประกันภัย') ? 'selected' : '' }}>มิตรแท้ประกันภัย</option>
+                                <option value="เอเชียประกันภัย" {{ ($data->BPCus_claimCompany === 'เอเชียประกันภัย') ? 'selected' : '' }}>เอเชียประกันภัย</option>
+                                <option value="เทเวศประกันภัย" {{ ($data->BPCus_claimCompany === 'เทเวศประกันภัย') ? 'selected' : '' }}>เทเวศประกันภัย</option>
+                                <option value="อื่นๆ" {{ ($data->BPCus_claimCompany === 'อื่นๆ') ? 'selected' : '' }}>อื่นๆ</option>
+                            </select>
+                            @if($data->BPCus_claimCompany === 'อื่นๆ')
+                                <input type="text" id="BPclaimcompanyother" name="BPclaimcompanyother" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}"/>
+                            @else
+                                <input type="text" id="BPclaimcompanyother" name="BPclaimcompanyother" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}" style="display:none"/>
+                            @endif
+                            </div>
+                            <label class="col-sm-4 col-form-label text-right"> เลขเคลมประกัน :</label>
+                            <div class="col-sm-6 mb-1">
+                            <input type="text" name="BPCusclaimNo" class="form-control" placeholder="ป้อนเลขเคลมประกัน" value="{{$data->BPCus_claimNumber}}"/>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div class="form-inline">
-                                <table class="table table-bordered table-hover" id="table">
-                                    <thead class="bg-gray-light" >
-                                        <tr>
-                                            <th class="text-center">ประกันอนุมัติ</th>
-                                            <th class="text-center">อะไหล่ครบ</th>
-                                            <th class="text-center">ซ่อมตัวถัง/พื้น</th>
-                                            <th class="text-center">พ่นสี</th>
-                                            <th class="text-center">ขัดสี QC ก่อนส่งมอบ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center text-xs">
-                                                @foreach($dataCallClaim as $key => $row)
-                                                    <div class="mb-3 btn btn-xs btn-block btn-outline-primary">
-                                                        <span>ครั้งที่ {{$key+1}}</span><br>
-                                                        <span>{{DateThai($row->BPCall_date)}}</span><br>
-                                                        <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
-                                                    </div>
-                                                @endforeach
-                                            </td>
-                                            <td class="text-center">
-                                                @foreach($dataCallClaim2 as $key => $row)
-                                                    <div class="mb-3 btn btn-xs btn-block btn-outline-secondary">
-                                                        <span>ครั้งที่ {{$key+1}}</span><br>
-                                                        <span>{{DateThai($row->BPCall_date)}}</span><br>
-                                                        <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
-                                                    </div>
-                                                @endforeach
-                                            </td>
-                                            <td class="text-center">
-                                                @foreach($dataCallClaim3 as $key => $row)
-                                                    <div class="mb-3 btn btn-xs btn-block btn-outline-success">
-                                                        <span>ครั้งที่ {{$key+1}}</span><br>
-                                                        <span>{{DateThai($row->BPCall_date)}}</span><br>
-                                                        <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
-                                                    </div>
-                                                @endforeach
-                                            </td>
-                                            <td class="text-center">
-                                                @foreach($dataCallClaim4 as $key => $row)
-                                                    <div class="mb-3 btn btn-xs btn-block btn-outline-waring">
-                                                        <span>ครั้งที่ {{$key+1}}</span><br>
-                                                        <span>{{DateThai($row->BPCall_date)}}</span><br>
-                                                        <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
-                                                    </div>
-                                                @endforeach
-                                            </td>
-                                            <td class="text-left">
-                                                @foreach($dataCallClaim5 as $key => $row)
-                                                    <div class="mb-3 btn btn-xs btn-block btn-outline-danger">
-                                                        <span>ครั้งที่ {{$key+1}}</span><br>
-                                                        <span>{{DateThai($row->BPCall_date)}}</span><br>
-                                                        <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
-                                                    </div>
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right">ป้ายทะเบียน : </label>
+                            <div class="col-sm-7 mb-1">
+                                <input type="text" name="BPCusregiscar" class="form-control" placeholder="ป้อนป้ายทะเบียน" value="{{$data->BPCar_regisCar}}"/>
+                            </div>
+                            <label class="col-sm-3 col-form-label text-right"> ยี่ห้อรถ :</label>
+                            <div class="col-sm-7 mb-1">
+                                <input type="text" name="BPCuscarbrand" class="form-control" placeholder="ป้อนยี่ห้อรถ" value="{{$data->BPCar_carBrand}}"/>
+                            </div>
+                            <label class="col-sm-3 col-form-label text-right"> รุ่นรถ :</label>
+                            <div class="col-sm-7 mb-1">
+                                <input type="text" name="BPCuscarmodel" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$data->BPCar_carModel}}"/>
+                            </div>
+                            <label class="col-sm-3 col-form-label text-right"> สีรถ :</label>
+                            <div class="col-sm-7 mb-1">
+                                <input type="text" name="BPCuscarcolor" class="form-control" placeholder="ป้อนสีรถ" value="{{$data->BPCar_carColor}}"/>
+                            </div>
+                            <label class="col-sm-3 col-form-label text-right">หมายเหตุ :</label>
+                            <div class="col-sm-7 mb-1">
+                                <textarea class="form-control" name="BPnote" rows="3" placeholder="ป้อนหมายเหตุ...">{{$data->BPCus_note}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-info">
+                                <h5 class="text-center"><i class="fas fa-phone-square-alt"></i> รายการโทรแจ้ง
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-inline">
+                                    <table class="table table-bordered table-hover" id="table">
+                                        <thead class="bg-gray-light" >
+                                            <tr>
+                                                <th class="text-center">ประกันอนุมัติ</th>
+                                                <th class="text-center">อะไหล่ครบ</th>
+                                                <th class="text-center">ซ่อมตัวถัง/พื้น</th>
+                                                <th class="text-center">พ่นสี</th>
+                                                <th class="text-center">ขัดสี QC ก่อนส่งมอบ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center text-xs">
+                                                    @foreach($dataCallClaim as $key => $row)
+                                                        <div class="mb-3 btn btn-xs btn-block btn-outline-primary">
+                                                            <span>ครั้งที่ {{$key+1}}</span><br>
+                                                            <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                            <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                        </div>
+                                                    @endforeach
+                                                </td>
+                                                <td class="text-center">
+                                                    @foreach($dataCallClaim2 as $key => $row)
+                                                        <div class="mb-3 btn btn-xs btn-block btn-outline-secondary">
+                                                            <span>ครั้งที่ {{$key+1}}</span><br>
+                                                            <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                            <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                        </div>
+                                                    @endforeach
+                                                </td>
+                                                <td class="text-center">
+                                                    @foreach($dataCallClaim3 as $key => $row)
+                                                        <div class="mb-3 btn btn-xs btn-block btn-outline-success">
+                                                            <span>ครั้งที่ {{$key+1}}</span><br>
+                                                            <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                            <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                        </div>
+                                                    @endforeach
+                                                </td>
+                                                <td class="text-center">
+                                                    @foreach($dataCallClaim4 as $key => $row)
+                                                        <div class="mb-3 btn btn-xs btn-block btn-outline-waring">
+                                                            <span>ครั้งที่ {{$key+1}}</span><br>
+                                                            <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                            <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                        </div>
+                                                    @endforeach
+                                                </td>
+                                                <td class="text-left">
+                                                    @foreach($dataCallClaim5 as $key => $row)
+                                                        <div class="mb-3 btn btn-xs btn-block btn-outline-danger">
+                                                            <span>ครั้งที่ {{$key+1}}</span><br>
+                                                            <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                            <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                        </div>
+                                                    @endforeach
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+    @elseif($type == 9) {{-- หน้าแก้ไขรายรายการส่วนช่าง --}}
+        <form name="form2" action="{{ route('MasterBP.update',[$data->BPMec_id]) }}" method="post" enctype="multipart/form-data">
+            @csrf
+            @method('put')
+            <input type="hidden" name="_method" value="PATCH"/>
+            <div class="modal-header bg-warning">
+                <div class="col-4">
+                    <div class="form-inline">
+                        <h5 class="modal-title"><i class="fas fa-edit"></i> แก้ไขรายการ</h5>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="card-tools d-inline float-right">
+                        {{--<small class="badge badge-warning">
+                            <select name="BPstatus" class="form-control text-sm">
+                            <option value="" selected>--- เลือกสถานะ ---</option>
+                            <option value="มาเคลมใหม่" {{ ($data->BPCus_status === 'มาเคลมใหม่') ? 'selected' : '' }}>มาเคลมใหม่</option>
+                            <option value="ประกันอนุมัติ" {{ ($data->BPCus_status === 'ประกันอนุมัติ') ? 'selected' : '' }}>ประกันอนุมัติ</option>
+                            <option value="อะไหล่ครบ" {{ ($data->BPCus_status === 'อะไหล่ครบ') ? 'selected' : '' }}>อะไหล่ครบ</option>
+                            <option value="ซ่อมตัวถัง/พื้น" {{ ($data->BPCus_status === 'ซ่อมตัวถัง/พื้น') ? 'selected' : '' }}>ซ่อมตัวถัง/พื้น</option>
+                            <option value="พ่นสี" {{ ($data->BPCus_status === 'พ่นสี') ? 'selected' : '' }}>พ่นสี</option>
+                            <option value="ขัดสี QC ก่อนส่งมอบ" {{ ($data->BPCus_status === 'ขัดสี QC ก่อนส่งมอบ') ? 'selected' : '' }}>ขัดสี QC ก่อนส่งมอบ</option>
+                            </select>
+                        </small>--}}
+                        <button type="submit" class="delete-modal btn btn-success btn-sm">
+                            <i class="fas fa-save"></i> อัพเดท
+                        </button>
+                        <a class="delete-modal btn btn-danger btn-sm" href="{{ route('MasterBP.index') }}?type={{2}}">
+                            <i class="far fa-window-close text-white"> ยกเลิก</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row text-sm">
+                    <div class="col-4">
+                        <div class="form-group row mb-5">
+                            <label class="col-sm-4 col-form-label text-right"> ชื่อ-สกุล :</label>
+                            <div class="col-sm-8 mb-1">
+                                <input type="text" name="BPCusname" class="form-control" placeholder="ป้อนชื่อสกุล" value="{{$data->BPCus_name}}" readonly/>
+                            </div>
+                            <label class="col-sm-4 col-form-label text-right"> เบอร์ติดต่อ :</label>
+                            <div class="col-sm-8 mb-1">
+                              <input type="text" name="BPCusphone" class="form-control" placeholder="ป้อนเบอร์ติดต่อ" value="{{$data->BPCus_phone}}" readonly/>
+                            </div>
+                            <label class="col-sm-4 col-for-label text-right">ชนิดงาน : </label>
+                            <div class="col-sm-8 mb-1">
+                                <select id="BPclaimlevel" name="BPclaimlevel" class="form-control" readonly>
+                                    <option value="" selected>--- เลือกชนิดงาน ---</option>
+                                    <option value="เบา" {{ ($data->BPCus_claimLevel === 'เบา') ? 'selected' : '' }}>เบา</option>
+                                    <option value="กลาง" {{ ($data->BPCus_claimLevel === 'กลาง') ? 'selected' : '' }}>กลาง</option>
+                                    <option value="หนัก" {{ ($data->BPCus_claimLevel === 'หนัก') ? 'selected' : '' }}>หนัก</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-4 col-form-label text-right"> เลขที่เคลม :</label>
+                            <div class="col-sm-8 mb-1">
+                              <input type="text" name="BPCusclaimNo" class="form-control" placeholder="ป้อนเลขเคลมประกัน" value="{{$data->BPCus_claimNumber}}" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group row mb-1">
+                            <label class="col-sm-4 col-form-label text-right">ป้ายทะเบียน : </label>
+                            <div class="col-sm-8 mb-1">
+                                <input type="text" name="BPCusregiscar" class="form-control" placeholder="ป้อนป้ายทะเบียน" value="{{$data->BPCar_regisCar}}" readonly/>
+                            </div>
+                            <label class="col-sm-4 col-form-label text-right"> ยี่ห้อรถ :</label>
+                            <div class="col-sm-8 mb-1">
+                                <input type="text" name="BPCuscarbrand" class="form-control" placeholder="ป้อนยี่ห้อรถ" value="{{$data->BPCar_carBrand}}" readonly/>
+                            </div>
+                            <label class="col-sm-4 col-form-label text-right"> รุ่นรถ :</label>
+                            <div class="col-sm-8 mb-1">
+                                <input type="text" name="BPCuscarmodel" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$data->BPCar_carModel}}" readonly/>
+                            </div>
+                            <label class="col-sm-4 col-form-label text-right"> สีรถ :</label>
+                            <div class="col-sm-8 mb-1">
+                                <input type="text" name="BPCuscarcolor" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$data->BPCar_carColor}}" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                       <div class="form-group row mb-1">
+                            <label class="col-sm-4 col-form-label text-right text-red">สถานะ : </label>
+                            <div class="col-sm-8 mb-1">
+                                <select name="BPstatus" class="form-control">
+                                    <option value="" selected>--- เลือกสถานะ ---</option>
+                                    <option value="มาเคลมใหม่" {{ ($data->BPCus_status === 'มาเคลมใหม่') ? 'selected' : '' }}>มาเคลมใหม่</option>
+                                    <option value="ประกันอนุมัติ" {{ ($data->BPCus_status === 'ประกันอนุมัติ') ? 'selected' : '' }}>ประกันอนุมัติ</option>
+                                    <option value="อะไหล่ครบ" {{ ($data->BPCus_status === 'อะไหล่ครบ') ? 'selected' : '' }}>อะไหล่ครบ</option>
+                                    <option value="ซ่อมตัวถัง/พื้น" {{ ($data->BPCus_status === 'ซ่อมตัวถัง/พื้น') ? 'selected' : '' }}>ซ่อมตัวถัง/พื้น</option>
+                                    <option value="พ่นสี" {{ ($data->BPCus_status === 'พ่นสี') ? 'selected' : '' }}>พ่นสี</option>
+                                    <option value="ขัดสี QC ก่อนส่งมอบ" {{ ($data->BPCus_status === 'ขัดสี QC ก่อนส่งมอบ') ? 'selected' : '' }}>ขัดสี QC ก่อนส่งมอบ</option>
+                                </select>
+                            </div>
+                            @if($data->BPCar_carFinished != null)
+                                @if($ifdate < $data->BPCar_carFinished)
+                                @php
+                                    $Cldate = date_create($data->BPCar_carFinished);
+                                    $nowCldate = date_create($ifdate);
+                                    $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                @endphp
+                                @endif
+                            @endif
+                            <label class="col-sm-4 col-form-label text-right text-red">เหลือเวลา :</label>
+                            <div class="col-sm-8 mb-1">
+                                <input type="text" name="BPCuscarcolor" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$ClDateDiff->format('%a วัน')}}" readonly/>
+                            </div>
+                            <label class="col-sm-4 col-form-label text-right">หมายเหตุ :</label>
+                            <div class="col-sm-8 mb-1">
+                                <textarea class="form-control" name="BPnote" rows="3" readonly>{{$data->BPCus_note}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 form-inline">
+                        <table class="table table-bordered" id="table">
+                            <thead class="bg-blue" >
+                                <tr>
+                                    <th class="text-center">สถานะซ่อม</th>
+                                    <th class="text-center">วันเริ่มดำเนินการ</th>
+                                    <th class="text-center">ระยะเวลา</th>
+                                    <th class="text-center" style="width:250px">ผู้รับผิดชอบงาน</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @if($data->BPMec_FixbodyDate != null)
+                                <tr>
+                                    <td class="text-center">
+                                        ซ่อมตัวถัง/พื้น
+                                    </td>
+                                    <td class="text-center">
+                                        {{DateThai($data->BPMec_FixbodyDate)}}
+                                    </td>
+                                    <td class="text-center">
+                                        @if($data->BPMec_FixbodyDate != null)
+                                            @php
+                                                $Cldate = date_create($data->BPMec_FixbodyDate);
+                                                $nowCldate = date_create($ifdate);
+                                                $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                            @endphp
+                                            {{$ClDateDiff->format('%a วัน')}}
+                                        @elseif($data->BPMec_PaintDate != null or $data->BPMec_PolishDate == null)
+                                            @php
+                                                $Cldate = date_create($data->BPMec_PaintDate);
+                                                $nowCldate = date_create($data->BPMec_FixbodyDate);
+                                                $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                            @endphp
+                                            {{$ClDateDiff->format('%a วัน')}}
+                                        @elseif($data->BPMec_PaintDate != null or $data->BPMec_PolishDate != null)
+                                            @php
+                                                $Cldate = date_create($data->BPMec_PolishDate);
+                                                $nowCldate = date_create($data->BPMec_FixbodyDate);
+                                                $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                            @endphp
+                                            {{$ClDateDiff->format('%a วัน')}}
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        <select name="BPMecuserfixbody" class="form-control">
+                                            <option value="" selected>--- เลือกผู้รับผิดชอบงาน ---</option>
+                                            <option value="นายเดวิด  แสงศรี" {{ ($data->BPMec_FixbodyRespon === 'นายเดวิด  แสงศรี') ? 'selected' : '' }}>นายเดวิด  แสงศรี</option>
+                                            <option value="นายวริศ  นิแม" {{ ($data->BPMec_FixbodyRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
+                                            <option value="นายบาหารี  นิเลาะ" {{ ($data->BPMec_FixbodyRespon === 'นายบาหารี  นิเลาะ') ? 'selected' : '' }}>นายบาหารี  นิเลาะ</option>
+                                            <option value="นายรอมลี  อาแวปาโอะ" {{ ($data->BPMec_FixbodyRespon === 'นายรอมลี  อาแวปาโอะ') ? 'selected' : '' }}>นายรอมลี  อาแวปาโอะ</option>
+                                            <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_FixbodyRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option>
+                                            <option value="นายซัมซัม  วานิ" {{ ($data->BPMec_FixbodyRespon === 'นายซัมซัม  วานิ') ? 'selected' : '' }}>นายซัมซัม  วานิ</option>
+                                            <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_FixbodyRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option>
+                                            <option value="นายหัสดิน  เจ๊ะโก๊ะ" {{ ($data->BPMec_FixbodyRespon === 'นายหัสดิน  เจ๊ะโก๊ะ') ? 'selected' : '' }}>นายหัสดิน  เจ๊ะโก๊ะ</option>
+                                            <option value="นายซาเฟียน  มะแซ" {{ ($data->BPMec_FixbodyRespon === 'นายซาเฟียน  มะแซ') ? 'selected' : '' }}>นายซาเฟียน  มะแซ</option>
+                                            <option value="นายพิทยา  เลี้ยงพันธุ์สกุล" {{ ($data->BPMec_FixbodyRespon === 'นายพิทยา  เลี้ยงพันธุ์สกุล') ? 'selected' : '' }}>นายพิทยา  เลี้ยงพันธุ์สกุล</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            @endif
+                            @if($data->BPMec_PaintDate != null)
+                                <tr>
+                                    <td class="text-center">
+                                        พ่นสี
+                                    </td>
+                                    <td class="text-center">
+                                        {{DateThai($data->BPMec_PaintDate)}}
+                                    </td>
+                                    <td class="text-center">
+                                        @if($data->BPMec_PaintDate != null)
+                                            @php
+                                                $Cldate = date_create($data->BPMec_PaintDate);
+                                                $nowCldate = date_create($ifdate);
+                                                $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                            @endphp
+                                            {{$ClDateDiff->format('%a วัน')}}
+                                        @elseif($data->BPMec_PolishDate != null)
+                                            @php
+                                                $Cldate = date_create($data->BPMec_PolishDate);
+                                                $nowCldate = date_create($data->BPMec_PaintDate);
+                                                $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                            @endphp
+                                            {{$ClDateDiff->format('%a วัน')}}
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        <select name="BPMecuserpaint" class="form-control">
+                                        <option value="" selected>--- เลือกผู้รับผิดชอบงาน ---</option>
+                                            <option value="นายเดวิด  แสงศรี" {{ ($data->BPMec_PaintRespon === 'นายเดวิด  แสงศรี') ? 'selected' : '' }}>นายเดวิด  แสงศรี</option>
+                                            <option value="นายวริศ  นิแม" {{ ($data->BPMec_PaintRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
+                                            <option value="นายบาหารี  นิเลาะ" {{ ($data->BPMec_PaintRespon === 'นายบาหารี  นิเลาะ') ? 'selected' : '' }}>นายบาหารี  นิเลาะ</option>
+                                            <option value="นายรอมลี  อาแวปาโอะ" {{ ($data->BPMec_PaintRespon === 'นายรอมลี  อาแวปาโอะ') ? 'selected' : '' }}>นายรอมลี  อาแวปาโอะ</option>
+                                            <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_PaintRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option>
+                                            <option value="นายซัมซัม  วานิ" {{ ($data->BPMec_PaintRespon === 'นายซัมซัม  วานิ') ? 'selected' : '' }}>นายซัมซัม  วานิ</option>
+                                            <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_PaintRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option>
+                                            <option value="นายหัสดิน  เจ๊ะโก๊ะ" {{ ($data->BPMec_PaintRespon === 'นายหัสดิน  เจ๊ะโก๊ะ') ? 'selected' : '' }}>นายหัสดิน  เจ๊ะโก๊ะ</option>
+                                            <option value="นายซาเฟียน  มะแซ" {{ ($data->BPMec_PaintRespon === 'นายซาเฟียน  มะแซ') ? 'selected' : '' }}>นายซาเฟียน  มะแซ</option>
+                                            <option value="นายพิทยา  เลี้ยงพันธุ์สกุล" {{ ($data->BPMec_PaintRespon === 'นายพิทยา  เลี้ยงพันธุ์สกุล') ? 'selected' : '' }}>นายพิทยา  เลี้ยงพันธุ์สกุล</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            @endif
+                            @if($data->BPMec_PolishDate != null)
+                                <tr>
+                                    <td class="text-center">
+                                        ขัดสี QC ก่อนส่งมอบ
+                                    </td>
+                                    <td class="text-center">
+                                        {{DateThai($data->BPMec_PolishDate)}}
+                                    </td>
+                                    <td class="text-center">
+                                        @if($data->BPMec_PolishDate != null)
+                                            @php
+                                                $Cldate = date_create($data->BPMec_PolishDate);
+                                                $nowCldate = date_create($ifdate);
+                                                $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                            @endphp
+                                            {{$ClDateDiff->format('%a วัน')}}
+                                        @elseif($data->BPCar_carDelivered != null)
+                                            @php
+                                                $Cldate = date_create($data->BPCar_carDelivered);
+                                                $nowCldate = date_create($data->BPMec_PolishDate);
+                                                $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                            @endphp
+                                            {{$ClDateDiff->format('%a วัน')}}
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        <select name="BPMecuserpolish" class="form-control">
+                                        <option value="" selected>--- เลือกผู้รับผิดชอบงาน ---</option>
+                                            <option value="นายเดวิด  แสงศรี" {{ ($data->BPMec_PolishRespon === 'นายเดวิด  แสงศรี') ? 'selected' : '' }}>นายเดวิด  แสงศรี</option>
+                                            <option value="นายวริศ  นิแม" {{ ($data->BPMec_PolishRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
+                                            <option value="นายบาหารี  นิเลาะ" {{ ($data->BPMec_PolishRespon === 'นายบาหารี  นิเลาะ') ? 'selected' : '' }}>นายบาหารี  นิเลาะ</option>
+                                            <option value="นายรอมลี  อาแวปาโอะ" {{ ($data->BPMec_PolishRespon === 'นายรอมลี  อาแวปาโอะ') ? 'selected' : '' }}>นายรอมลี  อาแวปาโอะ</option>
+                                            <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_PolishRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option>
+                                            <option value="นายซัมซัม  วานิ" {{ ($data->BPMec_PolishRespon === 'นายซัมซัม  วานิ') ? 'selected' : '' }}>นายซัมซัม  วานิ</option>
+                                            <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_PolishRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option>
+                                            <option value="นายหัสดิน  เจ๊ะโก๊ะ" {{ ($data->BPMec_PolishRespon === 'นายหัสดิน  เจ๊ะโก๊ะ') ? 'selected' : '' }}>นายหัสดิน  เจ๊ะโก๊ะ</option>
+                                            <option value="นายซาเฟียน  มะแซ" {{ ($data->BPMec_PolishRespon === 'นายซาเฟียน  มะแซ') ? 'selected' : '' }}>นายซาเฟียน  มะแซ</option>
+                                            <option value="นายพิทยา  เลี้ยงพันธุ์สกุล" {{ ($data->BPMec_PolishRespon === 'นายพิทยา  เลี้ยงพันธุ์สกุล') ? 'selected' : '' }}>นายพิทยา  เลี้ยงพันธุ์สกุล</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="Mecid" value="{{$data->BPMec_id}}"/>
+            <input type="hidden" name="Updatetype" value="3"/>
+            <input type="hidden" name="BPMecuser" value="{{ auth::user()->name }}"/>
+        </form>
     @endif
   </section>
-
-  {{-- image --}}
-  <script type="text/javascript">
-    $("#image-file,#Account_image,#image_checker_1,#image_checker_2").fileinput({
-      uploadUrl:"{{ route('MasterBP.store') }}",
-      theme:'fa',
-      uploadExtraData:function(){
-        return{
-          _token:"{{csrf_token()}}",
-        }
-      },
-      allowedFileExtensions:['jpg','png','gif'],
-      maxFileSize:10240
-    })
-  </script>

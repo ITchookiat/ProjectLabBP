@@ -98,9 +98,10 @@ class HomeController extends Controller
         // $LegisAsset = DB::table('legisassets')->count();
 
         // $LegisCompro = DB::table('Legiscompromises')->count();
+        $type = '';
         
         return view($name, compact('datafinance','datahomecar','datafollow','datamassage','datanotice','datastock',
-                                   'legisCourt','legisCourt2','LegisAsset','LegisCompro'));
+                                   'legisCourt','legisCourt2','LegisAsset','LegisCompro','type'));
     }
 
     public function get_json(Request $request)

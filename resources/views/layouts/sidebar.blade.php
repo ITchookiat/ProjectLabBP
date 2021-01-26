@@ -54,7 +54,7 @@
             </li>
           @endif
 
-          <li class="nav-item has-treeview {{ Request::is('MasterBP') ? 'menu-open' : '' }}">
+          <li class="nav-item has-treeview {{ Request::is('MasterBP*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <i class="nav-icon fa fa-sitemap"></i>
               <p>
@@ -64,53 +64,64 @@
             </a>
             
               <ul class="nav nav-treeview">
-                <li class="nav-item has-treeview {{ Request::is('MasterBP') ? 'menu-open' : '' }}">
+                <li class="nav-item has-treeview {{ Request::is('MasterBP*') ? 'menu-open' : '' }}">
                   <a href="#" class="nav-link">
                     <i class="far fa-window-restore text-red nav-icon"></i>
                     <p>
-                      Stock Claim
+                      ระบบ
                       <i class="right fas fa-angle-left"></i>
                     </p>
                   </a>
                   <ul class="nav nav-treeview" style="margin-left: 15px;">
                         <li class="nav-item">
-                          <a href="{{ route('MasterBP.index') }}?type={{1}}" class="nav-link {{ Request::is('MasterBP') ? 'active' : '' }} {{ Request::is('MasterBP/*/*') ? 'active' : '' }}">
+                          <a href="{{ route('MasterBP.index') }}?type={{1}}" class="nav-link {{ (request()->is($type === '1')) ? 'active' : '' }}">
                             <i class="far fa-dot-circle nav-icon"></i>
-                            <p>All Stock</p>
+                            <p>รายการโทรแจ้ง</p>
                           </a>
                         </li>
                         <li class="nav-item">
-                          <a href="#" class="nav-link {{ Request::is('MasterBP?type=2') ? 'active' : '' }}">
+                          <a href="{{ route('MasterBP.index') }}?type={{2}}" class="nav-link {{ (request()->is($type === '2')) ? 'active' : '' }}">
                             <i class="far fa-dot-circle nav-icon"></i>
-                            <p>ประกันอนุมัติ</p>
+                            <p>รายการรถซ่อมจริง</p>
                           </a>
                         </li>
                         <li class="nav-item">
-                          <a href="#" class="nav-link {{ Request::is('MasterBP?type=3') ? 'active' : '' }}">
+                          <a href="{{ route('MasterBP.index') }}?type={{3}}" class="nav-link {{ (request()->is($type === '3')) ? 'active' : '' }}">
                             <i class="far fa-dot-circle nav-icon"></i>
-                            <p>อะไหล่ครบ</p>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a href="#" class="nav-link {{ Request::is('MasterBP?type=4') ? 'active' : '' }}">
-                            <i class="far fa-dot-circle nav-icon"></i>
-                            <p>ซ่อมตัวถัง/พื้น</p>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a href="#" class="nav-link {{ Request::is('MasterBP?type=5') ? 'active' : '' }}">
-                            <i class="far fa-dot-circle nav-icon"></i>
-                            <p>พ่นสี</p>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a href="#" class="nav-link {{ Request::is('MasterBP?type=6') ? 'active' : '' }}">
-                            <i class="far fa-dot-circle nav-icon"></i>
-                            <p>ขัดสี QC ก่อนส่งมอบ</p>
+                            <p>รายการรถส่งมอบ</p>
                           </a>
                         </li>
                   </ul>
                 </li>
+                <!-- <li class="nav-item has-treeview">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-window-restore text-red nav-icon"></i>
+                    <p>
+                      รายงาน
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview" style="margin-left: 15px;">
+                        <li class="nav-item">
+                          <a href="{{ route('MasterBP.index') }}?type={{1}}" class="nav-link ">
+                            <i class="far fa-dot-circle nav-icon"></i>
+                            <p>รายงานโทรแจ้ง</p>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                            <i class="far fa-dot-circle nav-icon"></i>
+                            <p>รายงานรถซ่อมจริง</p>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                            <i class="far fa-dot-circle nav-icon"></i>
+                            <p>รายงานรถส่งมอบ</p>
+                          </a>
+                        </li>
+                  </ul>
+                </li> -->
               </ul>
 
           </li>
