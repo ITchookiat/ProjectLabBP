@@ -569,7 +569,7 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <select name="BPMecuserfixbody" class="form-control">
+                                        <select name="BPMecuserfixbody" class="form-control" {{ ($data->BPCus_status !== 'ซ่อมตัวถัง/พื้น') ? 'disabled' : '' }}>
                                             <option value="" selected>--- เลือกผู้รับผิดชอบงาน ---</option>
                                             <option value="นายเดวิด  แสงศรี" {{ ($data->BPMec_FixbodyRespon === 'นายเดวิด  แสงศรี') ? 'selected' : '' }}>นายเดวิด  แสงศรี</option>
                                             <option value="นายวริศ  นิแม" {{ ($data->BPMec_FixbodyRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
@@ -611,7 +611,7 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <select name="BPMecuserpaint" class="form-control">
+                                        <select name="BPMecuserpaint" class="form-control" {{ ($data->BPCus_status !== 'พ่นสี') ? 'disabled' : '' }}>
                                         <option value="" selected>--- เลือกผู้รับผิดชอบงาน ---</option>
                                             <option value="นายเดวิด  แสงศรี" {{ ($data->BPMec_PaintRespon === 'นายเดวิด  แสงศรี') ? 'selected' : '' }}>นายเดวิด  แสงศรี</option>
                                             <option value="นายวริศ  นิแม" {{ ($data->BPMec_PaintRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
@@ -653,7 +653,7 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <select name="BPMecuserpolish" class="form-control">
+                                        <select name="BPMecuserpolish" class="form-control" {{ ($data->BPCus_status !== 'ขัดสี QC ก่อนส่งมอบ') ? 'disabled' : '' }}>
                                         <option value="" selected>--- เลือกผู้รับผิดชอบงาน ---</option>
                                             <option value="นายเดวิด  แสงศรี" {{ ($data->BPMec_PolishRespon === 'นายเดวิด  แสงศรี') ? 'selected' : '' }}>นายเดวิด  แสงศรี</option>
                                             <option value="นายวริศ  นิแม" {{ ($data->BPMec_PolishRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
