@@ -13,6 +13,7 @@ use App\StockBPCar;
 use App\BodyCall;
 use App\BodyPart;
 use App\BodyImage;
+use App\BodyMechanic;
 
 
 class BodyPaintController extends Controller
@@ -33,13 +34,35 @@ class BodyPaintController extends Controller
             $newtdate = $request->get('Todate');
         }
 
-        $data = DB::table('stock_BP_cuses')
+        if($request->type == 1){
+            $data = DB::table('stock_BP_cuses')
             ->join('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
                 return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
               })
             ->get();
-        $type = $request->type;
+            $type = $request->type;
+        }
+        elseif($request->type == 2){
+            $data = DB::table('stock_BP_cuses')
+            ->join('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
+            ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
+                return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
+              })
+            ->where('stock_BP_cars.BPCar_carRepair','!=', null)
+            ->get();
+            $type = $request->type;
+        }
+        elseif($request->type == 3){
+            $data = DB::table('stock_BP_cuses')
+            ->join('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
+            ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
+                return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
+              })
+            ->where('stock_BP_cars.BPCar_carDelivered','!=', null)
+            ->get();
+            $type = $request->type;
+        }
 
         return view('bodyPaint.view', compact('type', 'data','newfdate','newtdate'));
     }
@@ -96,6 +119,11 @@ class BodyPaintController extends Controller
                 'BPCar_regisCar' => $request->get('BPCusregiscar'),
             ]);
             $BPCar->save();
+
+            $BPMechanic = new BodyMechanic([
+                'BPCus_id' => $BPCus->BPCus_id,
+            ]);
+            $BPMechanic->save();
         }
         elseif($request->get('Storetype') == 2){ //เพิ่มรายการโทรแจ้ง
             $BPcalldb = new BodyCall([
@@ -219,6 +247,17 @@ class BodyPaintController extends Controller
                 compact('data','dataCallClaim','dataCallClaim2','dataCallClaim3','dataCallClaim4','dataCallClaim5',
                 'dataPart','dataImage','type'));
         }
+        elseif($request->type == 2){
+            $data = DB::table('stock_BP_cuses')
+            ->join('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
+            ->join('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPMec_id')
+            ->where('stock_BP_cuses.BPCus_id',$id)
+            ->first();
+
+            $type = 9;
+            return view('bodyPaint.option',
+                compact('data','type'));
+        }
     }
 
     /**
@@ -275,8 +314,9 @@ class BodyPaintController extends Controller
             ->get();
 
             $tab = $request->tab;
+            $type = '1';
             return view('bodyPaint.edit',
-                compact('data','dataCallClaim','dataCallClaim2','dataCallClaim3','dataCallClaim4','dataCallClaim5',
+                compact('type','data','dataCallClaim','dataCallClaim2','dataCallClaim3','dataCallClaim4','dataCallClaim5',
                 'countDataCallClaim','countDataCallClaim2','countDataCallClaim3','countDataCallClaim4','countDataCallClaim5',
                 'dataPart','countdataPart','dataImage','tab'));
 
@@ -345,6 +385,7 @@ class BodyPaintController extends Controller
                 $StockBPCar->BPCar_regisCar = $request->get('BPCusregiscar');
                 $StockBPCar->BPCar_carBrand = $request->get('BPCuscarbrand');
                 $StockBPCar->BPCar_carModel = $request->get('BPCuscarmodel');
+                $StockBPCar->BPCar_carColor = $request->get('BPCuscarcolor');
                 $StockBPCar->BPCar_carRepair = $request->get('carRepair');
                 $StockBPCar->BPCar_carFinished = $dateExpected;
                 $StockBPCar->BPCar_carDelivered = $request->get('carDeliver');
@@ -364,6 +405,28 @@ class BodyPaintController extends Controller
                 $BPpartdb->BPPart_user = $request->get('BPpartuser');
             $BPpartdb->update();
         }
+        elseif($request->Updatetype == 3){ //อัพเดทซ่อมจริง
+            $user = StockBPCus::find($id);
+                $user->BPCus_dateUpdated = date('H:i:s');
+                $user->BPCus_status = $request->get('BPstatus');
+            $user->update();
+
+            $Mechanic = BodyMechanic::find($request->get('Mecid'));
+                if($request->get('BPstatus') == 'ซ่อมตัวถัง/พื้น'){
+                    $Mechanic->BPMec_FixbodyRespon = $request->get('BPMecuserfixbody');
+                    $Mechanic->BPMec_FixbodyDate = date('Y-m-d');
+                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
+                }elseif($request->get('BPstatus') == 'พ่นสี'){
+                    $Mechanic->BPMec_PaintRespon = $request->get('BPMecuserpaint');
+                    $Mechanic->BPMec_PaintDate = date('Y-m-d');
+                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
+                }elseif($request->get('BPstatus') == 'ขัดสี QC ก่อนส่งมอบ'){
+                    $Mechanic->BPMec_PolishRespon = $request->get('BPMecuserpolish');
+                    $Mechanic->BPMec_PolishDate = date('Y-m-d');
+                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
+                }
+            $Mechanic->update();
+        }
         return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อย');
     }
 
@@ -381,12 +444,14 @@ class BodyPaintController extends Controller
             $item3 = BodyPart::where('BPCus_id',$id);
             $item4 = StockBPCar::where('BPCus_id',$id);
             // $item5 = BodyImage::where('BPCus_id',$id);
+            $item6 = BodyMechanic::where('BPCus_id',$id);
             
             $item1->Delete();
             $item2->Delete();
             $item3->Delete();
             $item4->Delete();
             // $item5->Delete();
+            $item6->Delete();
         }
         elseif($request->deltype == 2){ //ลบรายการโทร ประกันอนุมัติ
             $item1 = BodyCall::where('BPCall_id',$id)->where('BPCall_type',$request->calltype);

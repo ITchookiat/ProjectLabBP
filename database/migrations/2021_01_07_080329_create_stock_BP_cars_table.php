@@ -19,6 +19,7 @@ class CreateStockBPCarsTable extends Migration
             $table->string('BPCar_regisCar')->nullable();
             $table->string('BPCar_carBrand')->nullable();
             $table->string('BPCar_carModel')->nullable();
+            $table->string('BPCar_carColor')->nullable();
             $table->string('BPCar_carYear')->nullable();
             $table->string('BPCar_carRepair')->nullable();
             $table->string('BPCar_carFinished')->nullable();

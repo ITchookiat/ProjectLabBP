@@ -47,18 +47,22 @@
                       <div class="form-inline">
                         <h4>
                           @if($type == 1)
-                              <i class="fas fa-gears"></i> รายการเคลมทั้งหมด
+                              <i class="fas fa-gears"></i> รายการโทรแจ้ง
                           @elseif($type == 2)
-                              รายงานส่งผู้บริหาร
+                              <i class="fas fa-gears"></i> รายการรถซ่อมจริง
+                          @elseif($type == 3)
+                              <i class="fas fa-gears"></i> รายการรถส่งมอบ
                           @endif
                         </h4>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="card-tools d-inline float-right">
+                      @if($type == 1)
                         <a class="btn btn-success text-white" data-toggle="modal" data-target="#modal-newcar" data-backdrop="static" data-keyboard="false">
                             <i class="fas fa-plus-circle"></i> เพิ่ม
                         </a>
+                      @endif
                         <a target="_blank" class="btn bg-primary">
                             <i class="fas fa-file-excel"></i> รายงาน
                         </a>
@@ -145,6 +149,72 @@
                       </div>
                     </div>
                   </div>
+                @elseif($type == 2)
+                  <div class="row">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-hover" id="table">
+                          <thead class="bg-gray-light" >
+                            <tr>
+                              <th class="text-center">ลำดับ</th>
+                              <th class="text-center">แจ้งเตือน</th>
+                              <th class="text-center">ชื่อ-สกุล</th>
+                              <th class="text-center">ป้ายทะเบียน</th>
+                              <th class="text-center">ชนิดงาน</th>
+                              <th class="text-center">หมายเหตุ</th>
+                              <th class="text-center">สถานะ</th>
+                              <th class="text-center" width="30px">#</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($data as $key => $row)
+                              <tr>
+                                <td class="text-center"> {{ $key + 1 }} </td>
+                                <td class="text-center">
+                                  @if($row->BPCar_carRepair != null)
+                                    <div class="form-inline pr-2">
+                                      <i class="far fa-clock text-lg pr-1" title="วันที่ซ่อมจริง : {{DateThai($row->BPCar_carRepair)}}"></i>
+                                        <label class="text-danger">
+                                          @if($row->BPCar_carFinished != null)
+                                            {{-- DateThai($row->BPCar_carRepair) --}}
+                                              @php
+                                                  date_default_timezone_set('Asia/Bangkok');
+                                                  $ifdate = date('Y-m-d');
+                                              @endphp
+                                              @if($ifdate < $row->BPCar_carFinished)
+                                                @php
+                                                  $Cldate = date_create($row->BPCar_carFinished);
+                                                  $nowCldate = date_create($ifdate);
+                                                  $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                @endphp
+                                                เหลือ {{$ClDateDiff->format('%a วัน')}}
+                                              @else
+                                                เลยเวลาซ่อมแล้ว
+                                              @endif
+                                          @endif
+                                        </label>
+                                    </div>
+                                  @endif
+                                </td>
+                                <td class="text-left"> {{ $row->BPCus_name}} </td>
+                                <td class="text-center"> {{ $row->BPCar_regisCar}} </td>
+                                <td class="text-center"> {{ $row->BPCus_claimLevel}} </td>
+                                <td class="text-left">{{($row->BPCus_note != null)?$row->BPCus_note:'-'}}</td>
+                                <td class="text-center"> <span class="btn btn-xs bg-navy text-xs">{{ $row->BPCus_status}}</span> </td>
+                                <td class="text-right">
+                                  <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit" title="แก้ไขรายการ"
+                                    data-backdrop="static" data-keyboard="false"
+                                    data-link="{{ route('MasterBP.show',[$row->BPCus_id]) }}?type={{2}}">
+                                    <i class="far fa-edit"></i>
+                                  </button>
+                                </td>
+                              </tr>
+                              @endforeach
+                          </tbody>
+                        </table>
+                    </div>
+                  </div>
+                @elseif($type == 3)
+                  333333333333333
                 @endif
                 <a id="button"></a>
               </div>
@@ -196,6 +266,11 @@
       $("#modal-view").on("show.bs.modal", function (e) {
         var link = $(e.relatedTarget).data("link");
         $("#modal-view .modal-content").load(link, function(){
+        });
+      });
+      $("#modal-edit").on("show.bs.modal", function (e) {
+        var link = $(e.relatedTarget).data("link");
+        $("#modal-edit .modal-content").load(link, function(){
         });
       });
     });
@@ -362,6 +437,15 @@
 
    <!-- Pop up รายละเอียด -->
    <div class="modal fade" id="modal-view">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Pop up รายการส่วนของช่าง -->
+  <div class="modal fade" id="modal-edit">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         
