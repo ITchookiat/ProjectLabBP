@@ -250,7 +250,7 @@
             <div class="modal-body">
                 <div class="row text-sm">
                     <div class="col-6">
-                        <div class="form-group row mb-5">
+                        <div class="form-group row mb-3">
                             <label class="col-sm-4 col-form-label text-right"> ชื่อ-สกุล :</label>
                             <div class="col-sm-6 mb-1">
                             <input type="text" name="BPCusname" class="form-control" placeholder="ป้อนชื่อสกุล" value="{{$data->BPCus_name}}"/>
@@ -338,20 +338,20 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header bg-info">
+                            <!-- <div class="card-header bg-info">
                                 <h5 class="text-center"><i class="fas fa-phone-square-alt"></i> รายการโทรแจ้ง
                                 </h5>
-                            </div>
+                            </div> -->
                             <div class="card-body">
                                 <div class="form-inline">
                                     <table class="table table-bordered table-hover" id="table">
                                         <thead class="bg-gray-light" >
                                             <tr>
-                                                <th class="text-center">ประกันอนุมัติ</th>
-                                                <th class="text-center">อะไหล่ครบ</th>
-                                                <th class="text-center">ซ่อมตัวถัง/พื้น</th>
-                                                <th class="text-center">พ่นสี</th>
-                                                <th class="text-center">ขัดสี QC ก่อนส่งมอบ</th>
+                                                <th class="text-center"><i class="fas fa-phone-square-alt"></i> ประกันอนุมัติ</th>
+                                                <th class="text-center"><i class="fas fa-phone-square-alt"></i> อะไหล่ครบ</th>
+                                                <th class="text-center"><i class="fas fa-phone-square-alt"></i> ซ่อมตัวถัง/พื้น</th>
+                                                <th class="text-center"><i class="fas fa-phone-square-alt"></i> พ่นสี</th>
+                                                <th class="text-center"><i class="fas fa-phone-square-alt"></i> ขัดสี QC ก่อนส่งมอบ</th>
                                             </tr>
                                         </thead>
                                         <tbody>
