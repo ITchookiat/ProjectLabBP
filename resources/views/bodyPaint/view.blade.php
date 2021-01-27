@@ -124,7 +124,13 @@
                                    @endif 
                                   </td> -->
                                   <td class="text-left">{{($row->BPCus_note != null)?$row->BPCus_note:'-'}}</td>
-                                  <td class="text-center"> <span class="btn btn-xs bg-navy text-xs">{{ $row->BPCus_status}}</span> </td>
+                                  <td class="text-center">
+                                    @if($row->BPCar_carDelivered == null)
+                                      <span class="btn btn-xs bg-navy text-xs">{{ $row->BPCus_status}}</span>
+                                    @else
+                                      <span class="btn btn-xs bg-success text-xs">ส่งมอบรถ</span>
+                                    @endif
+                                  </td>
                                   <td class="text-right">
                                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-view" title="ดูรายการ"
                                       data-backdrop="static" data-keyboard="false"
@@ -199,7 +205,13 @@
                                 <td class="text-center"> {{ $row->BPCar_regisCar}} </td>
                                 <td class="text-center"> {{ $row->BPCus_claimLevel}} </td>
                                 <td class="text-left">{{($row->BPCus_note != null)?$row->BPCus_note:'-'}}</td>
-                                <td class="text-center"> <span class="btn btn-xs bg-navy text-xs">{{ $row->BPCus_status}}</span> </td>
+                                <td class="text-center">
+                                  @if($row->BPCar_carDelivered == null)
+                                    <span class="btn btn-xs bg-navy text-xs">{{ $row->BPCus_status}}</span>
+                                  @else
+                                    <span class="btn btn-xs bg-success text-xs">ส่งมอบรถ</span>
+                                  @endif
+                                </td>
                                 <td class="text-right">
                                   <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit" title="แก้ไขรายการ"
                                     data-backdrop="static" data-keyboard="false"
@@ -214,7 +226,48 @@
                     </div>
                   </div>
                 @elseif($type == 3)
-                  333333333333333
+                  <div class="row">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-hover" id="table">
+                          <thead class="bg-gray-light" >
+                            <tr>
+                              <th class="text-center">ลำดับ</th>
+                              <th class="text-center">ชื่อ-สกุล</th>
+                              <th class="text-center">ป้ายทะเบียน</th>
+                              <th class="text-center">ชนิดงาน</th>
+                              <th class="text-center">หมายเหตุ</th>
+                              <th class="text-center">สถานะ</th>
+                              <!-- <th class="text-center" width="30px">#</th> -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($data as $key => $row)
+                              <tr>
+                                <td class="text-center"> {{ $key + 1 }} </td>
+                                <td class="text-left"> {{ $row->BPCus_name}} </td>
+                                <td class="text-center"> {{ $row->BPCar_regisCar}} </td>
+                                <td class="text-center"> {{ $row->BPCus_claimLevel}} </td>
+                                <td class="text-left">{{($row->BPCus_note != null)?$row->BPCus_note:'-'}}</td>
+                                <td class="text-center">
+                                  @if($row->BPCar_carDelivered == null)
+                                    <span class="btn btn-xs bg-navy text-xs">{{ $row->BPCus_status}}</span>
+                                  @else
+                                    <span class="btn btn-xs bg-success text-xs">ส่งมอบรถ</span>
+                                  @endif
+                                </td>
+                                <!-- <td class="text-right">
+                                  <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit" title="แก้ไขรายการ"
+                                    data-backdrop="static" data-keyboard="false"
+                                    data-link="{{ route('MasterBP.show',[$row->BPCus_id]) }}?type={{2}}">
+                                    <i class="far fa-edit"></i>
+                                  </button>
+                                </td> -->
+                              </tr>
+                              @endforeach
+                          </tbody>
+                        </table>
+                    </div>
+                  </div>
                 @endif
                 <a id="button"></a>
               </div>

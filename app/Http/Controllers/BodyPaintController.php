@@ -50,6 +50,7 @@ class BodyPaintController extends Controller
                 return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
               })
             ->where('stock_BP_cars.BPCar_carRepair','!=', null)
+            ->where('stock_BP_cars.BPCar_carDelivered','=', null)
             ->get();
             $type = $request->type;
         }
