@@ -335,80 +335,119 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <!-- <div class="card-header bg-info">
-                                <h5 class="text-center"><i class="fas fa-phone-square-alt"></i> รายการโทรแจ้ง
-                                </h5>
-                            </div> -->
-                            <div class="card-body">
-                                <div class="form-inline">
-                                    <table class="table table-bordered table-hover" id="table">
-                                        <thead class="bg-gray-light" >
-                                            <tr>
-                                                <th class="text-center"><i class="fas fa-phone-square-alt"></i> ประกันอนุมัติ</th>
-                                                <th class="text-center"><i class="fas fa-phone-square-alt"></i> อะไหล่ครบ</th>
-                                                <th class="text-center"><i class="fas fa-phone-square-alt"></i> ซ่อมตัวถัง/พื้น</th>
-                                                <th class="text-center"><i class="fas fa-phone-square-alt"></i> พ่นสี</th>
-                                                <th class="text-center"><i class="fas fa-phone-square-alt"></i> ขัดสี QC ก่อนส่งมอบ</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-center text-xs">
-                                                    @foreach($dataCallClaim as $key => $row)
-                                                        <div class="mb-3 btn btn-xs btn-block btn-outline-primary">
-                                                            <span>ครั้งที่ {{$key+1}}</span><br>
-                                                            <span>{{DateThai($row->BPCall_date)}}</span><br>
-                                                            <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
-                                                        </div>
-                                                    @endforeach
-                                                </td>
-                                                <td class="text-center">
-                                                    @foreach($dataCallClaim2 as $key => $row)
-                                                        <div class="mb-3 btn btn-xs btn-block btn-outline-secondary">
-                                                            <span>ครั้งที่ {{$key+1}}</span><br>
-                                                            <span>{{DateThai($row->BPCall_date)}}</span><br>
-                                                            <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
-                                                        </div>
-                                                    @endforeach
-                                                </td>
-                                                <td class="text-center">
-                                                    @foreach($dataCallClaim3 as $key => $row)
-                                                        <div class="mb-3 btn btn-xs btn-block btn-outline-success">
-                                                            <span>ครั้งที่ {{$key+1}}</span><br>
-                                                            <span>{{DateThai($row->BPCall_date)}}</span><br>
-                                                            <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
-                                                        </div>
-                                                    @endforeach
-                                                </td>
-                                                <td class="text-center">
-                                                    @foreach($dataCallClaim4 as $key => $row)
-                                                        <div class="mb-3 btn btn-xs btn-block btn-outline-waring">
-                                                            <span>ครั้งที่ {{$key+1}}</span><br>
-                                                            <span>{{DateThai($row->BPCall_date)}}</span><br>
-                                                            <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
-                                                        </div>
-                                                    @endforeach
-                                                </td>
-                                                <td class="text-left">
-                                                    @foreach($dataCallClaim5 as $key => $row)
-                                                        <div class="mb-3 btn btn-xs btn-block btn-outline-danger">
-                                                            <span>ครั้งที่ {{$key+1}}</span><br>
-                                                            <span>{{DateThai($row->BPCall_date)}}</span><br>
-                                                            <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
-                                                        </div>
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                @if($viewType == 1)
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <!-- <div class="card-header bg-info">
+                                    <h5 class="text-center"><i class="fas fa-phone-square-alt"></i> รายการโทรแจ้ง
+                                    </h5>
+                                </div> -->
+                                <div class="card-body">
+                                    <div class="form-inline">
+                                        <table class="table table-bordered table-hover" id="table">
+                                            <thead class="bg-gray-light" >
+                                                <tr>
+                                                    <th class="text-center"><i class="fas fa-phone-square-alt"></i> ประกันอนุมัติ</th>
+                                                    <th class="text-center"><i class="fas fa-phone-square-alt"></i> อะไหล่ครบ</th>
+                                                    <th class="text-center"><i class="fas fa-phone-square-alt"></i> ซ่อมตัวถัง/พื้น</th>
+                                                    <th class="text-center"><i class="fas fa-phone-square-alt"></i> พ่นสี</th>
+                                                    <th class="text-center"><i class="fas fa-phone-square-alt"></i> ขัดสี QC ก่อนส่งมอบ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center text-xs">
+                                                        @foreach($dataCallClaim as $key => $row)
+                                                            <div class="mb-3 btn btn-xs btn-block btn-outline-primary">
+                                                                <span>ครั้งที่ {{$key+1}}</span><br>
+                                                                <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                                <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                            </div>
+                                                        @endforeach
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @foreach($dataCallClaim2 as $key => $row)
+                                                            <div class="mb-3 btn btn-xs btn-block btn-outline-secondary">
+                                                                <span>ครั้งที่ {{$key+1}}</span><br>
+                                                                <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                                <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                            </div>
+                                                        @endforeach
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @foreach($dataCallClaim3 as $key => $row)
+                                                            <div class="mb-3 btn btn-xs btn-block btn-outline-success">
+                                                                <span>ครั้งที่ {{$key+1}}</span><br>
+                                                                <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                                <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                            </div>
+                                                        @endforeach
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @foreach($dataCallClaim4 as $key => $row)
+                                                            <div class="mb-3 btn btn-xs btn-block btn-outline-waring">
+                                                                <span>ครั้งที่ {{$key+1}}</span><br>
+                                                                <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                                <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                            </div>
+                                                        @endforeach
+                                                    </td>
+                                                    <td class="text-left">
+                                                        @foreach($dataCallClaim5 as $key => $row)
+                                                            <div class="mb-3 btn btn-xs btn-block btn-outline-danger">
+                                                                <span>ครั้งที่ {{$key+1}}</span><br>
+                                                                <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                                <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                            </div>
+                                                        @endforeach
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @elseif($viewType == 4)
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-inline">
+                                        <table class="table table-bordered table-hover" id="table">
+                                            <thead class="bg-gray-light" >
+                                                <tr>
+                                                    <th class="text-center">ลำดับ</th>
+                                                    <th class="text-center">วันที่</th>
+                                                    <th class="text-center">เลขที่ใบประเมิณ</th>
+                                                    <th class="text-center">จำนวน</th>
+                                                    <th class="text-center">สถานะ</th>
+                                                    <th class="text-center">หมายเหตุ</th>
+                                                    <th class="text-center">ผู้เพิ่มอะไหล่</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($dataPart as $key => $row)
+                                                <tr>
+                                                    <td class="text-center">{{$key+1}}</td>
+                                                    <td class="text-center">{{DateThai($row->BPPart_date)}}</td>
+                                                    <td class="text-center">{{$row->BPPart_assessment}}</td>
+                                                    <td class="text-center">{{$row->BPPart_quantity}}</td>
+                                                    <td class="text-center">{{($row->BPPart_status != null)?$row->BPPart_status:'-'}}</td>
+                                                    <td class="text-left">{{($row->BPPart_note != null)?$row->BPPart_note:'-'}}</td>
+                                                    <td class="text-left">{{$row->BPPart_user}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
     @elseif($type == 9) {{-- หน้าแก้ไขรายรายการส่วนช่าง --}}
         <form name="form2" action="{{ route('MasterBP.update',[$data->BPMec_id]) }}" method="post" enctype="multipart/form-data">

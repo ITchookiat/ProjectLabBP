@@ -214,15 +214,23 @@
                     </div>
                     <div class="col-8">
                       <div class="card-tools d-inline float-right">
+                        @if($type == 1)
                         <button type="submit" class="delete-modal btn btn-success btn-sm">
                             <i class="fas fa-save"></i> อัพเดท
                         </button>
-                        <a class="delete-modal btn btn-danger btn-sm text-white" href="{{ route('MasterBP.index') }}?type={{1}}">
-                            <i class="far fa-window-close"></i> ยกเลิก
-                        </a>
-                        <!-- <a class="delete-modal btn btn-danger" href="{{ URL::previous() }}">
-                            <i class="fas fa-undo"></i> ย้อนกลับ
-                        </a> -->
+                          <a class="delete-modal btn btn-danger btn-sm text-white" href="{{ route('MasterBP.index') }}?type={{1}}">
+                              <i class="far fa-window-close"></i> ยกเลิก
+                          </a>
+                        @elseif($type == 4)
+                          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-parts" title="เพิ่มรายการโทร"
+                              data-backdrop="static" data-keyboard="false"
+                              data-link="{{ route('MasterBP.store',[$data->BPCus_id]) }}?type={{3}}">
+                              <i class="fas fa-wrench"></i> เพิ่มอะไหล่
+                          </button>
+                          <a class="delete-modal btn btn-danger btn-sm text-white" href="{{ route('MasterBP.index') }}?type={{4}}">
+                              <i class="far fa-window-close"></i> ยกเลิก
+                          </a>
+                        @endif
                       </div>
                     </div>
                   </div>
@@ -231,7 +239,7 @@
                   
                   <input type="hidden" name="Updatetype" value="1"/>
                   <input type="hidden" name="UserUpdate" value="{{auth::user()->name}}"/>
-        
+                  @if($type == 1)
                   <div class="row">
                     <div class="col-12 mb-2">
                       <ol class="breadcrumb float-sm-right text-sm">
@@ -313,12 +321,14 @@
                       </ol>
                     </div>
                   </div>
+                  @endif
                   <div class="card card-blue card-tabs">
                     <div class="card-header p-0 pt-1">
                       <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist">
                         <!-- <li class="nav-item">
                           <a class="nav-link MainPage" href="{{ route('MasterBP.index') }}?type={{1}}">หน้าหลัก</a>
                         </li> -->
+                        @if($type == 1)
                         <li class="nav-item">
                           <a class="nav-link {{ (request()->is($tab === '6')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{6}}">
                             <i class="fas fa-toggle-on"></i> ข้อมูลหลัก
@@ -349,6 +359,19 @@
                             <i class="fas fa-toggle-on"></i> ขัดสี QC ก่อนส่งมอบ
                           </a>
                         </li>
+                        @endif
+                        @if($type == 4)
+                        <li class="nav-item">
+                          <a class="nav-link {{ (request()->is($tab === '6')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{4}}&tab={{6}}">
+                            <i class="fas fa-toggle-on"></i> ข้อมูลหลัก
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link {{ (request()->is($tab === '7')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{4}}&tab={{7}}">
+                            <i class="fas fa-toggle-on"></i> รายการอะไหล่
+                          </a>
+                        </li>
+                        @endif
                       </ul>
                     </div>
 
@@ -452,7 +475,7 @@
                               <div class="card">
                                   <div class="card-header">
                                     <h5 class="text-center">รูปภาพประกอบ
-                                    @if($data->BPCar_regisCar != null and $data->BPCar_carBrand != null)
+                                    @if($data->BPCar_regisCar != null and $data->BPCar_carBrand != null and $type == 1)
                                       <button type="button" class="btn btn-primary btn-xs float-right" data-toggle="modal" data-target="#modal-image" title="เพิ่มรูปภาพ"
                                           data-backdrop="static" data-keyboard="false"
                                           data-link="{{ route('MasterBP.create')}}?type={{7}}&id={{$data->BPCus_id}}">
@@ -485,11 +508,10 @@
                           </div>
 
                         </div>
-        
                         {{-- เเท็บ 1 --}}
                         <div class="tab-pane fade {{ (request()->is($tab === '1')) ? 'show active' : '' }}" id="Sub-tab1" role="tabpanel" aria-labelledby="Sub-custom-tab1">
                           <div class="row">
-                            <div class="col-md-2">
+                            {{--<div class="col-md-2">
                               <div class="card">
                                 <!-- <div class="card-header">
                                   <h3 class="card-title">ประกันอนุมัติ</h3>
@@ -502,17 +524,11 @@
                                             <span class="badge bg-primary float-right">{{$countDataCallClaim}}</span>
                                           @endif
                                       </a>
-                                      <a class="nav-link" id="vert-tabs-02-tab" data-toggle="pill" href="#vert-tabs-02" role="tab" aria-controls="vert-tabs-02" aria-selected="false">
-                                        <i class="fas fa-wrench"></i> งานอะไหล่
-                                          @if($countdataPart != 0)
-                                           <span class="badge bg-primary float-right">{{$countdataPart}}</span>
-                                          @endif
-                                      </a>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-10">
+                            </div>--}}
+                            <div class="col-md-12">
                               <div class="card card-secondary card-outline">
                                 <div class="card-body p-0 text-sm">
                                   <div class="row">
@@ -536,7 +552,7 @@
                                                     <th class="text-center">ครั้งที่</th>
                                                     <th class="text-center">วันที่โทร</th>
                                                     <th class="text-center">ผลการโทร</th>
-                                                    <!-- <th class="text-center">ผู้โทรแจ้ง</th> -->
+                                                    <th class="text-center">ผู้โทรแจ้ง</th>
                                                     <th class="text-center">หมายเหตุ</th>
                                                     <th class="text-center" style="width:10px">#</th>
                                                 </tr>
@@ -547,63 +563,10 @@
                                                     <td class="text-center">{{$key+1}}</td>
                                                     <td class="text-center">{{DateThai($row->BPCall_date)}}</td>
                                                     <td class="text-center">{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</td>
-                                                    <!-- <td class="text-center">{{($row->BPCall_usercall != null)?$row->BPCall_usercall:'-'}}</td> -->
+                                                    <td class="text-center">{{($row->BPCall_usercall != null)?$row->BPCall_usercall:'-'}}</td>
                                                     <td class="text-left">{{($row->BPCall_note != null)?$row->BPCall_note:'-'}}</td>
                                                     <td class="text-center">
                                                         <form method="post" class="delete_form" action="{{ route('MasterBP.destroy',[$row->BPCall_id]) }}?deltype={{2}}&tab={{1}}&calltype={{$row->BPCall_type}}" style="display:inline;">
-                                                          {{csrf_field()}}
-                                                          <input type="hidden" name="_method" value="DELETE" />
-                                                          <button type="submit" data-name="" class="delete-modal btn btn-danger btn-xs AlertForm" title="ลบรายการ">
-                                                              <i class="fa fa-trash"></i>
-                                                          </button>
-                                                        </form>
-                                                    </td>
-                                                    </tr>
-                                                @endforeach
-                                              </tbody>
-                                            </table>
-                                          </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="vert-tabs-02" role="tabpanel" aria-labelledby="vert-tabs-02-tab">
-                                          <div class="card-header">
-                                            <h3 class="card-title"><i class="fas fa-grip-vertical"></i> งานอะไหล่</h3>
-                                            @if($data->BPCus_status == 'ประกันอนุมัติ')
-                                            <button type="button" class="btn btn-primary btn-xs float-right" data-toggle="modal" data-target="#modal-parts" title="เพิ่มรายการโทร"
-                                                data-backdrop="static" data-keyboard="false"
-                                                data-link="{{ route('MasterBP.store',[$data->BPCus_id]) }}?type={{3}}">
-                                                <i class="fas fa-wrench"></i> เพิ่มอะไหล่
-                                            </button>
-                                            @endif
-                                          </div>
-                                          <div class="col-12">
-                                            <table class="table table-striped table-valign-middle" id="table2">
-                                              <thead>
-                                              <tr>
-                                                  <th class="text-center">ลำดับ</th>
-                                                  <th class="text-center">วันที่</th>
-                                                  <th class="text-center">เลขที่ใบประเมิณ</th>
-                                                  <th class="text-center">จำนวน</th>
-                                                  <th class="text-center">สถานะ</th>
-                                                  <th class="text-center">หมายเหตุ</th>
-                                                  <th class="text-center" style="width:50px"></th>
-                                              </tr>
-                                              </thead>
-                                              <tbody>
-                                                @foreach($dataPart as $key => $row)
-                                                    <tr>
-                                                    <td class="text-center">{{$key+1}}</td>
-                                                    <td class="text-center">{{DateThai($row->BPPart_date)}}</td>
-                                                    <td class="text-center">{{$row->BPPart_assessment}}</td>
-                                                    <td class="text-center">{{$row->BPPart_quantity}}</td>
-                                                    <td class="text-center">{{($row->BPPart_status != null)?$row->BPPart_status:'-'}}</td>
-                                                    <td class="text-left">{{($row->BPPart_note != null)?$row->BPPart_note:'-'}}</td>
-                                                    <td class="text-center">
-                                                        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal-edit" title="แก้ไขรายการ"
-                                                          data-backdrop="static" data-keyboard="false"
-                                                          data-link="{{ route('MasterBP.edit',[$row->BPPart_id]) }}?type={{2}}">
-                                                          <i class="far fa-edit"></i>
-                                                        </button>
-                                                        <form method="post" class="delete_form" action="{{ route('MasterBP.destroy',[$row->BPPart_id]) }}?deltype={{3}}" style="display:inline;">
                                                           {{csrf_field()}}
                                                           <input type="hidden" name="_method" value="DELETE" />
                                                           <button type="submit" data-name="" class="delete-modal btn btn-danger btn-xs AlertForm" title="ลบรายการ">
@@ -628,7 +591,7 @@
                         {{-- เเท็บ 2 --}}
                         <div class="tab-pane fade {{ (request()->is($tab === '2')) ? 'show active' : '' }}" id="Sub-tab2" role="tabpanel" aria-labelledby="Sub-custom-tab2">
                           <div class="row">
-                            <div class="col-md-2">
+                            {{--<div class="col-md-2">
                               <div class="card">
                                 <!-- <div class="card-header">
                                   <h3 class="card-title">ประกันอนุมัติ</h3>
@@ -644,8 +607,8 @@
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-10">
+                            </div>--}}
+                            <div class="col-md-12">
                               <div class="card card-secondary card-outline">
                                 <div class="card-body p-0 text-sm">
                                   <div class="row">
@@ -669,7 +632,7 @@
                                                     <th class="text-center">ครั้งที่</th>
                                                     <th class="text-center">วันที่โทร</th>
                                                     <th class="text-center">ผลการโทร</th>
-                                                    <!-- <th class="text-center">ผู้โทรแจ้ง</th> -->
+                                                    <th class="text-center">ผู้โทรแจ้ง</th>
                                                     <th class="text-center">หมายเหตุ</th>
                                                     <th class="text-center" style="width:10px">#</th>
                                                 </tr>
@@ -680,7 +643,7 @@
                                                     <td class="text-center">{{$key+1}}</td>
                                                     <td class="text-center">{{DateThai($row->BPCall_date)}}</td>
                                                     <td class="text-center">{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</td>
-                                                    <!-- <td class="text-center">{{($row->BPCall_usercall != null)?$row->BPCall_usercall:'-'}}</td> -->
+                                                    <td class="text-center">{{($row->BPCall_usercall != null)?$row->BPCall_usercall:'-'}}</td>
                                                     <td class="text-left">{{($row->BPCall_note != null)?$row->BPCall_note:'-'}}</td>
                                                     <td class="text-center">
                                                         <form method="post" class="delete_form" action="{{ route('MasterBP.destroy',[$row->BPCall_id]) }}?deltype={{2}}&tab={{2}}&calltype={{$row->BPCall_type}}" style="display:inline;">
@@ -708,7 +671,7 @@
                         {{-- เเท็บ 3 --}}
                         <div class="tab-pane fade {{ (request()->is($tab === '3')) ? 'show active' : '' }}" id="Sub-tab3" role="tabpanel" aria-labelledby="Sub-custom-tab3">
                           <div class="row">
-                            <div class="col-md-2">
+                            {{--<div class="col-md-2">
                               <div class="card">
                                 <!-- <div class="card-header">
                                   <h3 class="card-title">ประกันอนุมัติ</h3>
@@ -724,8 +687,8 @@
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-10">
+                            </div>--}}
+                            <div class="col-md-12">
                               <div class="card card-secondary card-outline">
                                 <div class="card-body p-0 text-sm">
                                   <div class="row">
@@ -788,7 +751,7 @@
                         {{-- เเท็บ 4 --}}
                         <div class="tab-pane fade {{ (request()->is($tab === '4')) ? 'show active' : '' }}" id="Sub-tab4" role="tabpanel" aria-labelledby="Sub-custom-tab4">
                           <div class="row">
-                            <div class="col-md-2">
+                            {{--<div class="col-md-2">
                               <div class="card">
                                 <!-- <div class="card-header">
                                   <h3 class="card-title">ประกันอนุมัติ</h3>
@@ -804,8 +767,8 @@
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-10">
+                            </div>--}}
+                            <div class="col-md-12">
                               <div class="card card-secondary card-outline">
                                 <div class="card-body p-0 text-sm">
                                   <div class="row">
@@ -868,7 +831,7 @@
                         {{-- เเท็บ 5 --}}
                         <div class="tab-pane fade {{ (request()->is($tab === '5')) ? 'show active' : '' }}" id="Sub-tab5" role="tabpanel" aria-labelledby="Sub-custom-tab5">
                           <div class="row">
-                            <div class="col-md-2">
+                            {{--<div class="col-md-2">
                               <div class="card">
                                 <!-- <div class="card-header">
                                   <h3 class="card-title">ประกันอนุมัติ</h3>
@@ -884,8 +847,8 @@
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-10">
+                            </div>--}}
+                            <div class="col-md-12">
                               <div class="card card-secondary card-outline">
                                 <div class="card-body p-0 text-sm">
                                   <div class="row">
@@ -943,6 +906,54 @@
                                 </div>
                               </div>
                             </div>
+                          </div>
+                        </div>
+                        {{-- แท็บ 7 --}}
+                        <div class="tab-pane fade {{ (request()->is($tab === '7')) ? 'show active' : '' }}" id="Sub-tab7" role="tabpanel" aria-labelledby="Sub-custom-tab7">
+                          <div class="row">
+                              <div class="col-12">
+                                <table class="table table-striped table-valign-middle" id="table2">
+                                  <thead>
+                                  <tr>
+                                      <th class="text-center">ลำดับ</th>
+                                      <th class="text-center">วันที่</th>
+                                      <th class="text-center">เลขที่ใบประเมิณ</th>
+                                      <th class="text-center">จำนวน</th>
+                                      <th class="text-center">สถานะ</th>
+                                      <th class="text-center">หมายเหตุ</th>
+                                      <th class="text-center">ผู้เพิ่มอะไหล่</th>
+                                      <th class="text-center" style="width:50px"></th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                    @foreach($dataPart as $key => $row)
+                                        <tr>
+                                        <td class="text-center">{{$key+1}}</td>
+                                        <td class="text-center">{{DateThai($row->BPPart_date)}}</td>
+                                        <td class="text-center">{{$row->BPPart_assessment}}</td>
+                                        <td class="text-center">{{$row->BPPart_quantity}}</td>
+                                        <td class="text-center">{{($row->BPPart_status != null)?$row->BPPart_status:'-'}}</td>
+                                        <td class="text-left">{{($row->BPPart_note != null)?$row->BPPart_note:'-'}}</td>
+                                        <td class="text-left">{{$row->BPPart_user}}</td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal-edit" title="แก้ไขรายการ"
+                                              data-backdrop="static" data-keyboard="false"
+                                              data-link="{{ route('MasterBP.edit',[$row->BPPart_id]) }}?type={{2}}">
+                                              <i class="far fa-edit"></i>
+                                            </button>
+                                            <form method="post" class="delete_form" action="{{ route('MasterBP.destroy',[$row->BPPart_id]) }}?deltype={{3}}" style="display:inline;">
+                                              {{csrf_field()}}
+                                              <input type="hidden" name="_method" value="DELETE" />
+                                              <button type="submit" data-name="" class="delete-modal btn btn-danger btn-xs AlertForm" title="ลบรายการ">
+                                                  <i class="fa fa-trash"></i>
+                                              </button>
+                                            </form>
+                                        </td>
+                                        </tr>
+                                    @endforeach
+                                  </tbody>
+                                </table>
+                              </div>
                           </div>
                         </div>
                       </div>
