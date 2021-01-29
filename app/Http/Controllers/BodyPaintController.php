@@ -34,12 +34,13 @@ class BodyPaintController extends Controller
             $newtdate = $request->get('Todate');
         }
 
-        if($request->type == 1){
+        if($request->type == 1 or $request->type == 4){
             $data = DB::table('stock_BP_cuses')
             ->join('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
                 return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
               })
+            ->where('stock_BP_cars.BPCar_carDelivered','=', null)
             ->get();
             $type = $request->type;
         }
@@ -204,7 +205,7 @@ class BodyPaintController extends Controller
      */
     public function show(Request $request, $id)
     {
-        if($request->type == 1){
+        if($request->type == 1 or $request->type == 4){
             $data = DB::table('stock_BP_cuses')
             ->join('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->where('stock_BP_cuses.BPCus_id',$id)
@@ -244,9 +245,10 @@ class BodyPaintController extends Controller
             ->get();
 
             $type = 8;
+            $viewType = $request->type;
             return view('bodyPaint.option',
                 compact('data','dataCallClaim','dataCallClaim2','dataCallClaim3','dataCallClaim4','dataCallClaim5',
-                'dataPart','dataImage','type'));
+                'dataPart','dataImage','type','viewType'));
         }
         elseif($request->type == 2){
             $data = DB::table('stock_BP_cuses')
@@ -269,7 +271,7 @@ class BodyPaintController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        if($request->type == 1){ //แก้ไขรายการโดยรวม
+        if($request->type == 1 or $request->type == 4){ //แก้ไขรายการโดยรวม
             $data = DB::table('stock_BP_cuses')
             ->join('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->where('stock_BP_cuses.BPCus_id',$id)
@@ -308,14 +310,14 @@ class BodyPaintController extends Controller
             $dataPart = DB::table('body_parts')
             ->where('body_parts.BPCus_id',$id)
             ->get();
-                 $countdataPart = count($dataPart);
+            $countdataPart = count($dataPart);
 
             $dataImage = DB::table('body_images')
             ->where('body_images.BPCus_id',$id)
             ->get();
 
             $tab = $request->tab;
-            $type = '1';
+            $type = $request->type;
             return view('bodyPaint.edit',
                 compact('type','data','dataCallClaim','dataCallClaim2','dataCallClaim3','dataCallClaim4','dataCallClaim5',
                 'countDataCallClaim','countDataCallClaim2','countDataCallClaim3','countDataCallClaim4','countDataCallClaim5',

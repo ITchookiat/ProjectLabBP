@@ -91,6 +91,12 @@
                             <p>รายการรถส่งมอบ</p>
                           </a>
                         </li>
+                        <li class="nav-item">
+                          <a href="{{ route('MasterBP.index') }}?type={{4}}" class="nav-link {{ (request()->is($type === '4')) ? 'active' : '' }}">
+                            <i class="far fa-dot-circle nav-icon"></i>
+                            <p>รายการอะไหล่</p>
+                          </a>
+                        </li>
                   </ul>
                 </li>
                 <!-- <li class="nav-item has-treeview">
