@@ -195,7 +195,8 @@
                                 <th class="text-center">ป้ายทะเบียน</th>
                                 <th class="text-center">ชนิดงาน</th>
                                 <th class="text-center">หมายเหตุ</th>
-                                <th class="text-center">สถานะ</th>
+                                <th class="text-center">สถานะเคลม</th>
+                                <th class="text-center">สถานะซ่อม</th>
                                 <th class="text-center" width="30px">#</th>
                               </tr>
                             </thead>
@@ -240,6 +241,9 @@
                                       <span class="btn btn-xs bg-success text-xs">ส่งมอบรถ</span>
                                     @endif
                                   </td>
+                                  <td class="text-center">
+                                    <span class="btn btn-xs bg-danger text-xs">{{ $row->BPMec_Status}}</span>
+                                  </div>
                                   <td class="text-right">
                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit" title="แก้ไขรายการ"
                                       data-backdrop="static" data-keyboard="false"

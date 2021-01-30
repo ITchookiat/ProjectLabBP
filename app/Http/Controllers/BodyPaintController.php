@@ -46,7 +46,8 @@ class BodyPaintController extends Controller
         }
         elseif($request->type == 2){
             $data = DB::table('stock_BP_cuses')
-            ->join('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
+            ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
+            ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPCus_id')
             ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
                 return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
               })
@@ -409,23 +410,39 @@ class BodyPaintController extends Controller
             $BPpartdb->update();
         }
         elseif($request->Updatetype == 3){ //อัพเดทซ่อมจริง
-            $user = StockBPCus::find($id);
-                $user->BPCus_dateUpdated = date('H:i:s');
-                $user->BPCus_status = $request->get('BPstatus');
-            $user->update();
-
             $Mechanic = BodyMechanic::find($request->get('Mecid'));
-                if($request->get('BPstatus') == 'ซ่อมตัวถัง/พื้น'){
-                    $Mechanic->BPMec_FixbodyRespon = $request->get('BPMecuserfixbody');
-                    $Mechanic->BPMec_FixbodyDate = date('Y-m-d');
+                $Mechanic->BPMec_status = $request->get('BPMecstatus');
+                if($request->get('BPMecstatus') == 'เคาะ'){
+                    $Mechanic->BPMec_KnockRespon = $request->get('BPMecuserknock');
+                    $Mechanic->BPMec_KnockDate = date('Y-m-d');
                     $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
-                }elseif($request->get('BPstatus') == 'พ่นสี'){
+                }elseif($request->get('BPMecstatus') == 'ถอดอะไหล่'){
+                    $Mechanic->BPMec_RemoveRespon = $request->get('BPMecuserremove');
+                    $Mechanic->BPMec_RemoveDate = date('Y-m-d');
+                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
+                }elseif($request->get('BPMecstatus') == 'เตรียมพื้น'){
+                    $Mechanic->BPMec_PrepareRespon = $request->get('BPMecuserprepare');
+                    $Mechanic->BPMec_PrepareDate = date('Y-m-d');
+                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
+                }elseif($request->get('BPMecstatus') == 'พ่นสี'){
                     $Mechanic->BPMec_PaintRespon = $request->get('BPMecuserpaint');
                     $Mechanic->BPMec_PaintDate = date('Y-m-d');
                     $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
-                }elseif($request->get('BPstatus') == 'ขัดสี QC ก่อนส่งมอบ'){
+                }elseif($request->get('BPMecstatus') == 'ประกอบ'){
+                    $Mechanic->BPMec_AssembleRespon = $request->get('BPMecuserassemble');
+                    $Mechanic->BPMec_AssembleDate = date('Y-m-d');
+                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
+                }elseif($request->get('BPMecstatus') == 'ขัดสี'){
                     $Mechanic->BPMec_PolishRespon = $request->get('BPMecuserpolish');
                     $Mechanic->BPMec_PolishDate = date('Y-m-d');
+                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
+                }elseif($request->get('BPMecstatus') == 'ส่งล้าง'){
+                    $Mechanic->BPMec_WashRespon = $request->get('BPMecuserwash');
+                    $Mechanic->BPMec_WashDate = date('Y-m-d');
+                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
+                }elseif($request->get('BPMecstatus') == 'QC ก่อนส่งมอบ'){
+                    $Mechanic->BPMec_DeliverRespon = $request->get('BPMecuserdeliver');
+                    $Mechanic->BPMec_DeliverDate = date('Y-m-d');
                     $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
                 }
             $Mechanic->update();
