@@ -889,3 +889,18 @@
         </form>
     @endif
   </section>
+
+  {{-- image --}}
+  <script type="text/javascript">
+    $("#image-file,#Account_image,#image_checker_1,#image_checker_2").fileinput({
+      uploadUrl:"{{ route('MasterBP.store') }}",
+      theme:'fa',
+      uploadExtraData:function(){
+        return{
+          _token:"{{csrf_token()}}",
+        }
+      },
+      allowedFileExtensions:['jpg','png','gif'],
+      maxFileSize:10240
+    })
+  </script>

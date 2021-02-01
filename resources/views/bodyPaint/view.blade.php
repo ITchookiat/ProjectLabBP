@@ -165,7 +165,7 @@
                       </div>
                     </div>
                   </div>
-                @elseif($type == 2)
+                @elseif($type == 2) {{-- รายการซ่อมจริง --}}
                   <div class="row">
                     <div class="col-md-12">
                         <form method="get" action="{{ route('MasterBP.index') }}">
@@ -258,7 +258,7 @@
                       </div>
                     </div>
                   </div>
-                @elseif($type == 3)
+                @elseif($type == 3) {{-- รายการส่งมอบ --}}
                   <div class="row">
                     <div class="col-md-12">
                       <form method="get" action="{{ route('MasterBP.index') }}">
@@ -283,6 +283,7 @@
                             <thead class="bg-gray-light" >
                               <tr>
                                 <th class="text-center">ลำดับ</th>
+                                <th class="text-center">วันที่ส่งมอบ</th>
                                 <th class="text-center">ชื่อ-สกุล</th>
                                 <th class="text-center">ป้ายทะเบียน</th>
                                 <th class="text-center">ชนิดงาน</th>
@@ -295,6 +296,7 @@
                               @foreach($data as $key => $row)
                                 <tr>
                                   <td class="text-center"> {{ $key + 1 }} </td>
+                                  <td class="text-center text-success"> {{ DateThai($row->BPCar_carDelivered) }} </td>
                                   <td class="text-left"> {{ $row->BPCus_name}} </td>
                                   <td class="text-center"> {{ $row->BPCar_regisCar}} </td>
                                   <td class="text-center"> {{ $row->BPCus_claimLevel}} </td>
