@@ -112,7 +112,14 @@
                             <tbody>
                               @foreach($data as $key => $row)
                                 <tr>
-                                  <td class="text-center"> {{ $key + 1 }} </td>
+                                  <td class="text-center"> 
+                                    {{ $key + 1 }} 
+                                    @if($row->BPMec_Status != null)
+                                      @if($row->BPMec_Status != 'QC ก่อนส่งมอบ')
+                                        <i class="fas fa-wrench text-xs text-red pr-1 prem"></i>
+                                      @endif
+                                    @endif
+                                  </td>
                                   <td class="text-left"> {{ $row->BPCus_name}} </td>
                                   <td class="text-center"> {{ $row->BPCus_phone}} </td>
                                   <td class="text-center"> {{ $row->BPCar_regisCar}} </td>
