@@ -488,6 +488,7 @@
                                       <div class="form-inline">
                                       @foreach($dataImage as $images)
                                         <div class="col-sm-3">
+                                        @if($type == 1)
                                           <form method="post" class="delete_form float-right" action="{{ route('MasterBP.destroy',[$images->BPImage_id]) }}?deltype={{4}}" style="display:inline;">
                                             {{csrf_field()}}
                                             <input type="hidden" name="_method" value="DELETE" />
@@ -496,6 +497,7 @@
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                           </form>
+                                        @endif
                                           <a href="{{ asset('storage/BP-images/'.$data->BPCar_carBrand.'/'.$data->BPCar_regisCar.'/'.$images->BPImage_filename) }}" class="MagicZoom" data-gallery="gallery" data-options="hint:true; zoomMode:magnifier; variableZoom: true">
                                             <img id="myImg" src="{{ asset('storage/BP-images/'.$data->BPCar_carBrand.'/'.$data->BPCar_regisCar.'/'.$images->BPImage_filename) }}">
                                           </a>
