@@ -52,6 +52,8 @@
                               <i class="fas fa-gears"></i> รายการรถซ่อมจริง
                           @elseif($type == 3)
                               <i class="fas fa-gears"></i> รายการรถส่งมอบ
+                          @elseif($type == 4)
+                              <i class="fas fa-gears"></i> รายการอะไหล่
                           @endif
                         </h4>
                       </div>
@@ -242,7 +244,7 @@
                                     @endif
                                   </td>
                                   <td class="text-center">
-                                    <span class="btn btn-xs bg-danger text-xs">{{ $row->BPMec_Status}}</span>
+                                    <span class="btn btn-xs bg-danger text-xs">{{($row->BPMec_Status != null)?$row->BPMec_Status:'-'}}</span>
                                   </div>
                                   <td class="text-right">
                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit" title="แก้ไขรายการ"
