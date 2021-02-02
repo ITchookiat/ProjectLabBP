@@ -253,15 +253,15 @@
                         <div class="form-group row mb-3">
                             <label class="col-sm-4 col-form-label text-right"> ชื่อ-สกุล :</label>
                             <div class="col-sm-6 mb-1">
-                            <input type="text" name="BPCusname" class="form-control" placeholder="ป้อนชื่อสกุล" value="{{$data->BPCus_name}}"/>
+                            <input type="text" class="form-control" placeholder="ป้อนชื่อสกุล" value="{{$data->BPCus_name}}" readonly/>
                             </div>
                             <label class="col-sm-4 col-form-label text-right"> เบอร์ติดต่อ :</label>
                             <div class="col-sm-6 mb-1">
-                            <input type="text" name="BPCusphone" class="form-control" placeholder="ป้อนเบอร์ติดต่อ" value="{{$data->BPCus_phone}}"/>
+                            <input type="text" class="form-control" placeholder="ป้อนเบอร์ติดต่อ" value="{{$data->BPCus_phone}}" readonly/>
                             </div>
                             <label class="col-sm-4 col-form-label text-right">ชนิดงาน : </label>
                             <div class="col-sm-6 mb-1">
-                            <select id="BPclaimlevel" name="BPclaimlevel" class="form-control">
+                            <select id="BPclaimlevel" class="form-control" readonly>
                                 <option value="" selected>--- เลือกชนิดงาน ---</option>
                                 <option value="เบา" {{ ($data->BPCus_claimLevel === 'เบา') ? 'selected' : '' }}>เบา</option>
                                 <option value="กลาง" {{ ($data->BPCus_claimLevel === 'กลาง') ? 'selected' : '' }}>กลาง</option>
@@ -270,7 +270,7 @@
                             </div>
                             <label class="col-sm-4 col-form-label text-right">ประเภทประกัน :</label>
                             <div class="col-sm-6 mb-1">
-                            <select id="BPclaimtype" name="BPclaimtype" class="form-control">
+                            <select id="BPclaimtype" class="form-control" readonly>
                                 <option value="" selected>--- เลือกประเภทประกัน ---</option>
                                 <option value="MPI" {{ ($data->BPCus_claimType === 'MPI') ? 'selected' : '' }}>MPI</option>
                                 <option value="Non MPI" {{ ($data->BPCus_claimType === 'Non MPI') ? 'selected' : '' }}>Non MPI</option>
@@ -278,7 +278,7 @@
                             </div>
                             <label class="col-sm-4 col-form-label text-right">บริษัทประกัน :</label>
                             <div class="col-sm-6 mb-1">
-                            <select id="BPclaimcompany" name="BPclaimcompany" class="form-control">
+                            <select id="BPclaimcompany" class="form-control" readonly>
                                 <option value="" selected>--- เลือกบริษัทประกัน ---</option>
                                 <option value="วิริยะประกันภัย" {{ ($data->BPCus_claimCompany === 'วิริยะประกันภัย') ? 'selected' : '' }}>วิริยะประกันภัย</option>
                                 <option value="ธนชาตประกันภัย" {{ ($data->BPCus_claimCompany === 'ธนชาตประกันภัย') ? 'selected' : '' }}>ธนชาตประกันภัย</option>
@@ -299,14 +299,14 @@
                                 <option value="อื่นๆ" {{ ($data->BPCus_claimCompany === 'อื่นๆ') ? 'selected' : '' }}>อื่นๆ</option>
                             </select>
                             @if($data->BPCus_claimCompany === 'อื่นๆ')
-                                <input type="text" id="BPclaimcompanyother" name="BPclaimcompanyother" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}"/>
+                                <input type="text" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}" readonly/>
                             @else
-                                <input type="text" id="BPclaimcompanyother" name="BPclaimcompanyother" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}" style="display:none"/>
+                                <input type="text" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}" style="display:none" readonly/>
                             @endif
                             </div>
                             <label class="col-sm-4 col-form-label text-right"> เลขเคลมประกัน :</label>
                             <div class="col-sm-6 mb-1">
-                            <input type="text" name="BPCusclaimNo" class="form-control" placeholder="ป้อนเลขเคลมประกัน" value="{{$data->BPCus_claimNumber}}"/>
+                            <input type="text" class="form-control" placeholder="ป้อนเลขเคลมประกัน" value="{{$data->BPCus_claimNumber}}" readonly/>
                             </div>
                         </div>
                     </div>
@@ -314,23 +314,23 @@
                         <div class="form-group row mb-1">
                             <label class="col-sm-3 col-form-label text-right">ป้ายทะเบียน : </label>
                             <div class="col-sm-7 mb-1">
-                                <input type="text" name="BPCusregiscar" class="form-control" placeholder="ป้อนป้ายทะเบียน" value="{{$data->BPCar_regisCar}}"/>
+                                <input type="text" class="form-control" placeholder="ป้อนป้ายทะเบียน" value="{{$data->BPCar_regisCar}}" readonly/>
                             </div>
                             <label class="col-sm-3 col-form-label text-right"> ยี่ห้อรถ :</label>
                             <div class="col-sm-7 mb-1">
-                                <input type="text" name="BPCuscarbrand" class="form-control" placeholder="ป้อนยี่ห้อรถ" value="{{$data->BPCar_carBrand}}"/>
+                                <input type="text" class="form-control" placeholder="ป้อนยี่ห้อรถ" value="{{$data->BPCar_carBrand}}" readonly/>
                             </div>
                             <label class="col-sm-3 col-form-label text-right"> รุ่นรถ :</label>
                             <div class="col-sm-7 mb-1">
-                                <input type="text" name="BPCuscarmodel" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$data->BPCar_carModel}}"/>
+                                <input type="text" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$data->BPCar_carModel}}" readonly/>
                             </div>
                             <label class="col-sm-3 col-form-label text-right"> สีรถ :</label>
                             <div class="col-sm-7 mb-1">
-                                <input type="text" name="BPCuscarcolor" class="form-control" placeholder="ป้อนสีรถ" value="{{$data->BPCar_carColor}}"/>
+                                <input type="text" class="form-control" placeholder="ป้อนสีรถ" value="{{$data->BPCar_carColor}}" readonly/>
                             </div>
                             <label class="col-sm-3 col-form-label text-right">หมายเหตุ :</label>
                             <div class="col-sm-7 mb-1">
-                                <textarea class="form-control" name="BPnote" rows="3" placeholder="ป้อนหมายเหตุ...">{{$data->BPCus_note}}</textarea>
+                                <textarea class="form-control" rows="3" placeholder="ป้อนหมายเหตุ..." readonly>{{$data->BPCus_note}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -488,15 +488,15 @@
                         <div class="form-group row mb-3">
                             <label class="col-sm-4 col-form-label text-right"> ชื่อ-สกุล :</label>
                             <div class="col-sm-8 mb-1">
-                                <input type="text" name="BPCusname" class="form-control" placeholder="ป้อนชื่อสกุล" value="{{$data->BPCus_name}}" readonly/>
+                                <input type="text" class="form-control" placeholder="ป้อนชื่อสกุล" value="{{$data->BPCus_name}}" readonly/>
                             </div>
                             <label class="col-sm-4 col-form-label text-right"> เบอร์ติดต่อ :</label>
                             <div class="col-sm-8 mb-1">
-                              <input type="text" name="BPCusphone" class="form-control" placeholder="ป้อนเบอร์ติดต่อ" value="{{$data->BPCus_phone}}" readonly/>
+                              <input type="text" class="form-control" placeholder="ป้อนเบอร์ติดต่อ" value="{{$data->BPCus_phone}}" readonly/>
                             </div>
                             <label class="col-sm-4 col-for-label text-right">ชนิดงาน : </label>
                             <div class="col-sm-8 mb-1">
-                                <select id="BPclaimlevel" name="BPclaimlevel" class="form-control" readonly>
+                                <select id="BPclaimlevel" class="form-control" readonly>
                                     <option value="" selected>--- เลือกชนิดงาน ---</option>
                                     <option value="เบา" {{ ($data->BPCus_claimLevel === 'เบา') ? 'selected' : '' }}>เบา</option>
                                     <option value="กลาง" {{ ($data->BPCus_claimLevel === 'กลาง') ? 'selected' : '' }}>กลาง</option>
@@ -505,7 +505,7 @@
                             </div>
                             <label class="col-sm-4 col-form-label text-right"> เลขที่เคลม :</label>
                             <div class="col-sm-8 mb-1">
-                              <input type="text" name="BPCusclaimNo" class="form-control" placeholder="ป้อนเลขเคลมประกัน" value="{{$data->BPCus_claimNumber}}" readonly/>
+                              <input type="text" class="form-control" placeholder="ป้อนเลขเคลมประกัน" value="{{$data->BPCus_claimNumber}}" readonly/>
                             </div>
                         </div>
                     </div>
@@ -513,19 +513,19 @@
                         <div class="form-group row mb-1">
                             <label class="col-sm-4 col-form-label text-right">ป้ายทะเบียน : </label>
                             <div class="col-sm-8 mb-1">
-                                <input type="text" name="BPCusregiscar" class="form-control" placeholder="ป้อนป้ายทะเบียน" value="{{$data->BPCar_regisCar}}" readonly/>
+                                <input type="text" class="form-control" placeholder="ป้อนป้ายทะเบียน" value="{{$data->BPCar_regisCar}}" readonly/>
                             </div>
                             <label class="col-sm-4 col-form-label text-right"> ยี่ห้อรถ :</label>
                             <div class="col-sm-8 mb-1">
-                                <input type="text" name="BPCuscarbrand" class="form-control" placeholder="ป้อนยี่ห้อรถ" value="{{$data->BPCar_carBrand}}" readonly/>
+                                <input type="text" class="form-control" placeholder="ป้อนยี่ห้อรถ" value="{{$data->BPCar_carBrand}}" readonly/>
                             </div>
                             <label class="col-sm-4 col-form-label text-right"> รุ่นรถ :</label>
                             <div class="col-sm-8 mb-1">
-                                <input type="text" name="BPCuscarmodel" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$data->BPCar_carModel}}" readonly/>
+                                <input type="text" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$data->BPCar_carModel}}" readonly/>
                             </div>
                             <label class="col-sm-4 col-form-label text-right"> สีรถ :</label>
                             <div class="col-sm-8 mb-1">
-                                <input type="text" name="BPCuscarcolor" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$data->BPCar_carColor}}" readonly/>
+                                <input type="text" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$data->BPCar_carColor}}" readonly/>
                             </div>
                         </div>
                     </div>
@@ -556,11 +556,11 @@
                             @endif
                             <label class="col-sm-4 col-form-label text-right text-red">เหลือเวลา :</label>
                             <div class="col-sm-8 mb-1">
-                                <input type="text" name="BPCuscarcolor" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$ClDateDiff->format('%a วัน')}}" readonly/>
+                                <input type="text" class="form-control" placeholder="ป้อนรุ่นรถ" value="{{$ClDateDiff->format('%a วัน')}}" readonly/>
                             </div>
                             <label class="col-sm-4 col-form-label text-right">หมายเหตุ :</label>
                             <div class="col-sm-8 mb-1">
-                                <textarea class="form-control" name="BPnote" rows="3" readonly>{{$data->BPCus_note}}</textarea>
+                                <textarea class="form-control" rows="3" readonly>{{$data->BPCus_note}}</textarea>
                             </div>
                         </div>
                     </div>

@@ -33,7 +33,7 @@
                       <div class="row">
                         <div class="col-8">
                           <div class="float-right form-inline">
-                            <label>Username : </label>
+                            <label class="pr-1">Username : </label>
                             <input type="text" name="main_username" class="form-control" style="width: 400px;" placeholder="ป้อนชื่อผู้ใช้" value="{{$user->username}}" />
                           </div>
                         </div>
@@ -43,7 +43,7 @@
                       <div class="row">
                         <div class="col-8">
                           <div class="float-right form-inline">
-                            <label>Name : </label>
+                            <label class="pr-1">Name : </label>
                             <input type="text" name="main_name" class="form-control" style="width: 400px;" placeholder="ป้อนชื่อ" value="{{$user->name}}" />
                           </div>
                         </div>
@@ -53,13 +53,13 @@
                       <div class="row">
                         <div class="col-8">
                           <div class="float-right form-inline">
-                            <label>Enail : </label>
+                            <label class="pr-1">Enail : </label>
                             <input type="text" name="main_email" class="form-control" style="width: 400px;" placeholder="ป้อนอีเมลล์" value="{{$user->email}}" />
                           </div>
                         </div>
                       </div>
 
-                      <br>
+                      {{--<br>
                       <div class="row">
                         <div class="col-8">
                           <div class="float-right form-inline">
@@ -102,20 +102,22 @@
                             </select>
                           </div>
                         </div>
-                      </div>
+                      </div>--}}
 
                       <br>
                       <div class="row">
                         <div class="col-8">
                           <div class="float-right form-inline">
-                            <label>ตำแหน่ง : </label>
+                            <label class="pr-1">ตำแหน่ง : </label>
                             <select name="position" class="form-control" style="width: 400px;">
                               <option value="" selected>--------- ตำแหน่ง ----------</option>
                               <option value="Admin" {{ ($user->position === 'Admin') ? 'selected' : '' }}>Admin</option>
                               <option value="MANAGER" {{ ($user->position === 'MANAGER') ? 'selected' : '' }}>MANAGER</option>
-                              <option value="AUDIT" {{ ($user->position === 'AUDIT') ? 'selected' : '' }}>AUDIT</option>
-                              <option value="MASTER" {{ ($user->position === 'MASTER') ? 'selected' : '' }}>MASTER</option>
+                              <!-- <option value="AUDIT" {{ ($user->position === 'AUDIT') ? 'selected' : '' }}>AUDIT</option> -->
+                              <!-- <option value="MASTER" {{ ($user->position === 'MASTER') ? 'selected' : '' }}>MASTER</option> -->
+                              <option value="SA" {{ ($user->position === 'SA') ? 'selected' : '' }}>SA</option>
                               <option value="STAFF" {{ ($user->position === 'STAFF') ? 'selected' : '' }}>STAFF</option>
+                              <option value="TECHNICIAN" {{ ($user->position === 'TECHNICIAN') ? 'selected' : '' }}>TECHNICIAN</option>
                             </select>
                           </div>
                         </div>

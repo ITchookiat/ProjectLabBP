@@ -34,7 +34,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column text-sm" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          @if(auth::user()->type == "Admin")
+          @if(auth::user()->position == "Admin")
             <li class="nav-item has-treeview {{ Request::is('maindata/view*') ? 'menu-open' : '' }}">
               <a href="#" class="nav-link active">
                 <i class="nav-icon fas fa-window-restore"></i>
@@ -73,30 +73,38 @@
                     </p>
                   </a>
                   <ul class="nav nav-treeview" style="margin-left: 15px;">
+                        @if(auth::user()->position == "Admin" or auth::user()->position == "SA")
                         <li class="nav-item">
                           <a href="{{ route('MasterBP.index') }}?type={{1}}" class="nav-link {{ (request()->is($type === '1')) ? 'active' : '' }}">
                             <i class="far fa-dot-circle nav-icon"></i>
                             <p>รายการโทรแจ้ง</p>
                           </a>
                         </li>
+                        @endif
+                        @if(auth::user()->position == "Admin" or auth::user()->position == "SA" or auth::user()->position == "TECHNICIAN")
                         <li class="nav-item">
                           <a href="{{ route('MasterBP.index') }}?type={{2}}" class="nav-link {{ (request()->is($type === '2')) ? 'active' : '' }}">
                             <i class="far fa-dot-circle nav-icon"></i>
                             <p>รายการรถซ่อมจริง</p>
                           </a>
                         </li>
+                        @endif
+                        @if(auth::user()->position == "Admin" or auth::user()->position == "SA")
                         <li class="nav-item">
                           <a href="{{ route('MasterBP.index') }}?type={{3}}" class="nav-link {{ (request()->is($type === '3')) ? 'active' : '' }}">
                             <i class="far fa-dot-circle nav-icon"></i>
                             <p>รายการรถส่งมอบ</p>
                           </a>
                         </li>
+                        @endif
+                        @if(auth::user()->position == "Admin" or auth::user()->position == "SA" or auth::user()->position == "STAFF")
                         <li class="nav-item">
                           <a href="{{ route('MasterBP.index') }}?type={{4}}" class="nav-link {{ (request()->is($type === '4')) ? 'active' : '' }}">
                             <i class="far fa-dot-circle nav-icon"></i>
                             <p>รายการอะไหล่</p>
                           </a>
                         </li>
+                        @endif
                   </ul>
                 </li>
                 <!-- <li class="nav-item has-treeview">
