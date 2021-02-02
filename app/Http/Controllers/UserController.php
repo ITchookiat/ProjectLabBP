@@ -17,7 +17,8 @@ class UserController extends Controller
     {
       if(auth()->user()->type == "Admin"){
         $users = User::all();
-        return view('maindata.view', compact('users'));
+        $type = '';
+        return view('maindata.view', compact('users','type'));
       }else {
         dd('You not admin');
         return view('home');
@@ -65,8 +66,8 @@ class UserController extends Controller
     public function edit($id)
     {
       $user = User::find($id);
-
-      return view('maindata.edit',compact('user','id'));
+      $type = '';
+      return view('maindata.edit',compact('user','id','type'));
     }
 
     /**
@@ -79,7 +80,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
       // dd($request);
-      $this->validate($request,['main_username' => 'required','main_name' => 'required','main_email' => 'required','section_type' => 'required','branch' => 'required']);  /**required =ตรวจสอบ,จำเป็นต้องป้อนข้อมูล */
+      // $this->validate($request,['main_username' => 'required','main_name' => 'required','main_email' => 'required','section_type' => 'required','branch' => 'required']);  /**required =ตรวจสอบ,จำเป็นต้องป้อนข้อมูล */
 
       $user = User::find($id);
 

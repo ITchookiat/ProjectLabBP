@@ -146,25 +146,29 @@
                                         data-link="{{ route('MasterBP.show',[$row->BPCus_id]) }}?type={{1}}">
                                         <i class="far fa-eye"></i>
                                       </button>
-                                      <a href="{{ route('MasterBP.edit',[$row->BPCus_id]) }}?type={{1}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
-                                        <i class="far fa-edit"></i>
-                                      </a>
-                                      <form method="post" class="delete_form" action="{{ route('MasterBP.destroy',[$row->BPCus_id]) }}?deltype={{1}}" style="display:inline;">
-                                        {{csrf_field()}}
-                                        <input type="hidden" name="_method" value="DELETE" />
-                                        <button type="submit" data-name="{{ $row->BPCar_regisCar }}" class="delete-modal btn btn-danger btn-sm AlertForm" title="ลบรายการ">
-                                          <i class="far fa-trash-alt"></i>
-                                        </button>
-                                      </form>
+                                      @if(auth::user()->position == "Admin" or auth::user()->position == "SA")
+                                        <a href="{{ route('MasterBP.edit',[$row->BPCus_id]) }}?type={{1}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                          <i class="far fa-edit"></i>
+                                        </a>
+                                        <form method="post" class="delete_form" action="{{ route('MasterBP.destroy',[$row->BPCus_id]) }}?deltype={{1}}" style="display:inline;">
+                                          {{csrf_field()}}
+                                          <input type="hidden" name="_method" value="DELETE" />
+                                          <button type="submit" data-name="{{ $row->BPCar_regisCar }}" class="delete-modal btn btn-danger btn-sm AlertForm" title="ลบรายการ">
+                                            <i class="far fa-trash-alt"></i>
+                                          </button>
+                                        </form>
+                                      @endif
                                     @elseif($type == 4)
                                       <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-view" title="ดูรายการ"
                                         data-backdrop="static" data-keyboard="false"
                                         data-link="{{ route('MasterBP.show',[$row->BPCus_id]) }}?type={{4}}">
                                         <i class="far fa-eye"></i>
                                       </button>
-                                      <a href="{{ route('MasterBP.edit',[$row->BPCus_id]) }}?type={{4}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
-                                        <i class="far fa-edit"></i>
-                                      </a>
+                                      @if(auth::user()->position == "Admin" or auth::user()->position == "STAFF")
+                                        <a href="{{ route('MasterBP.edit',[$row->BPCus_id]) }}?type={{4}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                          <i class="far fa-edit"></i>
+                                        </a>
+                                      @endif
                                     @endif
                                   </td>
                                 </tr>

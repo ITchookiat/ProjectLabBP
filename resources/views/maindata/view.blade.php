@@ -36,8 +36,8 @@
                       <th class="text-center">Username</th>
                       <th class="text-center">Password</th>
                       <th class="text-center">Email</th>
-                      <th class="text-center">สาขา</th>
-                      <th class="text-center">แผนก</th>
+                      <!-- <th class="text-center">สาขา</th> -->
+                      <!-- <th class="text-center">แผนก</th> -->
                       <th class="text-center">ตำแหน่ง</th>
                       <th class="text-center" width="150px">Action</th>
                     </tr>
@@ -50,8 +50,8 @@
                         <td class="text-center">{{ $row->username }}</td>
                         <td class="text-center">{{ $row->password_token }}</td>
                         <td class="text-center">{{ $row->email }}</td>
-                        <td class="text-center">{{ $row->branch }}</td>
-                        <td class="text-center">{{ $row->type }}</td>
+                        <!-- <td class="text-center">{{ $row->branch }}</td> -->
+                        <!-- <td class="text-center">{{ $row->type }}</td> -->
                         <td class="text-center">{{ $row->position }}</td>
                         <td class="text-center">
                           <a href="{{ action('UserController@edit',[$row['id']]) }}" class="btn btn-warning btn-sm">

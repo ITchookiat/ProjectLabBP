@@ -67,7 +67,7 @@
                         </div>
 
                         
-                        <div class="form-inline form-group">
+                        {{--<div class="form-inline form-group">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               สาขา</label>
@@ -86,7 +86,7 @@
                               <option value="58" > สาขา บังนังสตา</option>
                               <option value="10" > สาขา รถบ้าน</option>
                             </select>
-                          </div>
+                        </div>
 
                         <div class="form-inline form-group">
                           <label for="password-confirm" class="col-md-4 col-form-label text-md-right">
@@ -106,7 +106,7 @@
                             <option value="แผนก บัญชี"> แผนก บัญชี</option>
                             <option value="แผนก ประกันภัย"> แผนก ประกันภัย</option>
                           </select>
-                        </div>
+                        </div>--}}
 
                         <div class="form-inline form-group">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">
@@ -115,13 +115,15 @@
                               &nbsp;&nbsp;&nbsp;
                             <select name="position" class="form-control" style="width: 330px;">
                               <option selected disabled value="" >เลือกตำแหน่ง</option>
-                              <option value="Admin" > Admin</option>
-                              <option value="MANAGER" > MANAGER</option>
-                              <option value="AUDIT" > AUDIT</option>
-                              <option value="MASTER" > MASTER</option>
-                              <option value="STAFF" > STAFF</option>
+                              <option value="Admin" >Admin</option>
+                              <option value="MANAGER" >MANAGER</option>
+                              <!-- <option value="AUDIT" > AUDIT</option> -->
+                              <!-- <option value="MASTER" > MASTER</option> -->
+                              <option value="SA" >SA</option>
+                              <option value="STAFF" >STAFF</option>
+                              <option value="TECHNICIAN" >TECHNICIAN</option>
                             </select>
-                          </div>
+                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4" align="center">
