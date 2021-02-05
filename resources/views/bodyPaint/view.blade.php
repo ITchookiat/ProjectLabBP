@@ -146,7 +146,7 @@
                                         data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{1}}">
                                         <i class="far fa-eye"></i>
                                       </button>
-                                      @if(auth::user()->position == "Admin" or auth::user()->position == "SA")
+                                      @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA")
                                         <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{1}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
                                           <i class="far fa-edit"></i>
                                         </a>
@@ -164,7 +164,7 @@
                                         data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{4}}">
                                         <i class="far fa-eye"></i>
                                       </button>
-                                      @if(auth::user()->position == "Admin" or auth::user()->position == "STAFF")
+                                      @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "STAFF")
                                         <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{4}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
                                           <i class="far fa-edit"></i>
                                         </a>
