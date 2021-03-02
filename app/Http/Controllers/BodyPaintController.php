@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Storage;
 use File;
+use Image;
 
 use App\StockBPCus;
 use App\StockBPCar;
@@ -160,13 +161,6 @@ class BodyPaintController extends Controller
             $BPpartdb->save();
         }
         elseif($request->get('Storetype') == 4){ //เพิ่มรูปภาพ
-            // $user = StockBPCar::find($request->BPCus_id);
-            //     $user->BPCar_regisCar = $request->get('BPcusCarbrand');
-            //     $user->BPCar_carModel = $request->get('BPcusCarmodel');
-            //     $user->BPCar_regisCar = $request->get('BPcusCarregis');
-            //     $user->BPCar_carYear = $request->get('BPcusCaryear');
-            // $user->update();
-
             $image_new_name = "";
             // รูปประกอบ
             if ($request->hasFile('file_image')) {
@@ -176,30 +170,34 @@ class BodyPaintController extends Controller
                 $array_len = count($image_array);
 
                 for ($i=0; $i < $array_len; $i++) {
-                $image_size = $image_array[$i]->getClientSize();
-                $image_lastname = $image_array[$i]->getClientOriginalExtension();
-                $image_new_name = str_random(10).time(). '.' .$image_array[$i]->getClientOriginalExtension();
+                    $image_size = $image_array[$i]->getClientSize();
+                    $image_new_name = str_random(10).time().'.'.$image_array[$i]->getClientOriginalExtension();
+                    
+                    //resize Image
+                    $image_resize = Image::make($image_array[$i]->getRealPath());
+                    $image_resize->resize(1500, 1000);
+                    $image_resize->save(storage_path('app/public/BP-images/').$Brandcar.'/'.$Regiscar.'/'.$image_new_name);
 
-                // $destination_path = public_path().'/BP-image/'.$Brandcar.'/'.$Regiscar;
-                $destination_path = storage_path('app/public/BP-images/').$Brandcar.'/'.$Regiscar;
-                Storage::makeDirectory($destination_path, 0777, true, true);
-                
-                $image_array[$i]->move($destination_path,$image_new_name);
+                    //original Image
+                    // $destination_path = storage_path('app/public/BP-images/').$Brandcar.'/'.$Regiscar.'/';
+                    // Storage::makeDirectory($destination_path, 0777, true, true);
+                    // $image_array[$i]->move($destination_path,$image_new_name);
 
-                $Uploaddb = new BodyImage([
-                    'BPCus_id' => $request->BPCus_id,
-                    'BPImage_filename' => $image_new_name,
-                    'BPImage_filesize' => $image_size,
-                    'BPImage_type' => 1,
-                    'BPImage_userUpload' => $request->get('BPuser'),
-                ]);
-                $Uploaddb ->save();
+
+                    $Uploaddb = new BodyImage([
+                        'BPCus_id' => $request->BPCus_id,
+                        'BPImage_filename' => $image_new_name,
+                        'BPImage_filesize' => $image_size,
+                        'BPImage_type' => 1,
+                        'BPImage_userUpload' => $request->get('BPuser'),
+                    ]);
+                    $Uploaddb ->save();
                 }
             }
         }
         $type = $request->get('Storetype');
         // return redirect()->Route('Analysis',$type)->with('success','บันทึกข้อมูลเรียบร้อย');
-        return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อย');
+        return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อย')->with('image_new_name', $image_new_name);;
     }
 
     /**

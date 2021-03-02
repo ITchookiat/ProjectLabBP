@@ -500,6 +500,7 @@
                                         @endif
                                           <a href="{{ asset('storage/BP-images/'.$data->BPCar_carBrand.'/'.$data->BPCar_regisCar.'/'.$images->BPImage_filename) }}" class="MagicZoom" data-gallery="gallery" data-options="hint:true; zoomMode:magnifier; variableZoom: true">
                                             <img id="myImg" src="{{ asset('storage/BP-images/'.$data->BPCar_carBrand.'/'.$data->BPCar_regisCar.'/'.$images->BPImage_filename) }}">
+                                            <!-- <img id="myImg" src="/public/storage/BP-images/{{$data->BPCar_carBrand}}/{{$data->BPCar_regisCar}}/{{ Session::get('image_new_name') }}"> -->
                                           </a>
                                         </div>
                                       @endforeach
