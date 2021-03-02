@@ -172,11 +172,14 @@ class BodyPaintController extends Controller
                 for ($i=0; $i < $array_len; $i++) {
                     $image_size = $image_array[$i]->getClientSize();
                     $image_new_name = str_random(10).time().'.'.$image_array[$i]->getClientOriginalExtension();
+
+                    $path = storage_path().'/app/public/BP-images/'.$Brandcar.'/'.$Regiscar.'/';
+                    File::makeDirectory($path, $mode = 0777, true, true);
                     
                     //resize Image
                     $image_resize = Image::make($image_array[$i]->getRealPath());
                     $image_resize->resize(1500, 1000);
-                    $image_resize->save(storage_path('app/public/BP-images/').$Brandcar.'/'.$Regiscar.'/'.$image_new_name);
+                    $image_resize->save(storage_path().'/app/public/BP-images/'.$Brandcar.'/'.$Regiscar.'/'.$image_new_name);
 
                     //original Image
                     // $destination_path = storage_path('app/public/BP-images/').$Brandcar.'/'.$Regiscar.'/';
