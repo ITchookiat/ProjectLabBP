@@ -47,7 +47,7 @@
                       <div class="form-inline">
                         <h4>
                           @if($type == 1)
-                              <i class="fas fa-gears"></i> รายการโทรแจ้ง
+                              <i class="fas fa-gears"></i> รายการลูกค้าเปิด
                           @elseif($type == 2)
                               <i class="fas fa-gears"></i> รายการรถซ่อมจริง
                           @elseif($type == 3)
