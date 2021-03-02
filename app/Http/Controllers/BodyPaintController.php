@@ -200,7 +200,7 @@ class BodyPaintController extends Controller
         }
         $type = $request->get('Storetype');
         // return redirect()->Route('Analysis',$type)->with('success','บันทึกข้อมูลเรียบร้อย');
-        return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อย')->with('image_new_name', $image_new_name);;
+        return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อย')->with('image_new_name', $image_new_name);
     }
 
     /**
