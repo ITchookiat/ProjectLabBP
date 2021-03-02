@@ -77,7 +77,7 @@
                         <li class="nav-item">
                           <a href="{{ route('MasterBP.index') }}?type={{1}}" class="nav-link {{ (request()->is($type === '1')) ? 'active' : '' }}">
                             <i class="far fa-dot-circle nav-icon"></i>
-                            <p>รายการลูกค้าเปิด</p>
+                            <p>รายการงานเคลม</p>
                           </a>
                         </li>
                         @endif
