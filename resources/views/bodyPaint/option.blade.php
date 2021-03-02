@@ -535,14 +535,15 @@
                             <div class="col-sm-8 mb-1">
                                 <select name="BPMecstatus" class="form-control">
                                     <option value="" selected>--- เลือกสถานะซ่อม ---</option>
-                                    <option value="เคาะ" {{ ($data->BPMec_Status === 'เคาะ') ? 'selected' : '' }}>เคาะ</option>
-                                    <option value="ถอดอะไหล่" {{ ($data->BPMec_Status === 'ถอดอะไหล่') ? 'selected' : '' }}>ถอดอะไหล่</option>
+                                    <option value="ถอดชิ้นส่วนงาน" {{ ($data->BPMec_Status === 'ถอดชิ้นส่วนงาน') ? 'selected' : '' }}>ถอดชิ้นส่วนงาน</option>
+                                    <option value="ซ่อมตัวถัง" {{ ($data->BPMec_Status === 'ซ่อมตัวถัง') ? 'selected' : '' }}>ซ่อมตัวถัง</option>
                                     <option value="เตรียมพื้น" {{ ($data->BPMec_Status === 'เตรียมพื้น') ? 'selected' : '' }}>เตรียมพื้น</option>
                                     <option value="พ่นสี" {{ ($data->BPMec_Status === 'พ่นสี') ? 'selected' : '' }}>พ่นสี</option>
-                                    <option value="ประกอบ" {{ ($data->BPMec_Status === 'ประกอบ') ? 'selected' : '' }}>ประกอบ</option>
-                                    <option value="ขัดสี" {{ ($data->BPMec_Status === 'ขัดสี') ? 'selected' : '' }}>ขัดสี</option>
+                                    <option value="ประกอบชิ้นงาน" {{ ($data->BPMec_Status === 'ประกอบชิ้นงาน') ? 'selected' : '' }}>ประกอบชิ้นงาน</option>
+                                    <option value="ขัดสี/QC" {{ ($data->BPMec_Status === 'ขัดสี/QC') ? 'selected' : '' }}>ขัดสี/QC</option>
                                     <option value="ส่งล้าง" {{ ($data->BPMec_Status === 'ส่งล้าง') ? 'selected' : '' }}>ส่งล้าง</option>
                                     <option value="QC ก่อนส่งมอบ" {{ ($data->BPMec_Status === 'QC ก่อนส่งมอบ') ? 'selected' : '' }}>QC ก่อนส่งมอบ</option>
+                                    <option value="ปิดงานซ่อม" {{ ($data->BPMec_Status === 'ปิดงานซ่อม') ? 'selected' : '' }}>ปิดงานซ่อม</option>
                                 </select>
                             </div>
                             @if($data->BPCar_carFinished != null)
@@ -609,9 +610,9 @@
                                                 <option value="นายวริศ  นิแม" {{ ($data->BPMec_KnockRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
                                                 <option value="นายบาหารี  นิเลาะ" {{ ($data->BPMec_KnockRespon === 'นายบาหารี  นิเลาะ') ? 'selected' : '' }}>นายบาหารี  นิเลาะ</option>
                                                 <option value="นายรอมลี  อาแวปาโอะ" {{ ($data->BPMec_KnockRespon === 'นายรอมลี  อาแวปาโอะ') ? 'selected' : '' }}>นายรอมลี  อาแวปาโอะ</option>
-                                                <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_KnockRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option>
+                                                <!-- <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_KnockRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option> -->
                                                 <option value="นายซัมซัม  วานิ" {{ ($data->BPMec_KnockRespon === 'นายซัมซัม  วานิ') ? 'selected' : '' }}>นายซัมซัม  วานิ</option>
-                                                <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_KnockRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option>
+                                                <!-- <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_KnockRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option> -->
                                                 <option value="นายหัสดิน  เจ๊ะโก๊ะ" {{ ($data->BPMec_KnockRespon === 'นายหัสดิน  เจ๊ะโก๊ะ') ? 'selected' : '' }}>นายหัสดิน  เจ๊ะโก๊ะ</option>
                                                 <option value="นายซาเฟียน  มะแซ" {{ ($data->BPMec_KnockRespon === 'นายซาเฟียน  มะแซ') ? 'selected' : '' }}>นายซาเฟียน  มะแซ</option>
                                                 <option value="นายพิทยา  เลี้ยงพันธุ์สกุล" {{ ($data->BPMec_KnockRespon === 'นายพิทยา  เลี้ยงพันธุ์สกุล') ? 'selected' : '' }}>นายพิทยา  เลี้ยงพันธุ์สกุล</option>
