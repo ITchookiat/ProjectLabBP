@@ -178,7 +178,7 @@ class BodyPaintController extends Controller
                     
                     //resize Image
                     $image_resize = Image::make($image_array[$i]->getRealPath());
-                    $image_resize->resize(1500, 1000);
+                    // $image_resize->resize(1500, 1000);
                     $image_resize->save(storage_path().'/app/public/BP-images/'.$Brandcar.'/'.$Regiscar.'/'.$image_new_name);
 
                     //original Image
