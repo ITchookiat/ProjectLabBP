@@ -35,7 +35,7 @@ class BodyPaintController extends Controller
             $newtdate = $request->get('Todate');
         }
 
-        if($request->type == 1 or $request->type == 4){
+        if($request->type == 1){
             $data = DB::table('stock_BP_cuses')
             ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPMec_id')
@@ -69,6 +69,19 @@ class BodyPaintController extends Controller
                 return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
               })
             ->where('stock_BP_cars.BPCar_carDelivered','!=', null)
+            ->get();
+            $type = $request->type;
+        }
+        elseif($request->type == 4){
+            $data = DB::table('stock_BP_cuses')
+            ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
+            ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPMec_id')
+            ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
+                return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
+              })
+            ->select('stock_BP_cuses.BPCus_id as Cus_id','stock_BP_cuses.*','stock_BP_cars.*','body_mechanics.*')
+            ->where('stock_BP_cars.BPCar_carDelivered','=', null)
+            ->where('stock_BP_cuses.BPCus_status','!=', 'มาเคลมใหม่')
             ->get();
             $type = $request->type;
         }
