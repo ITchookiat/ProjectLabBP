@@ -55,7 +55,7 @@
                     <div class="form-group row mb-1">
                     <label class="col-sm-3 col-form-label text-right">ผลการโทร : </label>
                     <div class="col-sm-8">
-                        <select id="BPcallresult" name="BPcallresult" class="form-control">
+                        <select id="BPcallresult" name="BPcallresult" class="form-control" required>
                         <option value="" selected>--- เลือกผลการโทร ---</option>
                         <option value="ติดต่อได้">ติดต่อได้</option>
                         <option value="ติดต่อไม่ได้">ติดต่อไม่ได้</option>
@@ -410,6 +410,65 @@
                             </div>
                         </div>
                     </div>
+                    @elseif($viewType == 3)
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-inline">
+                                        <table class="table table-bordered table-hover" id="table">
+                                            <thead class="bg-gray-light" >
+                                                <tr>
+                                                    <th class="text-center">ลำดับ</th>
+                                                    <th class="text-center">สถานะซ่อม</th>
+                                                    <th class="text-center">วันที่เริ่มซ่อม</th>
+                                                    <th class="text-center">วันที่สิ้นสุดซ่อม</th>
+                                                    <th class="text-center">ระยะเวลา</th>
+                                                    <th class="text-center" style="width:250px">หมายเหตุ</th>
+                                                    <th class="text-center">ผู้รับผิดชอบงาน</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($dataMechanic as $key => $row)
+                                                    <tr>
+                                                        <td class="text-center">{{$key+1}}</td>
+                                                        <td class="text-center">{{$row->BPMec_Status}}</td>
+                                                        <td class="text-center">{{DateThai($row->BPMec_StartDate)}}</td>
+                                                        <td class="text-center">
+                                                        @if($row->BPMec_StopDate != null)
+                                                            {{DateThai($row->BPMec_StopDate)}}
+                                                        @else
+                                                            -
+                                                        @endif
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @if($row->BPMec_StartDate != null and $row->BPMec_StopDate == null)
+                                                                @php
+                                                                    $Cldate = date_create($row->BPMec_StartDate);
+                                                                    $nowCldate = date_create($ifdate);
+                                                                    $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                                @endphp
+                                                                <font color="red">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                            @elseif($row->BPMec_StartDate != null and $row->BPMec_StopDate != null)
+                                                                @php
+                                                                    $Cldate = date_create($row->BPMec_StartDate);
+                                                                    $nowCldate = date_create($row->BPMec_StopDate);
+                                                                    $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                                @endphp
+                                                                <font color="blue">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                            @endif
+                                                        </td>
+                                                        <td class="text-left">{{($row->BPMec_Note != null)?$row->BPMec_Note:'-'}}</td>
+                                                        <td class="text-left"> {{$row->BPMec_UserRespon}}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @elseif($viewType == 4)
                     <div class="row">
                         <div class="col-12">
@@ -449,8 +508,8 @@
                     </div>
                 @endif
             </div>
-    @elseif($type == 9) {{-- หน้าแก้ไขรายรายการส่วนช่าง --}}
-        <form name="form2" action="{{ route('MasterBP.update',[$data->BPMec_id]) }}" method="post" enctype="multipart/form-data">
+    @elseif($type == 9) {{-- หน้าแก้ไขรายรายการส่วนช่าง (เก็บไว้ยังไม่ใช้) --}}
+        <form name="form2" action="{{ route('MasterBP.update',[$data->Cus_id]) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('put')
             <input type="hidden" name="_method" value="PATCH"/>
@@ -539,7 +598,7 @@
                                     <option value="ซ่อมตัวถัง" {{ ($data->BPMec_Status === 'ซ่อมตัวถัง') ? 'selected' : '' }}>ซ่อมตัวถัง</option>
                                     <option value="เตรียมพื้น" {{ ($data->BPMec_Status === 'เตรียมพื้น') ? 'selected' : '' }}>เตรียมพื้น</option>
                                     <option value="พ่นสี" {{ ($data->BPMec_Status === 'พ่นสี') ? 'selected' : '' }}>พ่นสี</option>
-                                    <option value="ประกอบชิ้นงาน" {{ ($data->BPMec_Status === 'ประกอบชิ้นงาน') ? 'selected' : '' }}>ประกอบชิ้นงาน</option>
+                                    <option value="ประกอบชิ้นส่วน" {{ ($data->BPMec_Status === 'ประกอบชิ้นส่วน') ? 'selected' : '' }}>ประกอบชิ้นส่วน</option>
                                     <option value="ขัดสี/QC" {{ ($data->BPMec_Status === 'ขัดสี/QC') ? 'selected' : '' }}>ขัดสี/QC</option>
                                     <option value="ส่งล้าง" {{ ($data->BPMec_Status === 'ส่งล้าง') ? 'selected' : '' }}>ส่งล้าง</option>
                                     <option value="QC ก่อนส่งมอบ" {{ ($data->BPMec_Status === 'QC ก่อนส่งมอบ') ? 'selected' : '' }}>QC ก่อนส่งมอบ</option>
@@ -578,10 +637,47 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if($data->BPMec_KnockDate != null)
+                                @if($data->BPMec_RemoveDate != null) {{-- ถอดชิ้นส่วนงาน --}}
                                     <tr>
                                         <td class="text-center">
-                                            เคาะ
+                                        ถอดชิ้นส่วนงาน
+                                        </td>
+                                        <td class="text-center">
+                                            {{DateThai($data->BPMec_RemoveDate)}}
+                                        </td>
+                                        <td class="text-center">
+                                            @if($data->BPMec_RemoveDate != null)
+                                                @php
+                                                    $Cldate = date_create($data->BPMec_RemoveDate);
+                                                    $nowCldate = date_create($ifdate);
+                                                    $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                @endphp
+                                                {{$ClDateDiff->format('%a วัน')}}
+                                            @else 
+
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            <select name="BPMecuserremove" class="form-control text-sm" {{ ($data->BPMec_Status !== 'ถอดชิ้นส่วนงาน') ? 'disabled' : '' }}>
+                                            <option value="" selected>--- เลือกผู้รับผิดชอบงาน ---</option>
+                                                <option value="นายเดวิด  แสงศรี" {{ ($data->BPMec_RemoveRespon === 'นายเดวิด  แสงศรี') ? 'selected' : '' }}>นายเดวิด  แสงศรี</option>
+                                                <option value="นายวริศ  นิแม" {{ ($data->BPMec_RemoveRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
+                                                <option value="นายบาหารี  นิเลาะ" {{ ($data->BPMec_RemoveRespon === 'นายบาหารี  นิเลาะ') ? 'selected' : '' }}>นายบาหารี  นิเลาะ</option>
+                                                <option value="นายรอมลี  อาแวปาโอะ" {{ ($data->BPMec_RemoveRespon === 'นายรอมลี  อาแวปาโอะ') ? 'selected' : '' }}>นายรอมลี  อาแวปาโอะ</option>
+                                                <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_RemoveRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option>
+                                                <option value="นายซัมซัม  วานิ" {{ ($data->BPMec_RemoveRespon === 'นายซัมซัม  วานิ') ? 'selected' : '' }}>นายซัมซัม  วานิ</option>
+                                                <!-- <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_RemoveRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option> -->
+                                                <option value="นายหัสดิน  เจ๊ะโก๊ะ" {{ ($data->BPMec_RemoveRespon === 'นายหัสดิน  เจ๊ะโก๊ะ') ? 'selected' : '' }}>นายหัสดิน  เจ๊ะโก๊ะ</option>
+                                                <option value="นายซาเฟียน  มะแซ" {{ ($data->BPMec_RemoveRespon === 'นายซาเฟียน  มะแซ') ? 'selected' : '' }}>นายซาเฟียน  มะแซ</option>
+                                                <option value="นายพิทยา  เลี้ยงพันธุ์สกุล" {{ ($data->BPMec_RemoveRespon === 'นายพิทยา  เลี้ยงพันธุ์สกุล') ? 'selected' : '' }}>นายพิทยา  เลี้ยงพันธุ์สกุล</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if($data->BPMec_KnockDate != null)  {{--  ซ่อมตัวถัง --}}
+                                    <tr>
+                                        <td class="text-center">
+                                            ซ่อมตัวถัง
                                         </td>
                                         <td class="text-center">
                                             {{DateThai($data->BPMec_KnockDate)}}
@@ -604,7 +700,7 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
-                                            <select name="BPMecuserknock" class="form-control text-sm" {{ ($data->BPMec_Status !== 'เคาะ') ? 'disabled' : '' }}>
+                                            <select name="BPMecuserknock" class="form-control text-sm" {{ ($data->BPMec_Status !== 'ซ่อมตัวถัง') ? 'disabled' : '' }}>
                                                 <option value="" selected>--- เลือกผู้รับผิดชอบงาน ---</option>
                                                 <option value="นายเดวิด  แสงศรี" {{ ($data->BPMec_KnockRespon === 'นายเดวิด  แสงศรี') ? 'selected' : '' }}>นายเดวิด  แสงศรี</option>
                                                 <option value="นายวริศ  นิแม" {{ ($data->BPMec_KnockRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
@@ -620,44 +716,7 @@
                                         </td>
                                     </tr>
                                 @endif
-                                @if($data->BPMec_RemoveDate != null)
-                                    <tr>
-                                        <td class="text-center">
-                                            ถอดอะไหล่
-                                        </td>
-                                        <td class="text-center">
-                                            {{DateThai($data->BPMec_RemoveDate)}}
-                                        </td>
-                                        <td class="text-center">
-                                            @if($data->BPMec_RemoveDate != null)
-                                                @php
-                                                    $Cldate = date_create($data->BPMec_RemoveDate);
-                                                    $nowCldate = date_create($ifdate);
-                                                    $ClDateDiff = date_diff($Cldate,$nowCldate);
-                                                @endphp
-                                                {{$ClDateDiff->format('%a วัน')}}
-                                            @else 
-
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-                                            <select name="BPMecuserremove" class="form-control text-sm" {{ ($data->BPMec_Status !== 'ถอดอะไหล่') ? 'disabled' : '' }}>
-                                            <option value="" selected>--- เลือกผู้รับผิดชอบงาน ---</option>
-                                                <option value="นายเดวิด  แสงศรี" {{ ($data->BPMec_RemoveRespon === 'นายเดวิด  แสงศรี') ? 'selected' : '' }}>นายเดวิด  แสงศรี</option>
-                                                <option value="นายวริศ  นิแม" {{ ($data->BPMec_RemoveRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
-                                                <option value="นายบาหารี  นิเลาะ" {{ ($data->BPMec_RemoveRespon === 'นายบาหารี  นิเลาะ') ? 'selected' : '' }}>นายบาหารี  นิเลาะ</option>
-                                                <option value="นายรอมลี  อาแวปาโอะ" {{ ($data->BPMec_RemoveRespon === 'นายรอมลี  อาแวปาโอะ') ? 'selected' : '' }}>นายรอมลี  อาแวปาโอะ</option>
-                                                <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_RemoveRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option>
-                                                <option value="นายซัมซัม  วานิ" {{ ($data->BPMec_RemoveRespon === 'นายซัมซัม  วานิ') ? 'selected' : '' }}>นายซัมซัม  วานิ</option>
-                                                <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_RemoveRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option>
-                                                <option value="นายหัสดิน  เจ๊ะโก๊ะ" {{ ($data->BPMec_RemoveRespon === 'นายหัสดิน  เจ๊ะโก๊ะ') ? 'selected' : '' }}>นายหัสดิน  เจ๊ะโก๊ะ</option>
-                                                <option value="นายซาเฟียน  มะแซ" {{ ($data->BPMec_RemoveRespon === 'นายซาเฟียน  มะแซ') ? 'selected' : '' }}>นายซาเฟียน  มะแซ</option>
-                                                <option value="นายพิทยา  เลี้ยงพันธุ์สกุล" {{ ($data->BPMec_RemoveRespon === 'นายพิทยา  เลี้ยงพันธุ์สกุล') ? 'selected' : '' }}>นายพิทยา  เลี้ยงพันธุ์สกุล</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                @endif
-                                @if($data->BPMec_PrepareDate != null)
+                                @if($data->BPMec_PrepareDate != null) {{--  เตรียมพื้น --}}
                                     <tr>
                                         <td class="text-center">
                                             เตรียมพื้น
@@ -684,9 +743,9 @@
                                                 <option value="นายวริศ  นิแม" {{ ($data->BPMec_PrepareRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
                                                 <option value="นายบาหารี  นิเลาะ" {{ ($data->BPMec_PrepareRespon === 'นายบาหารี  นิเลาะ') ? 'selected' : '' }}>นายบาหารี  นิเลาะ</option>
                                                 <option value="นายรอมลี  อาแวปาโอะ" {{ ($data->BPMec_PrepareRespon === 'นายรอมลี  อาแวปาโอะ') ? 'selected' : '' }}>นายรอมลี  อาแวปาโอะ</option>
-                                                <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_PrepareRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option>
+                                                <!-- <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_PrepareRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option> -->
                                                 <option value="นายซัมซัม  วานิ" {{ ($data->BPMec_PrepareRespon === 'นายซัมซัม  วานิ') ? 'selected' : '' }}>นายซัมซัม  วานิ</option>
-                                                <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_PrepareRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option>
+                                                <!-- <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_PrepareRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option> -->
                                                 <option value="นายหัสดิน  เจ๊ะโก๊ะ" {{ ($data->BPMec_PrepareRespon === 'นายหัสดิน  เจ๊ะโก๊ะ') ? 'selected' : '' }}>นายหัสดิน  เจ๊ะโก๊ะ</option>
                                                 <option value="นายซาเฟียน  มะแซ" {{ ($data->BPMec_PrepareRespon === 'นายซาเฟียน  มะแซ') ? 'selected' : '' }}>นายซาเฟียน  มะแซ</option>
                                                 <option value="นายพิทยา  เลี้ยงพันธุ์สกุล" {{ ($data->BPMec_PrepareRespon === 'นายพิทยา  เลี้ยงพันธุ์สกุล') ? 'selected' : '' }}>นายพิทยา  เลี้ยงพันธุ์สกุล</option>
@@ -694,7 +753,7 @@
                                         </td>
                                     </tr>
                                 @endif
-                                @if($data->BPMec_PaintDate != null)
+                                @if($data->BPMec_PaintDate != null)   {{--  พ่นสี --}}
                                     <tr>
                                         <td class="text-center">
                                             พ่นสี
@@ -721,9 +780,9 @@
                                                 <option value="นายวริศ  นิแม" {{ ($data->BPMec_PaintRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
                                                 <option value="นายบาหารี  นิเลาะ" {{ ($data->BPMec_PaintRespon === 'นายบาหารี  นิเลาะ') ? 'selected' : '' }}>นายบาหารี  นิเลาะ</option>
                                                 <option value="นายรอมลี  อาแวปาโอะ" {{ ($data->BPMec_PaintRespon === 'นายรอมลี  อาแวปาโอะ') ? 'selected' : '' }}>นายรอมลี  อาแวปาโอะ</option>
-                                                <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_PaintRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option>
+                                                <!-- <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_PaintRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option> -->
                                                 <option value="นายซัมซัม  วานิ" {{ ($data->BPMec_PaintRespon === 'นายซัมซัม  วานิ') ? 'selected' : '' }}>นายซัมซัม  วานิ</option>
-                                                <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_PaintRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option>
+                                                <!-- <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_PaintRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option> -->
                                                 <option value="นายหัสดิน  เจ๊ะโก๊ะ" {{ ($data->BPMec_PaintRespon === 'นายหัสดิน  เจ๊ะโก๊ะ') ? 'selected' : '' }}>นายหัสดิน  เจ๊ะโก๊ะ</option>
                                                 <option value="นายซาเฟียน  มะแซ" {{ ($data->BPMec_PaintRespon === 'นายซาเฟียน  มะแซ') ? 'selected' : '' }}>นายซาเฟียน  มะแซ</option>
                                                 <option value="นายพิทยา  เลี้ยงพันธุ์สกุล" {{ ($data->BPMec_PaintRespon === 'นายพิทยา  เลี้ยงพันธุ์สกุล') ? 'selected' : '' }}>นายพิทยา  เลี้ยงพันธุ์สกุล</option>
@@ -731,10 +790,10 @@
                                         </td>
                                     </tr>
                                 @endif
-                                @if($data->BPMec_AssembleDate != null)
+                                @if($data->BPMec_AssembleDate != null)  {{--  ประกอบชิ้นส่วน --}}
                                     <tr>
                                         <td class="text-center">
-                                            ประกอบ
+                                            ประกอบชิ้นส่วน
                                         </td>
                                         <td class="text-center">
                                             {{DateThai($data->BPMec_AssembleDate)}}
@@ -752,15 +811,15 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
-                                            <select name="BPMecuserassemble" class="form-control text-sm" {{ ($data->BPMec_Status !== 'ประกอบ') ? 'disabled' : '' }}>
+                                            <select name="BPMecuserassemble" class="form-control text-sm" {{ ($data->BPMec_Status !== 'ประกอบชิ้นส่วน') ? 'disabled' : '' }}>
                                             <option value="" selected>--- เลือกผู้รับผิดชอบงาน ---</option>
                                                 <option value="นายเดวิด  แสงศรี" {{ ($data->BPMec_AssembleRespon === 'นายเดวิด  แสงศรี') ? 'selected' : '' }}>นายเดวิด  แสงศรี</option>
                                                 <option value="นายวริศ  นิแม" {{ ($data->BPMec_AssembleRespon === 'นายวริศ  นิแม') ? 'selected' : '' }}>นายวริศ  นิแม</option>
                                                 <option value="นายบาหารี  นิเลาะ" {{ ($data->BPMec_AssembleRespon === 'นายบาหารี  นิเลาะ') ? 'selected' : '' }}>นายบาหารี  นิเลาะ</option>
                                                 <option value="นายรอมลี  อาแวปาโอะ" {{ ($data->BPMec_AssembleRespon === 'นายรอมลี  อาแวปาโอะ') ? 'selected' : '' }}>นายรอมลี  อาแวปาโอะ</option>
-                                                <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_AssembleRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option>
+                                                <!-- <option value="นายประเสริฐ อาแวปาโอะ" {{ ($data->BPMec_AssembleRespon === 'นายประเสริฐ อาแวปาโอะ') ? 'selected' : '' }}>นายประเสริฐ อาแวปาโอะ</option> -->
                                                 <option value="นายซัมซัม  วานิ" {{ ($data->BPMec_AssembleRespon === 'นายซัมซัม  วานิ') ? 'selected' : '' }}>นายซัมซัม  วานิ</option>
-                                                <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_AssembleRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option>
+                                                <!-- <option value="นายมะดารี  สาเยาะ" {{ ($data->BPMec_AssembleRespon === 'นายมะดารี  สาเยาะ') ? 'selected' : '' }}>นายมะดารี  สาเยาะ</option> -->
                                                 <option value="นายหัสดิน  เจ๊ะโก๊ะ" {{ ($data->BPMec_AssembleRespon === 'นายหัสดิน  เจ๊ะโก๊ะ') ? 'selected' : '' }}>นายหัสดิน  เจ๊ะโก๊ะ</option>
                                                 <option value="นายซาเฟียน  มะแซ" {{ ($data->BPMec_AssembleRespon === 'นายซาเฟียน  มะแซ') ? 'selected' : '' }}>นายซาเฟียน  มะแซ</option>
                                                 <option value="นายพิทยา  เลี้ยงพันธุ์สกุล" {{ ($data->BPMec_AssembleRespon === 'นายพิทยา  เลี้ยงพันธุ์สกุล') ? 'selected' : '' }}>นายพิทยา  เลี้ยงพันธุ์สกุล</option>
@@ -768,10 +827,10 @@
                                         </td>
                                     </tr>
                                 @endif
-                                @if($data->BPMec_PolishDate != null)
+                                @if($data->BPMec_PolishDate != null)   {{-- ขัดสี/QC --}}
                                     <tr>
                                         <td class="text-center">
-                                            ขัดสี
+                                        ขัดสี/QC
                                         </td>
                                         <td class="text-center">
                                             {{DateThai($data->BPMec_PolishDate)}}
@@ -884,9 +943,96 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="Mecid" value="{{$data->BPMec_id}}"/>
+            <input type="hidden" name="Mecid" value="{{$data->Cus_id}}"/>
             <input type="hidden" name="Updatetype" value="3"/>
             <input type="hidden" name="BPMecuser" value="{{ auth::user()->name }}"/>
+        </form>
+    @elseif($type == 10) {{-- ฟอร์มเพิ่มการซ่อม --}}
+        <form name="form2" action="{{ route('MasterBP.store') }}" method="post" enctype="multipart/form-data">
+          @csrf
+            <div class="modal-header bg-info">
+                <div class="col text-center">
+                    <h5 class="modal-title">
+                        <i class="fas fa-gears"></i> 
+                        เพิ่มรายการซ่อม
+                    </h5>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group row mb-1">
+                            <label class="col-sm-4 col-form-label text-right text-sm">วันที่เริ่มซ่อม : </label>
+                            <div class="col-sm-7">
+                                <input type="date" name="BPmechanicdate" value="{{date('Y-m-d')}}" class="form-control" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group row mb-1">
+                        <label class="col-sm-4 col-form-label text-right text-sm">สถานะซ่อม : </label>
+                            <div class="col-sm-7">
+                                <select name="BPMecstatus" class="form-control">
+                                    <option value="" selected>--- เลือกสถานะซ่อม ---</option>
+                                    <option value="ถอดชิ้นส่วนงาน">ถอดชิ้นส่วนงาน</option>
+                                    <option value="ซ่อมตัวถัง">ซ่อมตัวถัง</option>
+                                    <option value="เตรียมพื้น">เตรียมพื้น</option>
+                                    <option value="พ่นสี">พ่นสี</option>
+                                    <option value="ประกอบชิ้นส่วน">ประกอบชิ้นส่วน</option>
+                                    <option value="ขัดสี/QC">ขัดสี/QC</option>
+                                    <option value="ส่งล้าง">ส่งล้าง</option>
+                                    <option value="QC ก่อนส่งมอบ">QC ก่อนส่งมอบ</option>
+                                    <option value="ปิดงานซ่อม">ปิดงานซ่อม</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group row mb-1">
+                        <label class="col-sm-4 col-form-label text-right text-sm">ผู้รับผิดชอบงาน : </label>
+                            <div class="col-sm-7">
+                                <select name="BPMecrespon" class="form-control text-sm">
+                                    <option value="" selected>--- เลือกผู้รับผิดชอบงาน ---</option>
+                                    <option value="นายเดวิด  แสงศรี">นายเดวิด  แสงศรี</option>
+                                    <option value="นายวริศ  นิแม">นายวริศ  นิแม</option>
+                                    <option value="นายบาหารี  นิเลาะ">นายบาหารี  นิเลาะ</option>
+                                    <option value="นายรอมลี  อาแวปาโอะ">นายรอมลี  อาแวปาโอะ</option>
+                                    <option value="นายประเสริฐ อาแวปาโอะ">นายประเสริฐ อาแวปาโอะ</option>
+                                    <option value="นายซัมซัม  วานิ">นายซัมซัม  วานิ</option>
+                                    <!-- <option value="นายมะดารี  สาเยาะ">นายมะดารี  สาเยาะ</option> -->
+                                    <option value="นายหัสดิน  เจ๊ะโก๊ะ">นายหัสดิน  เจ๊ะโก๊ะ</option>
+                                    <option value="นายซาเฟียน  มะแซ">นายซาเฟียน  มะแซ</option>
+                                    <option value="นายพิทยา  เลี้ยงพันธุ์สกุล">นายพิทยา  เลี้ยงพันธุ์สกุล</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group row mb-1">
+                        <label class="col-sm-4 col-form-label text-right text-sm">หมายเหตุการซ่อม : </label>
+                            <div class="col-sm-7">
+                                <textarea class="form-control" name="BPMechanicnote" rows="5" placeholder="ป้อนหมายเหตุ..."></textarea>
+                            </div>
+                        </div>
+                    <hr>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                  <button type="submit" class="btn btn-success text-center">บันทึก</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                </div>
+
+                <input type="hidden" name="Storetype" value="5"/>
+                <input type="hidden" name="BPCus_id" value="{{ $Cus_id }}"/>
+                <input type="hidden" name="BPMecuser" value="{{ auth::user()->name }}"/>
+            </div>
         </form>
     @endif
   </section>

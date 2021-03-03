@@ -57,6 +57,7 @@ class BodyPaintController extends Controller
               })
             ->where('stock_BP_cars.BPCar_carRepair','!=', null)
             ->where('stock_BP_cars.BPCar_carDelivered','=', null)
+            ->where('body_mechanics.BPMec_StopDate','=', null)
             ->get();
             $type = $request->type;
         }
@@ -201,6 +202,27 @@ class BodyPaintController extends Controller
                 }
             }
         }
+        elseif($request->get('Storetype') == 5){ //เพิ่มรายการซ่อม
+            $dataMechanic = DB::table('body_mechanics')
+                ->where('body_mechanics.BPCus_id',$request->get('BPCus_id'))
+                ->orderBy('body_mechanics.BPMec_id', 'desc')
+                ->first();
+            if($dataMechanic != null){
+                $user = BodyMechanic::find($dataMechanic->BPMec_id);
+                    $user->BPMec_StopDate = date('Y-m-d');
+                $user->update();
+            }
+            $Mechanic = new BodyMechanic([
+                'BPCus_id' => $request->get('BPCus_id'),
+                'BPMec_Status' => $request->get('BPMecstatus'),
+                'BPMec_StartDate' => $request->get('BPmechanicdate'),
+                'BPMec_UserRespon' => $request->get('BPMecrespon'),
+                'BPMec_Note' => $request->get('BPMechanicnote'),
+                'BPMec_UserUpdate' => $request->get('BPMecuser'),
+            ]);
+            $Mechanic->save();
+            
+        }
         $type = $request->get('Storetype');
         // return redirect()->Route('Analysis',$type)->with('success','บันทึกข้อมูลเรียบร้อย');
         return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อย');
@@ -214,7 +236,7 @@ class BodyPaintController extends Controller
      */
     public function show(Request $request, $id)
     {
-        if($request->type == 1 or $request->type == 4){
+        if($request->type == 1 or $request->type == 3 or $request->type == 4){
             $data = DB::table('stock_BP_cuses')
             ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPMec_id')
@@ -251,6 +273,10 @@ class BodyPaintController extends Controller
             ->where('body_parts.BPCus_id',$id)
             ->get();
 
+            $dataMechanic = DB::table('body_mechanics')
+            ->where('body_mechanics.BPCus_id',$id)
+            ->get();
+
             $dataImage = DB::table('body_images')
             ->where('body_images.BPCus_id',$id)
             ->get();
@@ -260,20 +286,21 @@ class BodyPaintController extends Controller
 
             return view('bodyPaint.option',
                 compact('data','dataCallClaim','dataCallClaim2','dataCallClaim3','dataCallClaim4','dataCallClaim5',
-                'dataPart','dataImage','type','viewType'));
+                'dataPart','dataImage','dataMechanic','type','viewType'));
         }
-        elseif($request->type == 2){
-            $data = DB::table('stock_BP_cuses')
-            ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
-            ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPMec_id')
-            ->select('stock_BP_cuses.BPCus_id as Cus_id','stock_BP_cuses.*','stock_BP_cars.*','body_mechanics.*')
-            ->where('stock_BP_cuses.BPCus_id',$id)
-            ->first();
+        // elseif($request->type == 2){
+        //     $data = DB::table('stock_BP_cuses')
+        //     ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
+        //     ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPMec_id')
+        //     ->select('stock_BP_cuses.BPCus_id as Cus_id','stock_BP_cuses.*','stock_BP_cars.*','body_mechanics.*','body_mechanics.BPCus_id as MCus_id')
+        //     ->where('stock_BP_cuses.BPCus_id',$id)
+        //     ->first();
+        //     dd($data);
 
-            $type = 9;
-            return view('bodyPaint.option',
-                compact('data','type'));
-        }
+        //     $type = 9;
+        //     return view('bodyPaint.option',
+        //         compact('data','type'));
+        // }
     }
 
     /**
@@ -284,7 +311,7 @@ class BodyPaintController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        if($request->type == 1 or $request->type == 4){ //แก้ไขรายการโดยรวม
+        if($request->type == 1 or $request->type == 3 or $request->type == 4){ //แก้ไขรายการโดยรวม
             $data = DB::table('stock_BP_cuses')
             ->join('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->select('stock_BP_cuses.BPCus_id as Cus_id','stock_BP_cuses.*','stock_BP_cars.*')
@@ -326,6 +353,11 @@ class BodyPaintController extends Controller
             ->get();
             $countdataPart = count($dataPart);
 
+            $dataMechanic = DB::table('body_mechanics')
+            ->where('body_mechanics.BPCus_id',$id)
+            ->get();
+            $countdataMechanic = count($dataMechanic);
+
             $dataImage = DB::table('body_images')
             ->where('body_images.BPCus_id',$id)
             ->get();
@@ -335,7 +367,7 @@ class BodyPaintController extends Controller
             return view('bodyPaint.edit',
                 compact('type','data','dataCallClaim','dataCallClaim2','dataCallClaim3','dataCallClaim4','dataCallClaim5',
                 'countDataCallClaim','countDataCallClaim2','countDataCallClaim3','countDataCallClaim4','countDataCallClaim5',
-                'dataPart','countdataPart','dataImage','tab'));
+                'dataPart','countdataPart','dataImage','dataMechanic','countdataMechanic','tab'));
 
         }
         elseif($request->type == 2){ //แก้ไขรายการอะไหล่
@@ -422,44 +454,6 @@ class BodyPaintController extends Controller
                 $BPpartdb->BPPart_user = $request->get('BPpartuser');
             $BPpartdb->update();
         }
-        elseif($request->Updatetype == 3){ //อัพเดทซ่อมจริง
-            $Mechanic = BodyMechanic::find($request->get('Mecid'));
-                $Mechanic->BPMec_status = $request->get('BPMecstatus');
-                if($request->get('BPMecstatus') == 'เคาะ'){
-                    $Mechanic->BPMec_KnockRespon = $request->get('BPMecuserknock');
-                    $Mechanic->BPMec_KnockDate = date('Y-m-d');
-                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
-                }elseif($request->get('BPMecstatus') == 'ถอดอะไหล่'){
-                    $Mechanic->BPMec_RemoveRespon = $request->get('BPMecuserremove');
-                    $Mechanic->BPMec_RemoveDate = date('Y-m-d');
-                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
-                }elseif($request->get('BPMecstatus') == 'เตรียมพื้น'){
-                    $Mechanic->BPMec_PrepareRespon = $request->get('BPMecuserprepare');
-                    $Mechanic->BPMec_PrepareDate = date('Y-m-d');
-                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
-                }elseif($request->get('BPMecstatus') == 'พ่นสี'){
-                    $Mechanic->BPMec_PaintRespon = $request->get('BPMecuserpaint');
-                    $Mechanic->BPMec_PaintDate = date('Y-m-d');
-                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
-                }elseif($request->get('BPMecstatus') == 'ประกอบ'){
-                    $Mechanic->BPMec_AssembleRespon = $request->get('BPMecuserassemble');
-                    $Mechanic->BPMec_AssembleDate = date('Y-m-d');
-                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
-                }elseif($request->get('BPMecstatus') == 'ขัดสี'){
-                    $Mechanic->BPMec_PolishRespon = $request->get('BPMecuserpolish');
-                    $Mechanic->BPMec_PolishDate = date('Y-m-d');
-                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
-                }elseif($request->get('BPMecstatus') == 'ส่งล้าง'){
-                    $Mechanic->BPMec_WashRespon = $request->get('BPMecuserwash');
-                    $Mechanic->BPMec_WashDate = date('Y-m-d');
-                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
-                }elseif($request->get('BPMecstatus') == 'QC ก่อนส่งมอบ'){
-                    $Mechanic->BPMec_DeliverRespon = $request->get('BPMecuserdeliver');
-                    $Mechanic->BPMec_DeliverDate = date('Y-m-d');
-                    $Mechanic->BPMec_UserUpdate = $request->get('BPMecuser');
-                }
-            $Mechanic->update();
-        }
         return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อย');
     }
 
@@ -498,6 +492,10 @@ class BodyPaintController extends Controller
             $item1 = BodyImage::find($id);
             $itemPath = storage_path('app/public/BP-images/').$request->Imagepath;
             File::delete($itemPath);
+            $item1->Delete();
+        }
+        elseif($request->deltype == 5){ //ลบรายการซ่อม
+            $item1 = BodyMechanic::find($id);
             $item1->Delete();
         }
 

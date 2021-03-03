@@ -12,6 +12,8 @@
       return "$strDay $strMonthThai $strYear";
       //return "$strDay-$strMonthThai-$strYear";
     }
+    date_default_timezone_set('Asia/Bangkok');
+    $ifdate = date('Y-m-d');
   @endphp
 
   <link type="text/css" rel="stylesheet" href="{{ asset('css/magiczoomplus.css') }}"/>
@@ -209,20 +211,31 @@
                   <div class="row">
                     <div class="col-4">
                       <div class="form-inline">
+                        @if($type == 1)
                           <h5><i class="fas fa-edit"></i> แก้ไขข้อมูล</h5>
+                        @endif
                       </div>
                     </div>
                     <div class="col-8">
                       <div class="card-tools d-inline float-right">
                         @if($type == 1)
-                        <button type="submit" class="delete-modal btn btn-success btn-sm">
-                            <i class="fas fa-save"></i> อัพเดท
-                        </button>
+                          <button type="submit" class="delete-modal btn btn-success btn-sm">
+                              <i class="fas fa-save"></i> อัพเดท
+                          </button>
                           <a class="delete-modal btn btn-danger btn-sm text-white" href="{{ route('MasterBP.index') }}?type={{1}}">
                               <i class="far fa-window-close"></i> ยกเลิก
                           </a>
+                        @elseif($type == 3)
+                          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-mechanic" title="เพิ่มการซ่อม"
+                              data-backdrop="static" data-keyboard="false"
+                              data-link="{{ route('MasterBP.create')}}?type={{10}}&id={{$data->BPCus_id}}">
+                              <i class="fas fa-wrench"></i> เพิ่มการซ่อม
+                          </button>
+                          <a class="delete-modal btn btn-danger btn-sm text-white" href="{{ route('MasterBP.index') }}?type={{2}}">
+                              <i class="far fa-window-close"></i> ยกเลิก
+                          </a>
                         @elseif($type == 4)
-                          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-parts" title="เพิ่มรายการโทร"
+                          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-parts" title="เพิ่มอะไหล่"
                               data-backdrop="static" data-keyboard="false"
                               data-link="{{ route('MasterBP.store',[$data->BPCus_id]) }}?type={{3}}">
                               <i class="fas fa-wrench"></i> เพิ่มอะไหล่
@@ -325,52 +338,66 @@
                   <div class="card card-blue card-tabs">
                     <div class="card-header p-0 pt-1">
                       <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist">
-                        <!-- <li class="nav-item">
-                          <a class="nav-link MainPage" href="{{ route('MasterBP.index') }}?type={{1}}">หน้าหลัก</a>
-                        </li> -->
-                        @if($type == 1)
                         <li class="nav-item">
-                          <a class="nav-link {{ (request()->is($tab === '6')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{6}}">
+                          <a class="nav-link {{ (request()->is($tab === '6')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{$type}}&tab={{6}}">
                             <i class="fas fa-toggle-on"></i> ข้อมูลหลัก
                           </a>
                         </li>
-                        <li class="nav-item">
-                        <a class="nav-link {{ (request()->is($tab === '1')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{1}}">
-                            <i class="fas fa-toggle-on"></i> ประกันอนุมัติ
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link {{ (request()->is($tab === '2')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{2}}">
-                            <i class="fas fa-toggle-on"></i> อะไหล่ครบ
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link {{ (request()->is($tab === '3')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{3}}">
-                            <i class="fas fa-toggle-on"></i> ซ่อมตัวถัง/พื้น
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link {{ (request()->is($tab === '4')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{4}}">
-                            <i class="fas fa-toggle-on"></i> พ่นสี
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link {{ (request()->is($tab === '5')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{5}}">
-                            <i class="fas fa-toggle-on"></i> ขัดสี QC ก่อนส่งมอบ
-                          </a>
-                        </li>
+                        @if($type == 1)
+                          <!-- <li class="nav-item">
+                            <a class="nav-link {{ (request()->is($tab === '6')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{6}}">
+                              <i class="fas fa-toggle-on"></i> ข้อมูลหลัก
+                            </a>
+                          </li> -->
+                          <li class="nav-item">
+                          <a class="nav-link {{ (request()->is($tab === '1')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{1}}">
+                              <i class="fas fa-toggle-on"></i> ประกันอนุมัติ
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                          <a class="nav-link {{ (request()->is($tab === '2')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{2}}">
+                              <i class="fas fa-toggle-on"></i> อะไหล่ครบ
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                          <a class="nav-link {{ (request()->is($tab === '3')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{3}}">
+                              <i class="fas fa-toggle-on"></i> ซ่อมตัวถัง/พื้น
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                          <a class="nav-link {{ (request()->is($tab === '4')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{4}}">
+                              <i class="fas fa-toggle-on"></i> พ่นสี
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                          <a class="nav-link {{ (request()->is($tab === '5')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{5}}">
+                              <i class="fas fa-toggle-on"></i> ขัดสี QC ก่อนส่งมอบ
+                            </a>
+                          </li>
+                        @endif
+                        @if($type == 3)
+                          <!-- <li class="nav-item">
+                            <a class="nav-link {{ (request()->is($tab === '6')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{3}}&tab={{6}}">
+                              <i class="fas fa-toggle-on"></i> ข้อมูลหลัก
+                            </a>
+                          </li> -->
+                          <li class="nav-item">
+                            <a class="nav-link {{ (request()->is($tab === '8')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{3}}&tab={{8}}">
+                              <i class="fas fa-toggle-on"></i> รายการซ่อม
+                            </a>
+                          </li>
                         @endif
                         @if($type == 4)
-                        <li class="nav-item">
-                          <a class="nav-link {{ (request()->is($tab === '6')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{4}}&tab={{6}}">
-                            <i class="fas fa-toggle-on"></i> ข้อมูลหลัก
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link {{ (request()->is($tab === '7')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{4}}&tab={{7}}">
-                            <i class="fas fa-toggle-on"></i> รายการอะไหล่
-                          </a>
-                        </li>
+                          <!-- <li class="nav-item">
+                            <a class="nav-link {{ (request()->is($tab === '6')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{4}}&tab={{6}}">
+                              <i class="fas fa-toggle-on"></i> ข้อมูลหลัก
+                            </a>
+                          </li> -->
+                          <li class="nav-item">
+                            <a class="nav-link {{ (request()->is($tab === '7')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{4}}&tab={{7}}">
+                              <i class="fas fa-toggle-on"></i> รายการอะไหล่
+                            </a>
+                          </li>
                         @endif
                       </ul>
                     </div>
@@ -916,14 +943,14 @@
                           <div class="row">
                               <div class="col-12">
                                 <table class="table table-striped table-valign-middle" id="table2">
-                                  <thead>
+                                  <thead style="background-color:#BF989E">
                                   <tr>
                                       <th class="text-center">ลำดับ</th>
                                       <th class="text-center">วันที่</th>
                                       <th class="text-center">เลขที่ใบประเมิณ</th>
                                       <th class="text-center">จำนวน</th>
                                       <th class="text-center">สถานะ</th>
-                                      <th class="text-center">หมายเหตุ</th>
+                                      <th class="text-center" style="width:250px">หมายเหตุ</th>
                                       <th class="text-center">ผู้เพิ่มอะไหล่</th>
                                       <th class="text-center" style="width:50px"></th>
                                   </tr>
@@ -944,6 +971,7 @@
                                               data-link="{{ route('MasterBP.edit',[$row->BPPart_id]) }}?type={{2}}">
                                               <i class="far fa-edit"></i>
                                             </button>
+                                            @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA")
                                             <form method="post" class="delete_form" action="{{ route('MasterBP.destroy',[$row->BPPart_id]) }}?deltype={{3}}" style="display:inline;">
                                               {{csrf_field()}}
                                               <input type="hidden" name="_method" value="DELETE" />
@@ -951,11 +979,77 @@
                                                   <i class="fa fa-trash"></i>
                                               </button>
                                             </form>
+                                            @endif
                                         </td>
                                         </tr>
                                     @endforeach
                                   </tbody>
                                 </table>
+                              </div>
+                          </div>
+                        </div>
+                        {{-- แท็บ 8 --}}
+                        <div class="tab-pane fade {{ (request()->is($tab === '8')) ? 'show active' : '' }}" id="Sub-tab8" role="tabpanel" aria-labelledby="Sub-custom-tab8">
+                          <div class="row">
+                              <div class="col-12">
+                                  <table class="table table-striped table-valign-middle" id="table3">
+                                    <thead style="background-color:#BF989E">
+                                        <tr>
+                                            <th class="text-center">ลำดับ</th>
+                                            <th class="text-center">สถานะซ่อม</th>
+                                            <th class="text-center">วันที่เริ่มซ่อม</th>
+                                            <th class="text-center">วันที่สิ้นสุดซ่อม</th>
+                                            <th class="text-center">ระยะเวลา</th>
+                                            <th class="text-center" style="width:250px">หมายเหตุ</th>
+                                            <th class="text-center">ผู้รับผิดชอบงาน</th>
+                                            <th class="text-center"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      @foreach($dataMechanic as $key => $row)
+                                        <tr>
+                                            <td class="text-center">{{$key+1}}</td>
+                                            <td class="text-center">{{$row->BPMec_Status}}</td>
+                                            <td class="text-center">{{DateThai($row->BPMec_StartDate)}}</td>
+                                            <td class="text-center">
+                                              @if($row->BPMec_StopDate != null)
+                                                {{DateThai($row->BPMec_StopDate)}}
+                                              @else
+                                                -
+                                              @endif
+                                            </td>
+                                            <td class="text-center">
+                                                @if($row->BPMec_StartDate != null and $row->BPMec_StopDate == null)
+                                                    @php
+                                                        $Cldate = date_create($row->BPMec_StartDate);
+                                                        $nowCldate = date_create($ifdate);
+                                                        $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                    @endphp
+                                                    <font color="red">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                @elseif($row->BPMec_StartDate != null and $row->BPMec_StopDate != null)
+                                                    @php
+                                                        $Cldate = date_create($row->BPMec_StartDate);
+                                                        $nowCldate = date_create($row->BPMec_StopDate);
+                                                        $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                    @endphp
+                                                    <font color="blue">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                @endif
+                                            </td>
+                                            <td class="text-left">{{($row->BPMec_Note != null)?$row->BPMec_Note:'-'}}</td>
+                                            <td class="text-left"> {{$row->BPMec_UserRespon}}</td>
+                                            <td class="text-center">
+                                              <form method="post" class="delete_form" action="{{ route('MasterBP.destroy',[$row->BPMec_id]) }}?deltype={{5}}" style="display:inline;">
+                                                {{csrf_field()}}
+                                                <input type="hidden" name="_method" value="DELETE" />
+                                                <button type="submit" data-name="" class="delete-modal btn btn-danger btn-xs AlertForm" title="ลบรายการ">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                              </form>
+                                            </td>
+                                        </tr>
+                                      @endforeach
+                                    </tbody>
+                                  </table>
                               </div>
                           </div>
                         </div>
@@ -973,15 +1067,6 @@
       </section>
     </div>
   </section>
-
-   <!-- pop up โทรแจ้งประกันอนุมัติ -->
-   <div class="modal fade" id="modal-claimphone">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        
-      </div>
-    </div>
-  </div>
 
   <!-- pop up เพิ่มอะไหล่ -->
   <form name="form2" action="{{ route('MasterBP.store') }}" method="post" enctype="multipart/form-data">
@@ -1098,6 +1183,16 @@
       </div>
   </form>
 
+  <!-- pop up โทรแจ้งประกันอนุมัติ -->
+    <div class="modal fade" id="modal-claimphone">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          
+        </div>
+      </div>
+    </div>
+
+
   <!-- Pop up แก้ไขอะไหล่ -->
   <div class="modal fade" id="modal-edit">
     <div class="modal-dialog modal-lg">
@@ -1110,6 +1205,15 @@
   <!-- Pop up เพิ่มรูปภาพ -->
   <div class="modal fade" id="modal-image">
     <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Pop up เพิ่มการซ่อม -->
+  <div class="modal fade" id="modal-mechanic">
+    <div class="modal-dialog">
       <div class="modal-content">
         
       </div>
@@ -1150,7 +1254,7 @@
 
   <script>
     $(function () {
-      $("#table1,#table2,#table4,#table5,#table6,#table7,#table08,#table09,#table12,#table33").DataTable({
+      $("#table1,#table2,#table3,#table4,#table5,#table6,#table7,#table08,#table09,#table12,#table33").DataTable({
         "responsive": true,
         "autoWidth": false,
         "ordering": true,
@@ -1177,6 +1281,11 @@
       $("#modal-image").on("show.bs.modal", function (e) {
         var link = $(e.relatedTarget).data("link");
         $("#modal-image .modal-content").load(link, function(){
+        });
+      });
+      $("#modal-mechanic").on("show.bs.modal", function (e) {
+        var link = $(e.relatedTarget).data("link");
+        $("#modal-mechanic .modal-content").load(link, function(){
         });
       });
     });
