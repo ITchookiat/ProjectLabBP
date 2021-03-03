@@ -225,7 +225,7 @@
                           <a class="delete-modal btn btn-danger btn-sm text-white" href="{{ route('MasterBP.index') }}?type={{1}}">
                               <i class="far fa-window-close"></i> ยกเลิก
                           </a>
-                        @elseif($type == 3)
+                        @elseif($type == 2)
                           <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-mechanic" title="เพิ่มการซ่อม"
                               data-backdrop="static" data-keyboard="false"
                               data-link="{{ route('MasterBP.create')}}?type={{10}}&id={{$data->BPCus_id}}">
@@ -344,58 +344,43 @@
                           </a>
                         </li>
                         @if($type == 1)
-                          <!-- <li class="nav-item">
-                            <a class="nav-link {{ (request()->is($tab === '6')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{6}}">
-                              <i class="fas fa-toggle-on"></i> ข้อมูลหลัก
-                            </a>
-                          </li> -->
                           <li class="nav-item">
-                          <a class="nav-link {{ (request()->is($tab === '1')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{1}}">
+                          <a class="nav-link {{ (request()->is($tab === '1')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{$type}}&tab={{1}}">
                               <i class="fas fa-toggle-on"></i> ประกันอนุมัติ
                             </a>
                           </li>
                           <li class="nav-item">
-                          <a class="nav-link {{ (request()->is($tab === '2')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{2}}">
+                          <a class="nav-link {{ (request()->is($tab === '2')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{$type}}&tab={{2}}">
                               <i class="fas fa-toggle-on"></i> อะไหล่ครบ
                             </a>
                           </li>
                           <li class="nav-item">
-                          <a class="nav-link {{ (request()->is($tab === '3')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{3}}">
+                          <a class="nav-link {{ (request()->is($tab === '3')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{$type}}&tab={{3}}">
                               <i class="fas fa-toggle-on"></i> ซ่อมตัวถัง/พื้น
                             </a>
                           </li>
                           <li class="nav-item">
-                          <a class="nav-link {{ (request()->is($tab === '4')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{4}}">
+                          <a class="nav-link {{ (request()->is($tab === '4')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{$type}}&tab={{4}}">
                               <i class="fas fa-toggle-on"></i> พ่นสี
                             </a>
                           </li>
                           <li class="nav-item">
-                          <a class="nav-link {{ (request()->is($tab === '5')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{1}}&tab={{5}}">
+                          <a class="nav-link {{ (request()->is($tab === '5')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{$type}}&tab={{5}}">
                               <i class="fas fa-toggle-on"></i> ขัดสี QC ก่อนส่งมอบ
                             </a>
                           </li>
                         @endif
-                        @if($type == 3)
-                          <!-- <li class="nav-item">
-                            <a class="nav-link {{ (request()->is($tab === '6')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{3}}&tab={{6}}">
-                              <i class="fas fa-toggle-on"></i> ข้อมูลหลัก
-                            </a>
-                          </li> -->
+                        @if($type == 1 or $type == 2)
                           <li class="nav-item">
-                            <a class="nav-link {{ (request()->is($tab === '8')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{3}}&tab={{8}}">
-                              <i class="fas fa-toggle-on"></i> รายการซ่อม
+                            <a class="nav-link {{ (request()->is($tab === '8')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{$type}}&tab={{8}}">
+                              <i class="fas fa-gear"></i> รายการซ่อม
                             </a>
                           </li>
                         @endif
-                        @if($type == 4)
-                          <!-- <li class="nav-item">
-                            <a class="nav-link {{ (request()->is($tab === '6')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{4}}&tab={{6}}">
-                              <i class="fas fa-toggle-on"></i> ข้อมูลหลัก
-                            </a>
-                          </li> -->
+                        @if($type == 1 or $type == 4)
                           <li class="nav-item">
-                            <a class="nav-link {{ (request()->is($tab === '7')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{4}}&tab={{7}}">
-                              <i class="fas fa-toggle-on"></i> รายการอะไหล่
+                            <a class="nav-link {{ (request()->is($tab === '7')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{$type}}&tab={{7}}">
+                              <i class="fas fa-wrench"></i> รายการอะไหล่
                             </a>
                           </li>
                         @endif
@@ -968,7 +953,7 @@
                                         <td class="text-center">
                                             <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal-edit" title="แก้ไขรายการ"
                                               data-backdrop="static" data-keyboard="false"
-                                              data-link="{{ route('MasterBP.edit',[$row->BPPart_id]) }}?type={{2}}">
+                                              data-link="{{ route('MasterBP.edit',[$row->BPPart_id]) }}?type={{5}}">
                                               <i class="far fa-edit"></i>
                                             </button>
                                             @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA")

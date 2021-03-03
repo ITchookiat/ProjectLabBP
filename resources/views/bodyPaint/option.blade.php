@@ -410,7 +410,7 @@
                             </div>
                         </div>
                     </div>
-                    @elseif($viewType == 3)
+                    @elseif($viewType == 2)
                     <div class="row">
                         <div class="col-12">
                             <div class="card">

@@ -249,10 +249,10 @@
                                   <td class="text-right">
                                       <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-view" title="ดูรายการ"
                                         data-backdrop="static" data-keyboard="false"
-                                        data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{3}}">
+                                        data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{2}}">
                                         <i class="far fa-eye"></i>
                                       </button>
-                                      <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{3}}&tab={{8}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                      <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{2}}&tab={{8}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
                                         <i class="far fa-edit"></i>
                                       </a>
                                       @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA")
