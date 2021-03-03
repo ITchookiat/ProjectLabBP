@@ -28,26 +28,32 @@ class BodyPaintController extends Controller
     {
         $newfdate = '';
         $newtdate = '';
+        $status = '';
         if ($request->has('Fromdate')) {
             $newfdate = $request->get('Fromdate');
         }
         if ($request->has('Todate')) {
             $newtdate = $request->get('Todate');
         }
-
-        if($request->type == 1){
+        if ($request->has('BPstatus')) {
+            $status = $request->get('BPstatus');
+        }
+        if($request->type == 1){ //รายการงานเคลม
             $data = DB::table('stock_BP_cuses')
             ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPMec_id')
             ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
                 return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
               })
+            ->when(!empty($status), function($q) use ($status) {
+                return $q->where('stock_BP_cuses.BPCus_status', '=', $status);
+            })
             ->select('stock_BP_cuses.BPCus_id as Cus_id','stock_BP_cuses.*','stock_BP_cars.*','body_mechanics.*')
             ->where('stock_BP_cars.BPCar_carDelivered','=', null)
             ->get();
             $type = $request->type;
         }
-        elseif($request->type == 2){
+        elseif($request->type == 2){ //รายการรถระหว่างซ่อม
             $data = DB::table('stock_BP_cuses')
             ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPCus_id')
@@ -55,13 +61,16 @@ class BodyPaintController extends Controller
             ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
                 return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
               })
+            ->when(!empty($status), function($q) use ($status) {
+                return $q->where('body_mechanics.BPMec_Status', '=', $status);
+            })
             ->where('stock_BP_cars.BPCar_carRepair','!=', null)
             ->where('stock_BP_cars.BPCar_carDelivered','=', null)
             ->where('body_mechanics.BPMec_StopDate','=', null)
             ->get();
             $type = $request->type;
         }
-        elseif($request->type == 3){
+        elseif($request->type == 3){ //รายการส่งมอบรถ
             $data = DB::table('stock_BP_cuses')
             ->join('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->select('stock_BP_cuses.BPCus_id as Cus_id','stock_BP_cuses.*','stock_BP_cars.*')
@@ -72,13 +81,16 @@ class BodyPaintController extends Controller
             ->get();
             $type = $request->type;
         }
-        elseif($request->type == 4){
+        elseif($request->type == 4){ //รายการอะไหล่
             $data = DB::table('stock_BP_cuses')
             ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPMec_id')
             ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
                 return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
               })
+            ->when(!empty($status), function($q) use ($status) {
+                return $q->where('stock_BP_cuses.BPCus_status', '=', $status);
+            })
             ->select('stock_BP_cuses.BPCus_id as Cus_id','stock_BP_cuses.*','stock_BP_cars.*','body_mechanics.*')
             ->where('stock_BP_cars.BPCar_carDelivered','=', null)
             ->where('stock_BP_cuses.BPCus_status','!=', 'มาเคลมใหม่')
@@ -86,7 +98,7 @@ class BodyPaintController extends Controller
             $type = $request->type;
         }
 
-        return view('bodyPaint.view', compact('type', 'data','newfdate','newtdate'));
+        return view('bodyPaint.view', compact('type', 'data','newfdate','newtdate','status'));
     }
 
     /**

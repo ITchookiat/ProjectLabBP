@@ -85,9 +85,19 @@
                           <div class="form-inline float-right">
                             <small class="badge badge-warning" style="font-size: 14px;">
                               <i class="fas fa-sign"></i>&nbsp; วันที่ :
-                              <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: date('Y-m-d') }}" class="form-control" />
+                              <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: '' }}" class="form-control" />
                               &nbsp; ถึงวันที่ :
-                              <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: date('Y-m-d') }}" class="form-control" />&nbsp;
+                              <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: '' }}" class="form-control" />&nbsp;
+                              สถานะ :
+                              <select name="BPstatus" class="form-control text-sm">
+                                <option value="" selected>--- เลือกสถานะ ---</option>
+                                <option value="มาเคลมใหม่" {{ ($status == 'มาเคลมใหม่') ? 'selected' : '' }}>มาเคลมใหม่</option>
+                                <option value="ประกันอนุมัติ" {{ ($status == 'ประกันอนุมัติ') ? 'selected' : '' }}>ประกันอนุมัติ</option>
+                                <option value="อะไหล่ครบ" {{ ($status == 'อะไหล่ครบ') ? 'selected' : '' }}>อะไหล่ครบ</option>
+                                <option value="ซ่อมตัวถัง/พื้น" {{ ($status == 'ซ่อมตัวถัง/พื้น') ? 'selected' : '' }}>ซ่อมตัวถัง/พื้น</option>
+                                <option value="พ่นสี" {{ ($status == 'พ่นสี') ? 'selected' : '' }}>พ่นสี</option>
+                                <option value="ขัดสี QC ก่อนส่งมอบ" {{ ($status == 'ขัดสี QC ก่อนส่งมอบ') ? 'selected' : '' }}>ขัดสี QC ก่อนส่งมอบ</option>
+                              </select>
                               <button type="submit" class="btn bg-white" title="ค้นหา">
                                 <span class="fas fa-search"></span>
                               </button>
@@ -171,14 +181,27 @@
                   <div class="row">
                     <div class="col-md-12">
                         <form method="get" action="{{ route('MasterBP.index') }}">
-                          <input type="hidden" name="type" value="1" />                      
+                          <input type="hidden" name="type" value="2" />                      
                           <div class="info-box-content">
                             <div class="form-inline float-right">
                               <small class="badge badge-warning" style="font-size: 14px;">
                                 <i class="fas fa-sign"></i>&nbsp; วันที่ :
-                                <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: date('Y-m-d') }}" class="form-control" />
+                                <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: '' }}" class="form-control" />
                                 &nbsp; ถึงวันที่ :
-                                <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: date('Y-m-d') }}" class="form-control" />&nbsp;
+                                <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: '' }}" class="form-control" />&nbsp;
+                                สถานะ :
+                                <select name="BPstatus" class="form-control text-sm">
+                                    <option value="" selected>--- เลือกสถานะซ่อม ---</option>
+                                    <option value="ถอดชิ้นส่วนงาน" {{ ($status == 'ถอดชิ้นส่วนงาน') ? 'selected' : '' }}>ถอดชิ้นส่วนงาน</option>
+                                    <option value="ซ่อมตัวถัง" {{ ($status == 'ซ่อมตัวถัง') ? 'selected' : '' }}>ซ่อมตัวถัง</option>
+                                    <option value="เตรียมพื้น" {{ ($status == 'เตรียมพื้น') ? 'selected' : '' }}>เตรียมพื้น</option>
+                                    <option value="พ่นสี" {{ ($status == 'พ่นสี') ? 'selected' : '' }}>พ่นสี</option>
+                                    <option value="ประกอบชิ้นส่วน" {{ ($status == 'ประกอบชิ้นส่วน') ? 'selected' : '' }}>ประกอบชิ้นส่วน</option>
+                                    <option value="ขัดสี/QC" {{ ($status == 'ขัดสี/QC') ? 'selected' : '' }}>ขัดสี/QC</option>
+                                    <option value="ส่งล้าง" {{ ($status == 'ส่งล้าง') ? 'selected' : '' }}>ส่งล้าง</option>
+                                    <option value="QC ก่อนส่งมอบ" {{ ($status == 'QC ก่อนส่งมอบ') ? 'selected' : '' }}>QC ก่อนส่งมอบ</option>
+                                    <option value="ปิดงานซ่อม" {{ ($status == 'ปิดงานซ่อม') ? 'selected' : '' }}>ปิดงานซ่อม</option>
+                                </select>
                                 <button type="submit" class="btn bg-white" title="ค้นหา">
                                   <span class="fas fa-search"></span>
                                 </button>
@@ -340,14 +363,24 @@
                   <div class="row">
                     <div class="col-md-12">
                       <form method="get" action="{{ route('MasterBP.index') }}">
-                        <input type="hidden" name="type" value="1" />                      
+                        <input type="hidden" name="type" value="4" />                      
                         <div class="info-box-content">
                           <div class="form-inline float-right">
                             <small class="badge badge-warning" style="font-size: 14px;">
                               <i class="fas fa-sign"></i>&nbsp; วันที่ :
-                              <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: date('Y-m-d') }}" class="form-control" />
+                              <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: '' }}" class="form-control" />
                               &nbsp; ถึงวันที่ :
-                              <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: date('Y-m-d') }}" class="form-control" />&nbsp;
+                              <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: '' }}" class="form-control" />&nbsp;
+                              สถานะ :
+                              <select name="BPstatus" class="form-control text-sm">
+                                <option value="" selected>--- เลือกสถานะ ---</option>
+                                <!-- <option value="มาเคลมใหม่" {{ ($status == 'มาเคลมใหม่') ? 'selected' : '' }}>มาเคลมใหม่</option> -->
+                                <option value="ประกันอนุมัติ" {{ ($status == 'ประกันอนุมัติ') ? 'selected' : '' }}>ประกันอนุมัติ</option>
+                                <option value="อะไหล่ครบ" {{ ($status == 'อะไหล่ครบ') ? 'selected' : '' }}>อะไหล่ครบ</option>
+                                <option value="ซ่อมตัวถัง/พื้น" {{ ($status == 'ซ่อมตัวถัง/พื้น') ? 'selected' : '' }}>ซ่อมตัวถัง/พื้น</option>
+                                <option value="พ่นสี" {{ ($status == 'พ่นสี') ? 'selected' : '' }}>พ่นสี</option>
+                                <option value="ขัดสี QC ก่อนส่งมอบ" {{ ($status == 'ขัดสี QC ก่อนส่งมอบ') ? 'selected' : '' }}>ขัดสี QC ก่อนส่งมอบ</option>
+                              </select>
                               <button type="submit" class="btn bg-white" title="ค้นหา">
                                 <span class="fas fa-search"></span>
                               </button>
