@@ -196,7 +196,7 @@
                                 <th class="text-center">ชื่อ-สกุล</th>
                                 <th class="text-center">ป้ายทะเบียน</th>
                                 <th class="text-center">ชนิดงาน</th>
-                                <th class="text-center">หมายเหตุ</th>
+                                <th class="text-center"  width="250px">หมายเหตุ</th>
                                 <!-- <th class="text-center">สถานะเคลม</th> -->
                                 <th class="text-center">สถานะซ่อม</th>
                                 <th class="text-center" width="100px">#</th>
