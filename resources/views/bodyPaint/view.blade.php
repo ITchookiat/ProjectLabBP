@@ -49,7 +49,7 @@
                           @if($type == 1)
                               <i class="fas fa-gears"></i> รายการงานเคลม
                           @elseif($type == 2)
-                              <i class="fas fa-gears"></i> รายการรถซ่อมจริง
+                              <i class="fas fa-gears"></i> รายการรถระหว่างซ่อม
                           @elseif($type == 3)
                               <i class="fas fa-gears"></i> รายการรถส่งมอบ
                           @elseif($type == 4)
@@ -65,16 +65,278 @@
                             <i class="fas fa-plus-circle"></i> เพิ่ม
                         </a>
                       @endif
+                      @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA")
                         <a target="_blank" class="btn bg-primary">
                             <i class="fas fa-file-excel"></i> รายงาน
                         </a>
+                      @endif
                       </div>
                     </div>
                 </div>
               </div>
 
               <div class="card-body text-sm">
-                @if($type == 1 or $type == 4)
+                @if($type == 1) {{-- รายการงานเคลม --}}
+                  <div class="row">
+                    <div class="col-md-12">
+                      <form method="get" action="{{ route('MasterBP.index') }}">
+                        <input type="hidden" name="type" value="1" />                      
+                        <div class="info-box-content">
+                          <div class="form-inline float-right">
+                            <small class="badge badge-warning" style="font-size: 14px;">
+                              <i class="fas fa-sign"></i>&nbsp; วันที่ :
+                              <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: date('Y-m-d') }}" class="form-control" />
+                              &nbsp; ถึงวันที่ :
+                              <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: date('Y-m-d') }}" class="form-control" />&nbsp;
+                              <button type="submit" class="btn bg-white" title="ค้นหา">
+                                <span class="fas fa-search"></span>
+                              </button>
+                            </small>
+                          </div>
+                        </div>
+                      </form>
+                      <br><br><hr>
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="table">
+                            <thead class="bg-gray-light" >
+                              <tr>
+                                <th class="text-center">ลำดับ</th>
+                                <th class="text-center">ชื่อ-สกุล</th>
+                                <th class="text-center">เบอร์ติดต่อ</th>
+                                <th class="text-center">ป้ายทะเบียน</th>
+                                <th class="text-center">ชนิดงาน</th>
+                                <!-- <th class="text-center">บริษัทประกัน</th> -->
+                                <th class="text-center" width="250px">หมายเหตุ</th>
+                                <th class="text-center">สถานะ</th>
+                                <th class="text-center" width="100px">การจัดการ</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach($data as $key => $row)
+                                <tr>
+                                  <td class="text-center"> 
+                                    {{ $key + 1 }} 
+                                    @if($row->BPMec_Status != null)
+                                      @if($row->BPMec_Status != 'QC ก่อนส่งมอบ')
+                                        <i class="fas fa-wrench text-xs text-red pr-1 prem"></i>
+                                      @endif
+                                    @endif
+                                  </td>
+                                  <td class="text-left"> {{ $row->BPCus_name}} </td>
+                                  <td class="text-center"> {{ $row->BPCus_phone}} </td>
+                                  <td class="text-center"> {{ $row->BPCar_regisCar}} </td>
+                                  <td class="text-center"> {{ $row->BPCus_claimLevel}} </td>
+                                  <!-- <td class="text-center">
+                                   @if($row->BPCus_claimCompany == 'อื่นๆ') 
+                                    {{ $row->BPCus_claimCompanyother}}
+                                   @else
+                                    {{ $row->BPCus_claimCompany}}
+                                   @endif 
+                                  </td> -->
+                                  <td class="text-left">{{($row->BPCus_note != null)?$row->BPCus_note:'-'}}</td>
+                                  <td class="text-center">
+                                    @if($row->BPCar_carDelivered == null)
+                                      <span class="btn btn-xs bg-navy text-xs">{{ $row->BPCus_status}}</span>
+                                    @else
+                                      <span class="btn btn-xs bg-success text-xs">ส่งมอบรถ</span>
+                                    @endif
+                                  </td>
+                                  <td class="text-right">
+                                      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-view" title="ดูรายการ"
+                                        data-backdrop="static" data-keyboard="false"
+                                        data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{1}}">
+                                        <i class="far fa-eye"></i>
+                                      </button>
+                                      @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA")
+                                        <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{1}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                          <i class="far fa-edit"></i>
+                                        </a>
+                                        <form method="post" class="delete_form" action="{{ route('MasterBP.destroy',[$row->Cus_id]) }}?deltype={{1}}" style="display:inline;">
+                                          {{csrf_field()}}
+                                          <input type="hidden" name="_method" value="DELETE" />
+                                          <button type="submit" data-name="{{ $row->BPCar_regisCar }}" class="delete-modal btn btn-danger btn-sm AlertForm" title="ลบรายการ">
+                                            <i class="far fa-trash-alt"></i>
+                                          </button>
+                                        </form>
+                                      @endif
+                                  </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                          </table>
+                      </div>
+                    </div>
+                  </div>
+                @elseif($type == 2) {{-- รายการรถระหว่างซ่อม --}}
+                  <div class="row">
+                    <div class="col-md-12">
+                        <form method="get" action="{{ route('MasterBP.index') }}">
+                          <input type="hidden" name="type" value="1" />                      
+                          <div class="info-box-content">
+                            <div class="form-inline float-right">
+                              <small class="badge badge-warning" style="font-size: 14px;">
+                                <i class="fas fa-sign"></i>&nbsp; วันที่ :
+                                <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: date('Y-m-d') }}" class="form-control" />
+                                &nbsp; ถึงวันที่ :
+                                <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: date('Y-m-d') }}" class="form-control" />&nbsp;
+                                <button type="submit" class="btn bg-white" title="ค้นหา">
+                                  <span class="fas fa-search"></span>
+                                </button>
+                              </small>
+                            </div>
+                          </div>
+                        </form>
+                        <br><br><hr>
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="table">
+                            <thead class="bg-gray-light" >
+                              <tr>
+                                <th class="text-center">ลำดับ</th>
+                                <th class="text-center">แจ้งเตือน</th>
+                                <th class="text-center">ชื่อ-สกุล</th>
+                                <th class="text-center">ป้ายทะเบียน</th>
+                                <th class="text-center">ชนิดงาน</th>
+                                <th class="text-center">หมายเหตุ</th>
+                                <!-- <th class="text-center">สถานะเคลม</th> -->
+                                <th class="text-center">สถานะซ่อม</th>
+                                <th class="text-center" width="100px">#</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach($data as $key => $row)
+                                <tr>
+                                  <td class="text-center"> {{ $key + 1 }} </td>
+                                  <td class="text-center">
+                                    @if($row->BPCar_carRepair != null)
+                                      <div class="form-inline pr-2">
+                                        <i class="far fa-clock text-lg pr-1" title="วันที่ซ่อมจริง : {{DateThai($row->BPCar_carRepair)}}"></i>
+                                          <label class="text-danger">
+                                            @if($row->BPCar_carFinished != null)
+                                              {{-- DateThai($row->BPCar_carRepair) --}}
+                                                @php
+                                                    date_default_timezone_set('Asia/Bangkok');
+                                                    $ifdate = date('Y-m-d');
+                                                @endphp
+                                                @if($ifdate < $row->BPCar_carFinished)
+                                                  @php
+                                                    $Cldate = date_create($row->BPCar_carFinished);
+                                                    $nowCldate = date_create($ifdate);
+                                                    $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                  @endphp
+                                                  เหลือ {{$ClDateDiff->format('%a วัน')}}
+                                                @else
+                                                  เลยเวลาซ่อมแล้ว
+                                                @endif
+                                            @endif
+                                          </label>
+                                      </div>
+                                    @endif
+                                  </td>
+                                  <td class="text-left"> {{ $row->BPCus_name}} </td>
+                                  <td class="text-center"> {{ $row->BPCar_regisCar}} </td>
+                                  <td class="text-center"> {{ $row->BPCus_claimLevel}} </td>
+                                  <td class="text-left">{{($row->BPCus_note != null)?$row->BPCus_note:'-'}}</td>
+                                  <!-- <td class="text-center">
+                                    @if($row->BPCar_carDelivered == null)
+                                      <span class="btn btn-xs bg-navy text-xs">{{ $row->BPCus_status}}</span>
+                                    @else
+                                      <span class="btn btn-xs bg-success text-xs">ส่งมอบรถ</span>
+                                    @endif
+                                  </td> -->
+                                  <td class="text-center">
+                                    <span class="btn btn-xs bg-danger text-xs">{{($row->BPMec_Status != null)?$row->BPMec_Status:'-'}}</span>
+                                  </div>
+                                  <td class="text-right">
+                                      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-view" title="ดูรายการ"
+                                        data-backdrop="static" data-keyboard="false"
+                                        data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{3}}">
+                                        <i class="far fa-eye"></i>
+                                      </button>
+                                      <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{3}}&tab={{8}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                        <i class="far fa-edit"></i>
+                                      </a>
+                                      @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA")
+                                        <form method="post" class="delete_form" action="{{ route('MasterBP.destroy',[$row->Cus_id]) }}?deltype={{5}}" style="display:inline;">
+                                          {{csrf_field()}}
+                                          <input type="hidden" name="_method" value="DELETE" />
+                                          <button type="submit" data-name="{{ $row->BPCar_regisCar }}" class="delete-modal btn btn-danger btn-sm AlertForm" title="ลบรายการ">
+                                            <i class="far fa-trash-alt"></i>
+                                          </button>
+                                        </form>
+                                      @endif
+                                  </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                          </table>
+                      </div>
+                    </div>
+                  </div>
+                @elseif($type == 3) {{-- รายการรถส่งมอบ --}}
+                  <div class="row">
+                    <div class="col-md-12">
+                      <form method="get" action="{{ route('MasterBP.index') }}">
+                        <input type="hidden" name="type" value="1" />                      
+                        <div class="info-box-content">
+                          <div class="form-inline float-right">
+                            <small class="badge badge-warning" style="font-size: 14px;">
+                              <i class="fas fa-sign"></i>&nbsp; วันที่ :
+                              <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: date('Y-m-d') }}" class="form-control" />
+                              &nbsp; ถึงวันที่ :
+                              <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: date('Y-m-d') }}" class="form-control" />&nbsp;
+                              <button type="submit" class="btn bg-white" title="ค้นหา">
+                                <span class="fas fa-search"></span>
+                              </button>
+                            </small>
+                          </div>
+                        </div>
+                      </form>
+                      <br><br><hr>
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="table">
+                            <thead class="bg-gray-light" >
+                              <tr>
+                                <th class="text-center">ลำดับ</th>
+                                <th class="text-center">วันที่ส่งมอบ</th>
+                                <th class="text-center">ชื่อ-สกุล</th>
+                                <th class="text-center">ป้ายทะเบียน</th>
+                                <th class="text-center">ชนิดงาน</th>
+                                <th class="text-center">หมายเหตุ</th>
+                                <th class="text-center">สถานะ</th>
+                                <!-- <th class="text-center" width="30px">#</th> -->
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach($data as $key => $row)
+                                <tr>
+                                  <td class="text-center"> {{ $key + 1 }} </td>
+                                  <td class="text-center text-success"> {{ DateThai($row->BPCar_carDelivered) }} </td>
+                                  <td class="text-left"> {{ $row->BPCus_name}} </td>
+                                  <td class="text-center"> {{ $row->BPCar_regisCar}} </td>
+                                  <td class="text-center"> {{ $row->BPCus_claimLevel}} </td>
+                                  <td class="text-left">{{($row->BPCus_note != null)?$row->BPCus_note:'-'}}</td>
+                                  <td class="text-center">
+                                    @if($row->BPCar_carDelivered == null)
+                                      <span class="btn btn-xs bg-navy text-xs">{{ $row->BPCus_status}}</span>
+                                    @else
+                                      <span class="btn btn-xs bg-success text-xs">ส่งมอบรถ</span>
+                                    @endif
+                                  </td>
+                                  <!-- <td class="text-right">
+                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit" title="แก้ไขรายการ"
+                                      data-backdrop="static" data-keyboard="false"
+                                      data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{2}}">
+                                      <i class="far fa-edit"></i>
+                                    </button>
+                                  </td> -->
+                                </tr>
+                                @endforeach
+                            </tbody>
+                          </table>
+                      </div>
+                    </div>
+                  </div>
+                @elseif($type == 4) {{-- รายการอะไหล่--}}
                   <div class="row">
                     <div class="col-md-12">
                       <form method="get" action="{{ route('MasterBP.index') }}">
@@ -140,16 +402,15 @@
                                     @endif
                                   </td>
                                   <td class="text-right">
-                                    @if($type == 1)
                                       <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-view" title="ดูรายการ"
                                         data-backdrop="static" data-keyboard="false"
-                                        data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{1}}">
+                                        data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{4}}">
                                         <i class="far fa-eye"></i>
                                       </button>
+                                      <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{4}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                        <i class="far fa-edit"></i>
+                                      </a>
                                       @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA")
-                                        <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{1}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
-                                          <i class="far fa-edit"></i>
-                                        </a>
                                         <form method="post" class="delete_form" action="{{ route('MasterBP.destroy',[$row->Cus_id]) }}?deltype={{1}}" style="display:inline;">
                                           {{csrf_field()}}
                                           <input type="hidden" name="_method" value="DELETE" />
@@ -158,176 +419,7 @@
                                           </button>
                                         </form>
                                       @endif
-                                    @elseif($type == 4)
-                                      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-view" title="ดูรายการ"
-                                        data-backdrop="static" data-keyboard="false"
-                                        data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{4}}">
-                                        <i class="far fa-eye"></i>
-                                      </button>
-                                      @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "STAFF")
-                                        <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{4}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
-                                          <i class="far fa-edit"></i>
-                                        </a>
-                                      @endif
-                                    @endif
                                   </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                          </table>
-                      </div>
-                    </div>
-                  </div>
-                @elseif($type == 2) {{-- รายการซ่อมจริง --}}
-                  <div class="row">
-                    <div class="col-md-12">
-                        <form method="get" action="{{ route('MasterBP.index') }}">
-                          <input type="hidden" name="type" value="1" />                      
-                          <div class="info-box-content">
-                            <div class="form-inline float-right">
-                              <small class="badge badge-warning" style="font-size: 14px;">
-                                <i class="fas fa-sign"></i>&nbsp; วันที่ :
-                                <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: date('Y-m-d') }}" class="form-control" />
-                                &nbsp; ถึงวันที่ :
-                                <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: date('Y-m-d') }}" class="form-control" />&nbsp;
-                                <button type="submit" class="btn bg-white" title="ค้นหา">
-                                  <span class="fas fa-search"></span>
-                                </button>
-                              </small>
-                            </div>
-                          </div>
-                        </form>
-                        <br><br><hr>
-                      <div class="table-responsive">
-                        <table class="table table-bordered table-hover" id="table">
-                            <thead class="bg-gray-light" >
-                              <tr>
-                                <th class="text-center">ลำดับ</th>
-                                <th class="text-center">แจ้งเตือน</th>
-                                <th class="text-center">ชื่อ-สกุล</th>
-                                <th class="text-center">ป้ายทะเบียน</th>
-                                <th class="text-center">ชนิดงาน</th>
-                                <th class="text-center">หมายเหตุ</th>
-                                <th class="text-center">สถานะเคลม</th>
-                                <th class="text-center">สถานะซ่อม</th>
-                                <th class="text-center" width="30px">#</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              @foreach($data as $key => $row)
-                                <tr>
-                                  <td class="text-center"> {{ $key + 1 }} </td>
-                                  <td class="text-center">
-                                    @if($row->BPCar_carRepair != null)
-                                      <div class="form-inline pr-2">
-                                        <i class="far fa-clock text-lg pr-1" title="วันที่ซ่อมจริง : {{DateThai($row->BPCar_carRepair)}}"></i>
-                                          <label class="text-danger">
-                                            @if($row->BPCar_carFinished != null)
-                                              {{-- DateThai($row->BPCar_carRepair) --}}
-                                                @php
-                                                    date_default_timezone_set('Asia/Bangkok');
-                                                    $ifdate = date('Y-m-d');
-                                                @endphp
-                                                @if($ifdate < $row->BPCar_carFinished)
-                                                  @php
-                                                    $Cldate = date_create($row->BPCar_carFinished);
-                                                    $nowCldate = date_create($ifdate);
-                                                    $ClDateDiff = date_diff($Cldate,$nowCldate);
-                                                  @endphp
-                                                  เหลือ {{$ClDateDiff->format('%a วัน')}}
-                                                @else
-                                                  เลยเวลาซ่อมแล้ว
-                                                @endif
-                                            @endif
-                                          </label>
-                                      </div>
-                                    @endif
-                                  </td>
-                                  <td class="text-left"> {{ $row->BPCus_name}} </td>
-                                  <td class="text-center"> {{ $row->BPCar_regisCar}} </td>
-                                  <td class="text-center"> {{ $row->BPCus_claimLevel}} </td>
-                                  <td class="text-left">{{($row->BPCus_note != null)?$row->BPCus_note:'-'}}</td>
-                                  <td class="text-center">
-                                    @if($row->BPCar_carDelivered == null)
-                                      <span class="btn btn-xs bg-navy text-xs">{{ $row->BPCus_status}}</span>
-                                    @else
-                                      <span class="btn btn-xs bg-success text-xs">ส่งมอบรถ</span>
-                                    @endif
-                                  </td>
-                                  <td class="text-center">
-                                    <span class="btn btn-xs bg-danger text-xs">{{($row->BPMec_Status != null)?$row->BPMec_Status:'-'}}</span>
-                                  </div>
-                                  <td class="text-right">
-                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit" title="แก้ไขรายการ"
-                                      data-backdrop="static" data-keyboard="false"
-                                      data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{2}}">
-                                      <i class="far fa-edit"></i>
-                                    </button>
-                                  </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                          </table>
-                      </div>
-                    </div>
-                  </div>
-                @elseif($type == 3) {{-- รายการส่งมอบ --}}
-                  <div class="row">
-                    <div class="col-md-12">
-                      <form method="get" action="{{ route('MasterBP.index') }}">
-                        <input type="hidden" name="type" value="1" />                      
-                        <div class="info-box-content">
-                          <div class="form-inline float-right">
-                            <small class="badge badge-warning" style="font-size: 14px;">
-                              <i class="fas fa-sign"></i>&nbsp; วันที่ :
-                              <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: date('Y-m-d') }}" class="form-control" />
-                              &nbsp; ถึงวันที่ :
-                              <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: date('Y-m-d') }}" class="form-control" />&nbsp;
-                              <button type="submit" class="btn bg-white" title="ค้นหา">
-                                <span class="fas fa-search"></span>
-                              </button>
-                            </small>
-                          </div>
-                        </div>
-                      </form>
-                      <br><br><hr>
-                      <div class="table-responsive">
-                        <table class="table table-bordered table-hover" id="table">
-                            <thead class="bg-gray-light" >
-                              <tr>
-                                <th class="text-center">ลำดับ</th>
-                                <th class="text-center">วันที่ส่งมอบ</th>
-                                <th class="text-center">ชื่อ-สกุล</th>
-                                <th class="text-center">ป้ายทะเบียน</th>
-                                <th class="text-center">ชนิดงาน</th>
-                                <th class="text-center">หมายเหตุ</th>
-                                <th class="text-center">สถานะ</th>
-                                <!-- <th class="text-center" width="30px">#</th> -->
-                              </tr>
-                            </thead>
-                            <tbody>
-                              @foreach($data as $key => $row)
-                                <tr>
-                                  <td class="text-center"> {{ $key + 1 }} </td>
-                                  <td class="text-center text-success"> {{ DateThai($row->BPCar_carDelivered) }} </td>
-                                  <td class="text-left"> {{ $row->BPCus_name}} </td>
-                                  <td class="text-center"> {{ $row->BPCar_regisCar}} </td>
-                                  <td class="text-center"> {{ $row->BPCus_claimLevel}} </td>
-                                  <td class="text-left">{{($row->BPCus_note != null)?$row->BPCus_note:'-'}}</td>
-                                  <td class="text-center">
-                                    @if($row->BPCar_carDelivered == null)
-                                      <span class="btn btn-xs bg-navy text-xs">{{ $row->BPCus_status}}</span>
-                                    @else
-                                      <span class="btn btn-xs bg-success text-xs">ส่งมอบรถ</span>
-                                    @endif
-                                  </td>
-                                  <!-- <td class="text-right">
-                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit" title="แก้ไขรายการ"
-                                      data-backdrop="static" data-keyboard="false"
-                                      data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{2}}">
-                                      <i class="far fa-edit"></i>
-                                    </button>
-                                  </td> -->
                                 </tr>
                                 @endforeach
                             </tbody>
