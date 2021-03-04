@@ -76,7 +76,15 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        ประกันอนุมัติ
+                        รอดำเนินการ
+                        <span class="float-right text-red">
+                          {{$countwaitProcess}} คัน
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ประกันอนุมัติ
                         <span class="float-right">
                           {{$countAnumat}}
                         </span>
@@ -84,7 +92,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        อะไหล่ครบ
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> อะไหล่ครบ
                         <span class="float-right">
                           {{$countAlai}}
                         </span>
@@ -92,7 +100,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        ซ่อมตัวถัง/พื้น
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ซ่อมตัวถัง/พื้น
                         <span class="float-right">
                           {{$countTank}}
                         </span>
@@ -100,7 +108,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        พ่นสี
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> พ่นสี
                         <span class="float-right">
                           {{$countPaint}}
                         </span>
@@ -108,7 +116,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        ขัดสี QC ก่อนส่งมอบ
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ขัดสี QC ก่อนส่งมอบ
                         <span class="float-right">
                           {{$countpolishQC}}
                         </span>
@@ -117,8 +125,8 @@
                     <li class="nav-item">
                       <a href="#" class="nav-link">
                         ส่งมอบแล้ว
-                        <span class="float-right">
-                          {{$countDataDone}}
+                        <span class="float-right text-success">
+                          {{$countDataDone}} คัน
                         </span>
                       </a>
                     </li>
@@ -165,7 +173,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        ถอดชิ้นส่วนงาน
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ถอดชิ้นส่วนงาน
                         <span class="float-right">
                           {{$countRemoveParts}}
                         </span>
@@ -173,7 +181,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        ซ่อมตัวถัง
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ซ่อมตัวถัง
                         <span class="float-right">
                           {{$countRepairTank}}
                         </span>
@@ -181,7 +189,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        เตรียมพื้น
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> เตรียมพื้น
                         <span class="float-right">
                           {{$countPrepareBG}}
                         </span>
@@ -189,7 +197,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        พ่นสี
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> พ่นสี
                         <span class="float-right">
                           {{$countPaintColor}}
                         </span>
@@ -197,7 +205,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        ประกอบชิ้นส่วนงาน
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ประกอบชิ้นส่วนงาน
                         <span class="float-right">
                           {{$countAssembleParts}}
                         </span>
@@ -205,7 +213,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        ขัดสี/QC
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ขัดสี/QC
                         <span class="float-right">
                           {{$countPolishColor}}
                         </span>
@@ -213,7 +221,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        ส่งล้าง
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ส่งล้าง
                         <span class="float-right">
                           {{$countWash}}
                         </span>
@@ -221,7 +229,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        QC ก่อนส่งมอบ
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> QC ก่อนส่งมอบ
                         <span class="float-right">
                           {{$countQCbeforeSend}}
                         </span>
@@ -229,7 +237,7 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        ปิดงานซ่อม
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ปิดงานซ่อม
                         <span class="float-right">
                           {{$countRepairDone}}
                         </span>
@@ -336,6 +344,7 @@
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
       ['Task', 'Hours per Day'],
+      ['รอดำเนินการ',{{$countwaitProcess}}],
       ['ประกันอนุมัติ',{{$countAnumat}}],
       ['อะไหล่ครบ',{{$countAlai}}],
       ['ซ่อมตัวถัง/พื้น',{{$countTank}}],
