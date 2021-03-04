@@ -12,329 +12,295 @@
   <div class="row justify-content-center">
     <div class="col-md-12 table-responsive">
       <div class="card">
-        <div class="card-body">
-          @if(session()->has('success'))
-            <script type="text/javascript">
-              toastr.success('{{ session()->get('success') }}')
-            </script>
-          @endif
 
+        <div class="card-header">
+        <div class="form-inline">
+          <div class="col-sm-4">
+            <h1 class="m-0 text-dark">ศูนย์บริการซ่อมตัวถังและสี</h1>
+          </div>
+          <div class="col-sm-8">
+            @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก วิเคราะห์" or auth::user()->type == "แผนก จัดไฟแนนท์" or auth::user()->type == "แผนก รถบ้าน")
+              
+                <div class="float-right">
+                  <small class="badge" style="font-size: 14px;">
+                    <i class="fas fa-sign"></i> วันที่ :
+                    <input type="date" name="Fromdate" value="" class="form-control pr-3" />
+                    ถึงวันที่ :
+                    <input type="date" name="Todate" value="" class="form-control" />&nbsp;
+                    <button type="submit" class="btn btn-info" title="ค้นหา">
+                      <span class="fas fa-search"></span> ค้นหา
+                    </button>
+                  </small>
+                </div>
+
+            @endif
+          </div>
+        </div>
+        </div>
+
+        <div class="card-body">
 
           <div class="row mb-0">
             <div class="col-sm-6">
-              <h1 class="m-0 text-dark">Mazda Body and Paint</h1>
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">งานเคลม ({{$countData + $countDataDone}})</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="chart-responsive">
+                        <div id="piechart_3d_Claim" style="width: 100%;height: 410px;"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer bg-light p-0">
+                  <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        งานเคลมทั้งหมด
+                        <span class="float-right">
+                          {{$countData + $countDataDone}} คัน
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        ประกันอนุมัติ
+                        <span class="float-right">
+                          {{$countAnumat}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        อะไหล่ครบ
+                        <span class="float-right">
+                          {{$countAlai}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        ซ่อมตัวถัง/พื้น
+                        <span class="float-right">
+                          {{$countTank}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        พ่นสี
+                        <span class="float-right">
+                          {{$countPaint}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        ขัดสี QC ก่อนส่งมอบ
+                        <span class="float-right">
+                          {{$countpolishQC}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        ส่งมอบแล้ว
+                        <span class="float-right">
+                          {{$countDataDone}}
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="col-sm-6">
-              @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก วิเคราะห์" or auth::user()->type == "แผนก จัดไฟแนนท์" or auth::user()->type == "แผนก รถบ้าน")
-                <!-- <a class="btn bg-warning btn-app float-right" data-toggle="modal" data-target="#modal-walkin" data-backdrop="static" data-keyboard="false" style="border-radius: 40px;">
-                  <span class="fas fa-users prem fa-5x"></span> <label class="prem">WALK IN</label>
-                </a> -->
-              @endif
-            </div>
-          </div>
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">รถระหว่างซ่อม</h3>
 
-          <div align="center">
-            <a href="{{ route('MasterBP.index') }}?type={{1}}"><img class="img-responsive img-circle" src="{{ asset('dist/img/BP_BG2.png') }}" alt="Background" style = "width: 60%"></a>
-          </div>
-
-          <div class="row">
-            {{-- <div class="col-lg-3 col-xs-6">
-              <div class="small-box bg-info">
-                <div class="inner">
-                  <h2>ระบบสินเชื่อ</h2>
-                  <br><br>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
                 </div>
-                @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก วิเคราะห์" or auth::user()->type == "แผนก จัดไฟแนนท์" or auth::user()->type == "แผนก รถบ้าน" or auth::user()->type == "แผนก การเงินใน")
-                <div class="icon">
-                  <i class="a1 fa fa-sitemap" data-toggle="modal" data-target="#modal-default" style="cursor: pointer;"></i>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="chart-responsive">
+                        <div id="piechart_3d_Mechanic" style="width: 100%;height: 410px;"></div>
+                      </div>
+                      <!-- ./chart-responsive -->
+                    </div>
+                  </div>
+                  <!-- /.row -->
                 </div>
-                @endif
-                <a href="#" class="small-box-footer">เพิ่มเติม <i class="fa fa-arrow-circle-right"></i></a>
+                <!-- /.card-body -->
+                <div class="card-footer bg-light p-0">
+                  <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        รถระหว่างซ่อมทั้งหมด
+                        <span class="float-right">
+                          {{$countdataMechanic}} คัน
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        ถอดชิ้นส่วนงาน
+                        <span class="float-right">
+                          {{$countRemoveParts}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        ซ่อมตัวถัง
+                        <span class="float-right">
+                          {{$countRepairTank}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        เตรียมพื้น
+                        <span class="float-right">
+                          {{$countPrepareBG}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        พ่นสี
+                        <span class="float-right">
+                          {{$countPaintColor}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        ประกอบชิ้นส่วนงาน
+                        <span class="float-right">
+                          {{$countAssembleParts}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        ขัดสี/QC
+                        <span class="float-right">
+                          {{$countPolishColor}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        ส่งล้าง
+                        <span class="float-right">
+                          {{$countWash}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        QC ก่อนส่งมอบ
+                        <span class="float-right">
+                          {{$countQCbeforeSend}}
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        ปิดงานซ่อม
+                        <span class="float-right">
+                          {{$countRepairDone}}
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <!-- /.footer -->
               </div>
             </div>
+            <!-- <div class="col-sm-3">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">รถส่งมอบ</h3>
 
-
-            <div class="col-lg-3 col-xs-6">
-              <div class="small-box bg-red">
-                <div class="inner">
-                  <h2>แผนกการเงิน</h2>
-                  <br><br>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
                 </div>
-                @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก วิเคราะห์" or auth::user()->type == "แผนก เร่งรัด" or auth::user()->type == "แผนก กฏหมาย")
-                <div class="icon">
-                  <i class="a1 fas fa-gavel" data-toggle="modal" data-target="#modal-legislation" style="cursor: pointer;"></i>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="chart-responsive">
+                        <div id="piechart_3d_Done" style="width: 100%;height: 350px;"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                @endif
-                <a href="#" class="small-box-footer">เพิ่มเติม <i class="fa fa-arrow-circle-right"></i></a>
+                <div class="card-footer bg-light p-0">
+                  <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        รถทั้งหมด
+                        <span class="float-right text-danger">
+                          <i class="fas fa-arrow-down text-sm"></i>
+                          12%</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        ส่งมอบแล้ว
+                        <span class="float-right text-success">
+                          <i class="fas fa-arrow-up text-sm"></i> 4%
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        กำลังดำเนินการ
+                        <span class="float-right text-warning">
+                          <i class="fas fa-arrow-left text-sm"></i> 0%
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div> --}}
+            </div> -->
           </div>
 
         </div>
+
       </div>
     </div>
   </div>
 </div>
-
-  <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content" >
-        <div class="modal-header">
-          <div class="col text-center">
-            <h4 class="modal-title">ระบบสินเชื่อ</h4>
-          </div>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">x</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก วิเคราะห์" or auth::user()->type == "แผนก จัดไฟแนนท์" or auth::user()->type == "แผนก รถบ้าน" or auth::user()->type == "แผนก การเงินใน")
-              @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก วิเคราะห์" or auth::user()->type == "แผนก จัดไฟแนนท์" or auth::user()->type == "แผนก การเงินใน" or auth::user()->branch == 01 or auth::user()->branch == 03 or auth::user()->branch == 04 or auth::user()->branch == 05 or auth::user()->branch == 06 or auth::user()->branch == 07)
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <div class="info-box bg-blue">
-                    <span class="info-box-icon bg-blue">
-                      <span class="info-box-icon">
-                        <a href="#" class="a1"><i class="fas fa-id-card fa-2x"></i></a>
-                      </span>
-                    </span>
-                    <div class="info-box-content">
-                      <span class="info-box-text"><br /></span>
-                      <span class="info-box-number">เช่าซื้อ</span>
-
-                      <div class="progress">
-                        <div class="progress-bar" style="width: 100%"></div>
-                      </div>
-                        <span class="progress-description">
-                          {{-- จำนวนรถที่อนุมัติ {{ $datafinance }} คัน --}}
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              @endif
-            @endif
-          </div>
-        </div>
-        <div class="modal-footer justify-content-between">
-          {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button> --}}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Walkin modal -->
-  <form name="form2" action="#" method="post" enctype="multipart/form-data">
-    @csrf
-      <div class="modal fade" id="modal-walkin" aria-hidden="true" style="display: none;">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content" style="border-radius: 30px 30px 30px 30px;">
-              <div class="modal-header bg-warning" style="border-radius: 30px 30px 30px 30px;">
-                <div class="col text-center">
-                  <h5 class="modal-title"><i class="fas fa-users"></i> ลูกค้า WALK IN</h5>
-                </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">x</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="form-group row mb-1">
-                        <label class="col-sm-5 col-form-label text-right"><font color="red">*** ป้ายทะเบียน :</font> </label>
-                        <div class="col-sm-7">
-                          <input type="text" name="Licensecar" class="form-control" placeholder="ป้อนป้ายทะเบียน" required/>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="form-group row mb-1">
-                      <label class="col-sm-4 col-form-label text-right">ยี่ห้อรถ : </label>
-                        <div class="col-sm-7">
-                          <select name="Brandcar" class="form-control">
-                            <option value="" selected>--- ยี่ห้อ ---</option>
-                            <option value="ISUZU">ISUZU</option>
-                            <option value="MITSUBISHI">MITSUBISHI</option>
-                            <option value="TOYOTA">TOYOTA</option>
-                            <option value="MAZDA">MAZDA</option>
-                            <option value="FORD">FORD</option>
-                            <option value="NISSAN">NISSAN</option>
-                            <option value="HONDA">HONDA</option>
-                            <option value="CHEVROLET">CHEVROLET</option>
-                            <option value="MG">MG</option>
-                            <option value="SUZUKI">SUZUKI</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="form-group row mb-1">
-                      <label class="col-sm-5 col-form-label text-right">รุ่นรถ : </label>
-                        <div class="col-sm-7">
-                          <input type="text" name="Modelcar" class="form-control" placeholder="ป้อนรุ่นรถ" />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="form-group row mb-1">
-                      <label class="col-sm-4 col-form-label text-right">ประเภทรถ : </label>
-                        <div class="col-sm-7">
-                          <select id="Typecardetail" name="Typecardetail" class="form-control">
-                            <option value="" selected>--- ประเภทรถ ---</option>
-                            <option value="รถกระบะ">รถกระบะ</option>
-                            <option value="รถตอนเดียว">รถตอนเดียว</option>
-                            <option value="รถเก๋ง/7ที่นั่ง">รถเก๋ง/7ที่นั่ง</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="form-group row mb-1">
-                      <label class="col-sm-5 col-form-label text-right"><font color="red"> ยอดจัด : </font> </label>
-                        <div class="col-sm-7">
-                          <input type="text" id="topcar" name="Topcar" class="form-control" placeholder="ป้อนยอดจัด" oninput="addcomma();" maxlength="9" />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="form-group row mb-1">
-                      <label class="col-sm-4 col-form-label text-right">ปีรถ : </label>
-                        <div class="col-sm-7">
-                          <select id="Yearcar" name="Yearcar" class="form-control">
-                            <option value="" selected>--- เลือกปี ---</option>
-                              @php
-                                  $Year = date('Y');
-                              @endphp
-                              @for ($i = 0; $i < 20; $i++)
-                                <option value="{{ $Year }}">{{ $Year }}</option>
-                                @php
-                                    $Year -= 1;
-                                @endphp
-                              @endfor
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="form-group row mb-1">
-                      <label class="col-sm-5 col-form-label text-right">ชื่อลูกค้า :</label>
-                        <div class="col-sm-4">
-                          <input type="text" name="Namebuyer" class="form-control" placeholder="ป้อนชื่อ"/>
-                        </div>
-                        <div class="col-sm-3">
-                          <input type="text" name="Lastbuyer" class="form-control" placeholder="นามสกุล"/>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="form-group row mb-1">
-                      <label class="col-sm-4 col-form-label text-right">ชื่อนายหน้า :</label>
-                        <div class="col-sm-7">
-                          <input type="text" name="Nameagent" class="form-control" placeholder="ป้อนชื่อนายหน้า"/>
-                        </div>
-                        <!-- <div class="col-sm-3">
-                          <input type="text" name="Lastagent" class="form-control" placeholder="ป้อนสกุล"/>
-                        </div> -->
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="form-group row mb-1">
-                      <label class="col-sm-5 col-form-label text-right">เบอร์ลูกค้า :</label>
-                        <div class="col-sm-7">
-                          <input type="text" name="Phonebuyer" class="form-control" placeholder="ป้อนเบอร์ลูกค้า"/>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="form-group row mb-1">
-                      <label class="col-sm-4 col-form-label text-right">เบอร์นายหน้า :</label>
-                        <div class="col-sm-7">
-                          <input type="text" name="Phoneagent" class="form-control" placeholder="ป้อนเบอร์นายหน้า"/>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="form-group row mb-1">
-                      <label class="col-sm-5 col-form-label text-right">เลขบัตร ปชช :</label>
-                        <div class="col-sm-7">
-                          <input type="text" name="IDCardbuyer" class="form-control" placeholder="ป้อนเลขบัตร ปชช" maxlength="13"/>
-                        </div>
-                        <br><br>
-                        <label class="col-sm-5 col-form-label text-right">ประเภทเงินกู้ :</label>
-                        <div class="col-sm-7">
-                          <select id="TypeLeasing" name="TypeLeasing" class="form-control" required>
-                              <option value="" selected>--- เลือกประเภทเงินกู้ ---</option>
-                              <option value="P03">P03 - สัญญาเงินกู้รถยนต์</option>
-                              <option value="P06">P06 - สัญญาเงินกู้ส่วนบุคคล</option>
-                              <option value="P07">P07 - สัญญาเงินกู้พนักงาน</option>
-                          </select>
-                        </div>
-                        <br><br>
-                        <label class="col-sm-5 col-form-label text-right">ที่มาของลูกค้า :</label>
-                        <div class="col-sm-7">
-                        <select id="News" name="News" class="form-control" required>
-                            <option value="" selected>--- เลือกแหล่งที่มา ---</option>
-                            <option value="นายหน้าแนะนำ">นายหน้าแนะนำ</option>
-                            <option value="Facebook">Facebook</option>
-                            <option value="Line">Line</option>
-                            <option value="ป้ายโฆษณา">ป้ายโฆษณา</option>
-                            <option value="วิทยุ">วิทยุ</option>
-                            <option value="เพื่อนแนะนำ">เพื่อนแนะนำ</option>
-                          </select>
-                        </div>
-                        <br><br>
-                        <label class="col-sm-5 col-form-label text-right">สาขา :</label>
-                        <div class="col-sm-7">
-                          <select id="branchcar" name="branchcar" class="form-control" required>
-                                <option value="" selected>--- เลือกสาขา ---</option>
-                                <option value="ปัตตานี" {{ (auth::user()->branch == 50) ? 'selected' : '' }}>ปัตตานี(50)</option>
-                                <option value="ยะลา" {{ (auth::user()->branch == 51) ? 'selected' : '' }}>ยะลา(51)</option>
-                                <option value="นราธิวาส" {{ (auth::user()->branch == 52) ? 'selected' : '' }}>นราธิวาส(52)</option>
-                                <option value="สายบุรี" {{ (auth::user()->branch == 53) ? 'selected' : '' }}>สายบุรี(53)</option>
-                                <option value="โกลก" {{ (auth::user()->branch == 54) ? 'selected' : '' }}>โกลก(54)</option>
-                                <option value="เบตง" {{ (auth::user()->branch == 55) ? 'selected' : '' }}>เบตง(55)</option>
-                                <option value="โคกโพธิ์" {{ (auth::user()->branch == 56) ? 'selected' : '' }}>โคกโพธิ์(56)</option>
-                                <option value="ตันหยงมัส" {{ (auth::user()->branch == 57) ? 'selected' : '' }}>ตันหยงมัส(57)</option>
-                                <option value="บังนังสตา" {{ (auth::user()->branch == 58) ? 'selected' : '' }}>บังนังสตา(58)</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="form-group row mb-1">
-                      <label class="col-sm-4 col-form-label text-right">หมายเหตุ :</label>
-                        <div class="col-sm-7">
-                          <textarea class="form-control" name="Notecar" rows="7" placeholder="ป้อนหมายเหตุ..."></textarea>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-
-              <input type="hidden" name="Nameuser" value="{{auth::user()->name}}"/>
-
-              <div style="text-align: center;">
-                  <button type="submit" class="btn btn-success text-center" style="border-radius: 50px;">บันทึก</button>
-                  <button type="button" class="btn btn-danger" style="border-radius: 50px;" data-dismiss="modal">ยกเลิก</button>
-              </div>
-              <br>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-      </div>
-  </form>
 
   <script>
       function blinker() {
@@ -362,5 +328,91 @@
       document.form2.topcar.value = addCommas(num1);
     }
   </script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load("current", {packages:["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Task', 'Hours per Day'],
+      ['ประกันอนุมัติ',{{$countAnumat}}],
+      ['อะไหล่ครบ',{{$countAlai}}],
+      ['ซ่อมตัวถัง/พื้น',{{$countTank}}],
+      ['พ่นสี', {{$countPaint}}],
+      ['ขัดสี QC ก่อนส่งมอบ',{{$countpolishQC}}],
+      ['ส่งมอบแล้ว',{{$countDataDone}}],
+    ]);
+
+    var options = {
+      // title: 'My Daily Activities',
+      is3D : true,
+      legend :'none',
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart_3d_Claim'));
+    chart.draw(data, options);
+  }
+</script>
+<script type="text/javascript">
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Density", { role: "style" } ],
+        ['ถอดชิ้นส่วนงาน',{{$countRemoveParts}},"#b87333"],
+        ['ซ่อมตัวถัง',{{$countRepairTank}}, "#b87344"],
+        ['เตรียมพื้น',{{$countPrepareBG}}, "#b87355"],
+        ['พ่นสี', {{$countPaintColor}}, "#b87366"],
+        ['ประกอบชิ้นส่วน',{{$countAssembleParts}}, "#b87377"],
+        ['ขัดสี/QC',{{$countPolishColor}}, "#b87388"],
+        ['ส่งล้าง',{{$countWash}}, "#b87399"],
+        ['QC ก่อนส่งมอบ',{{$countQCbeforeSend}}, "#b87333"],
+        ['ปิดงานซ่อม',{{$countRepairDone}}, "#b87333"],
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        // title: "Density of Precious Metals, in g/cm^3",
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+        is3D : true,
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("piechart_3d_Mechanic"));
+      chart.draw(view, options);
+  }
+  </script>
+<script type="text/javascript">
+  google.charts.load("current", {packages:["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Task', 'Hours per Day'],
+      ['ส่งมอบแล้ว', 11],
+      ['กำลังดำเนินการ', 2],
+    ]);
+
+    var options = {
+      // title: 'My Daily Activities',
+      is3D : true,
+      legend :'none',
+      pieHole: 4,
+      slices: {
+            0: { color: 'green' },
+            1: { color: 'red' }
+          }
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart_3d_Done'));
+    chart.draw(data, options);
+  }
+</script>
 
 @endsection

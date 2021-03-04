@@ -353,6 +353,7 @@
   <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
   <script src="{{ asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
   <script src="{{ asset('plugins/filterizr/jquery.filterizr.min.js') }}"></script>
+  <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
   <script>
     $.widget.bridge('uibutton', $.ui.button)
@@ -369,8 +370,8 @@
 
 </head>
 
-<!-- <body  class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-collapse" style="height: auto;"> -->
-<body  class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style="height: auto;">
+<body  class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-collapse" style="height: auto;">
+<!-- <body  class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style="height: auto;"> -->
   <!-- Site wrapper -->
   <div class="wrapper">
 
