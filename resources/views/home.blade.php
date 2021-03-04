@@ -76,9 +76,9 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        มาเคลมใหม่
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> มาเคลมใหม่
                         <span class="float-right text-red">
-                          {{$countNewclaim}} คัน
+                          {{$countNewclaim}}
                         </span>
                       </a>
                     </li>
@@ -350,7 +350,7 @@
       ['ซ่อมตัวถัง/พื้น',{{$countTank}}],
       ['พ่นสี', {{$countPaint}}],
       ['ขัดสี QC ก่อนส่งมอบ',{{$countpolishQC}}],
-      ['ส่งมอบแล้ว',{{$countDataDone}}],
+      // ['ส่งมอบแล้ว',{{$countDataDone}}],
     ]);
 
     var options = {
