@@ -7,14 +7,12 @@ use App\Connectdb2;
 use App\DataIBM;
 use DB;
 
-use App\Buyer;
-use App\Sponsor;
-use App\Cardetail;
-use App\homecardetail;
-use App\Expenses;
-use App\Holdcar;
-use App\data_car;
-use App\checkDocument;
+use App\StockBPCus;
+use App\StockBPCar;
+use App\BodyCall;
+use App\BodyPart;
+use App\BodyImage;
+use App\BodyMechanic;
 
 class HomeController extends Controller
 {
@@ -35,136 +33,123 @@ class HomeController extends Controller
      */
     public function index($name)
     {
-        // $conn = Connectdb2::where('CUSCOD','=','AHI-00000001')->get();
-        // echo $conn[0]->NAME1;
-        // echo iconv('Tis-620','utf-8',$conn[0]->NAME1).'<br>';
-        // $data = DB::select("SELECT * FROM [IBM].[DATASF].[SFHP].[INVTRAN] WHERE [RECVNO] = 'AOC-03040001'");
-        // dd($data);
+        $newfdate = '';
+        $newtdate = '';
+        $data = DB::table('stock_BP_cuses')
+            ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
+            ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPMec_id')
+            ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
+                return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
+              })
+            ->where('stock_BP_cars.BPCar_carDelivered','=', null)
+            ->get();
+        $countData = count($data);
+        $dataDone = DB::table('stock_BP_cuses')
+            ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
+            ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPMec_id')
+            ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
+                return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
+              })
+            ->where('stock_BP_cars.BPCar_carDelivered','!=', null)
+            ->get();
+        $countDataDone = count($dataDone);
 
-        // $conn = DataIBM::where('RECVNO','=','AOC-03040001')->get();
-        // dd($conn);
+        $Anumat[] = '';
+        $Alai[] = '';
+        $Tank[] = '';
+        $Paint[] = '';
+        $polishQC[] = '';
+            for ($i=0; $i < $countData; $i++) { 
+                if($data[$i]->BPCus_status == 'ประกันอนุมัติ'){
+                    $Anumat[] = $data[$i];
+                }
+                elseif($data[$i]->BPCus_status == 'อะไหล่ครบ'){
+                    $Alai[] = $data[$i];
+                }
+                elseif($data[$i]->BPCus_status == 'ซ่อมตัวถัง/พื้น'){
+                    $Tank[] = $data[$i];
+                }
+                elseif($data[$i]->BPCus_status == 'พ่นสี'){
+                    $Paint[] = $data[$i];
+                }
+                elseif($data[$i]->BPCus_status == 'ขัดสี QC ก่อนส่งมอบ'){
+                    $polishQC[] = $data[$i];
+                }
+            }
+        $countAnumat = count($Anumat) - 1;
+        $countAlai = count($Alai) - 1;
+        $countTank = count($Tank) - 1;
+        $countPaint = count($Paint) - 1;
+        $countpolishQC = count($polishQC) - 1;
+        // dd($countData,$countDataDone,$countAnumat,$countAlai,$countTank,$countPaint,$countpolishQC);
 
-        // date_default_timezone_set('Asia/Bangkok');
-        // $Y = date('Y');
-        // $m = date('m');
-        // $d = date('d');
-        // $date = $Y.'-'.$m.'-'.$d;
-        // $newdate = date('Y-m-d', strtotime('+3 days'));
+        $dataMechanic = DB::table('stock_BP_cuses')
+            ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
+            ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPCus_id')
+            ->select('stock_BP_cuses.BPCus_id as Cus_id','stock_BP_cuses.*','stock_BP_cars.*','body_mechanics.*')
+            ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
+                return $q->whereBetween('stock_BP_cuses.BPCus_dateKeyin',[$newfdate,$newtdate]);
+              })
+            ->where('stock_BP_cars.BPCar_carRepair','!=', null)
+            ->where('stock_BP_cars.BPCar_carDelivered','=', null)
+            ->where('body_mechanics.BPMec_StopDate','=', null)
+            ->get();
+        $countdataMechanic = count($dataMechanic);
 
+        $RemoveParts[] = '';
+        $RepairTank[] = '';
+        $PrepareBG[] = '';
+        $PaintColor[] = '';
+        $AssembleParts[] = '';
+        $PolishColor[] = '';
+        $Wash[] = '';
+        $QCbeforeSend[] = '';
+        $RepairDone[] = '';
+            for ($j=0; $j < $countdataMechanic; $j++) { 
+                if($dataMechanic[$j]->BPMec_Status == 'ถอดชิ้นส่วนงาน'){
+                    $RemoveParts[] = $dataMechanic[$j];
+                }
+                elseif($dataMechanic[$j]->BPMec_Status == 'ซ่อมตัวถัง'){
+                    $RepairTank[] = $dataMechanic[$j];
+                }
+                elseif($dataMechanic[$j]->BPMec_Status == 'เตรียมพื้น'){
+                    $PrepareBG[] = $dataMechanic[$j];
+                }
+                elseif($dataMechanic[$j]->BPMec_Status == 'พ่นสี'){
+                    $PaintColor[] = $dataMechanic[$j];
+                }
+                elseif($dataMechanic[$j]->BPMec_Status == 'ประกอบชิ้นส่วน'){
+                    $AssembleParts[] = $dataMechanic[$j];
+                }
+                elseif($dataMechanic[$j]->BPMec_Status == 'ขัดสี/QC'){
+                    $PolishColor[] = $dataMechanic[$j];
+                }
+                elseif($dataMechanic[$j]->BPMec_Status == 'ส่งล้าง'){
+                    $Wash[] = $dataMechanic[$j];
+                }
+                elseif($dataMechanic[$j]->BPMec_Status == 'QC ก่อนส่งมอบ'){
+                    $QCbeforeSend[] = $dataMechanic[$j];
+                }
+                elseif($dataMechanic[$j]->BPMec_Status == 'ปิดงานซ่อม'){
+                    $RepairDone[] = $dataMechanic[$j];
+                }
+        }
+        $countRemoveParts = count($RemoveParts) - 1;
+        $countRepairTank = count($RepairTank) - 1;
+        $countPrepareBG = count($PrepareBG) - 1;
+        $countPaintColor = count($PaintColor) - 1;
+        $countAssembleParts = count($AssembleParts) - 1;
+        $countPolishColor = count($PolishColor) - 1;
+        $countWash = count($Wash) - 1;
+        $countQCbeforeSend = count($QCbeforeSend) - 1;
+        $countRepairDone = count($RepairDone) - 1;
 
-        // $datafinance = DB::table('buyers')
-        //           ->join('cardetails','buyers.id','=','cardetails.Buyercar_id')
-        //           ->where('cardetails.Approvers_car','<>',Null)
-        //           ->count();
+        // dump($countRemoveParts,$countRepairTank,$countPrepareBG,$countPaintColor,$countAssembleParts,$countPolishColor,$countWash,$countQCbeforeSend,$countRepairDone);
 
-        // $datahomecar = DB::table('buyers')
-        //           ->join('homecardetails','buyers.id','=','homecardetails.Buyerhomecar_id')
-        //           ->where('homecardetails.dateapp_HC','<>',Null)
-        //           ->count();
-
-        // $datamassage = DB::connection('ibmi')
-        //           ->table('SFHP.ARMAST')
-        //           ->join('SFHP.ARPAY','SFHP.ARMAST.CONTNO','=','SFHP.ARPAY.CONTNO')
-        //           ->whereBetween('SFHP.ARPAY.DDATE',[$newdate,$newdate])
-        //           ->whereBetween('SFHP.ARMAST.HLDNO',[1.5,3.69])
-        //           ->where('SFHP.ARMAST.BILLCOLL','=',99)
-        //           ->count();
-
-        // $datafollow = DB::connection('ibmi')
-        //           ->table('SFHP.ARMAST')
-        //           ->join('SFHP.ARPAY','SFHP.ARMAST.CONTNO','=','SFHP.ARPAY.CONTNO')
-        //           ->where('SFHP.ARMAST.BILLCOLL','=',99)
-        //           ->whereBetween('SFHP.ARMAST.HLDNO',[2.5,4.69])
-        //           ->whereBetween('SFHP.ARPAY.DDATE',[$date,$date])
-        //           ->count();
-
-        // $datanotice = DB::connection('ibmi')
-        //           ->table('SFHP.ARMAST')
-        //           ->join('SFHP.ARPAY','SFHP.ARMAST.CONTNO','=','SFHP.ARPAY.CONTNO')
-        //           ->whereBetween('SFHP.ARPAY.DDATE',[$date,$date])
-        //           ->whereBetween('SFHP.ARMAST.HLDNO',[4.7,5.69])
-        //           ->count();
-
-        // $datastock = DB::table('holdcars')->count();
-
-        // $legisCourt = DB::table('legislations')
-        //             ->where('legislations.Flag_status','=',1)
-        //             ->count();
-
-        // $legisCourt2 = DB::table('legislations')
-        //             ->where('legislations.Flag_status','=',2)
-        //             ->count();
-
-        // $LegisAsset = DB::table('legisassets')->count();
-
-        // $LegisCompro = DB::table('Legiscompromises')->count();
         $type = '';
         
-        return view($name, compact('datafinance','datahomecar','datafollow','datamassage','datanotice','datastock',
-                                   'legisCourt','legisCourt2','LegisAsset','LegisCompro','type'));
-    }
-
-    public function get_json(Request $request)
-    {
-        $data = '{
-            "1":{
-                "2015-2019":[12,18,24,30,36,42,48,54,60,66,72,78,84],
-                "2012-2014":[12,18,24,30,36,42,48,54,60,66,72],
-                "2010-2011":[12,18,24,30,36,42,48,54,60,66,72],
-                "2009":[12,18,24,30,36,42,48,54,60,66,72],
-                "2008":[12,18,24,30,36,42,48,54,60,66,72],
-                "2007":[12,18,24,30,36,42,48,54,60],
-                "2006":[12,18,24,30,36,42,48,54,60],
-                "2005-2003":[12,18,24,30,36,42,48]
-            },
-            "2":{
-                "2015-2019":[12,18,24,30,36,42,48,54,60,66,72,78,84],
-                "2012-2014":[12,18,24,30,36,42,48,54,60,66,72],
-                "2010-2011":[12,18,24,30,36,42,48,54,60,66,72],
-                "2009":[12,18,24,30,36,42,48,54,60,66,72],
-                "2008":[12,18,24,30,36,42,48,54,60,66,72],
-                "2007":[12,18,24,30,36,42,48,54,60],
-                "2006":[12,18,24,30,36,42,48,54,60],
-                "2005-2003":[12,18,24,30,36,42,48]
-            },
-            "3":{
-                "2015-2020":[12,18,24,30,36,42,48,54,60],
-                "2013-2014":[12,18,24,30,36,42,48,54,60],
-                "2010-2012":[12,18,24,30,36,42,48,54,60],
-                "2008-2009":[12,18,24,30,36,42,48],
-                "2006-2007":[12,18,24,30,36,42,48],
-                "2004-2005":[12,18,24,30,36]
-            }
-        }';
-
-        $json_data = json_decode($data);
-        // dd($json_data);
-        $type = $request->type;
-        $year = $request->year;
-        $showtext = $request->showtext;
-
-        switch ($request->action) {
-            case 'type':
-                echo "<option value='0'>- เลือกปี -</option>";
-                foreach ($json_data->$type as $year => $value) {
-                    echo "<option value='$year' >$year</option>" ;
-                }
-                break;
-            case 'year':
-                foreach ($json_data->$type->$year as $value) {
-                    echo "<option value='$value' >$value</option>" ;
-                }
-                break;
-            case 'showtext':
-                foreach ($json_data->$type->$year as $value) {
-                    echo "<option value='$value' >$value</option>" ;
-                }
-                break;
-
-            default:
-                # code...
-                break;
-        }
+        return view($name, compact('countData','countDataDone','countAnumat','countAlai','countTank','countPaint','countpolishQC',
+                                   'countdataMechanic','countRemoveParts','countRepairTank','countPrepareBG','countPaintColor','countAssembleParts','countPolishColor','countWash','countQCbeforeSend','countRepairDone','type'));
     }
 
 }

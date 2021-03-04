@@ -65,11 +65,11 @@
                             <i class="fas fa-plus-circle"></i> เพิ่ม
                         </a>
                       @endif
-                      @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA")
+                      <!-- @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA")
                         <a target="_blank" class="btn bg-primary">
                             <i class="fas fa-file-excel"></i> รายงาน
                         </a>
-                      @endif
+                      @endif -->
                       </div>
                     </div>
                 </div>

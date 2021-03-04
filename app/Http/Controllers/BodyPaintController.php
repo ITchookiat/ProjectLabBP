@@ -10,7 +10,6 @@ use Image;
 
 use App\StockBPCus;
 use App\StockBPCar;
-// use App\BodyPaint;
 use App\BodyCall;
 use App\BodyPart;
 use App\BodyImage;
