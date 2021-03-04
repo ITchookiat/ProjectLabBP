@@ -59,7 +59,7 @@ class HomeController extends Controller
         $Tank[] = '';
         $Paint[] = '';
         $polishQC[] = '';
-        $waitProcess[] = '';
+        $Newclaim[] = '';
             for ($i=0; $i < $countData; $i++) { 
                 if($data[$i]->BPCus_status == 'ประกันอนุมัติ'){
                     $Anumat[] = $data[$i];
@@ -76,8 +76,8 @@ class HomeController extends Controller
                 elseif($data[$i]->BPCus_status == 'ขัดสี QC ก่อนส่งมอบ'){
                     $polishQC[] = $data[$i];
                 }
-                elseif($data[$i]->BPCus_status == ' '){
-                    $waitProcess[] = $data[$i];
+                elseif($data[$i]->BPCus_status == 'มาเคลมใหม่'){
+                    $Newclaim[] = $data[$i];
                 }
             }
         $countAnumat = count($Anumat) - 1;
@@ -85,7 +85,7 @@ class HomeController extends Controller
         $countTank = count($Tank) - 1;
         $countPaint = count($Paint) - 1;
         $countpolishQC = count($polishQC) - 1;
-        $countwaitProcess = count($waitProcess) - 1;
+        $countNewclaim = count($Newclaim) - 1;
         // dd($countData,$countDataDone,$countAnumat,$countAlai,$countTank,$countPaint,$countpolishQC);
 
         $dataMechanic = DB::table('stock_BP_cuses')
@@ -153,7 +153,7 @@ class HomeController extends Controller
 
         $type = '';
         
-        return view($name, compact('countData','countDataDone','countAnumat','countAlai','countTank','countPaint','countpolishQC','countwaitProcess',
+        return view($name, compact('countData','countDataDone','countAnumat','countAlai','countTank','countPaint','countpolishQC','countNewclaim',
                                    'countdataMechanic','countRemoveParts','countRepairTank','countPrepareBG','countPaintColor','countAssembleParts','countPolishColor','countWash','countQCbeforeSend','countRepairDone','type'));
     }
 
