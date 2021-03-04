@@ -76,9 +76,9 @@
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        รอดำเนินการ
+                        มาเคลมใหม่
                         <span class="float-right text-red">
-                          {{$countwaitProcess}} คัน
+                          {{$countNewclaim}} คัน
                         </span>
                       </a>
                     </li>
@@ -344,7 +344,7 @@
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
       ['Task', 'Hours per Day'],
-      ['รอดำเนินการ',{{$countwaitProcess}}],
+      ['มาเคลมใหม่',{{$countNewclaim}}],
       ['ประกันอนุมัติ',{{$countAnumat}}],
       ['อะไหล่ครบ',{{$countAlai}}],
       ['ซ่อมตัวถัง/พื้น',{{$countTank}}],
