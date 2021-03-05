@@ -974,7 +974,7 @@
                         <div class="form-group row mb-1">
                         <label class="col-sm-4 col-form-label text-right text-sm">สถานะซ่อม : </label>
                             <div class="col-sm-7">
-                                <select name="BPMecstatus" class="form-control">
+                                <select name="BPMecstatus" class="form-control" required>
                                     <option value="" selected>--- เลือกสถานะซ่อม ---</option>
                                     <option value="ถอดชิ้นส่วนงาน">ถอดชิ้นส่วนงาน</option>
                                     <option value="ซ่อมตัวถัง">ซ่อมตัวถัง</option>
@@ -995,7 +995,7 @@
                         <div class="form-group row mb-1">
                         <label class="col-sm-4 col-form-label text-right text-sm">ผู้รับผิดชอบงาน : </label>
                             <div class="col-sm-7">
-                                <select name="BPMecrespon" class="form-control text-sm">
+                                <select name="BPMecrespon" class="form-control text-sm" required>
                                     <option value="" selected>--- เลือกผู้รับผิดชอบงาน ---</option>
                                     <option value="นายเดวิด  แสงศรี">นายเดวิด  แสงศรี</option>
                                     <option value="นายวริศ  นิแม">นายวริศ  นิแม</option>
