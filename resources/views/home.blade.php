@@ -8,307 +8,308 @@
   }
 </style>
 
-<div class="content-header">
-  <div class="row justify-content-center">
-    <div class="col-md-12 table-responsive">
-      <div class="card">
-
-        <div class="card-header">
-        <div class="form-inline">
-          <div class="col-sm-4">
-            <h1 class="m-0 text-dark">ศูนย์บริการซ่อมตัวถังและสี</h1>
-          </div>
-          <div class="col-sm-8">
-            @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก วิเคราะห์" or auth::user()->type == "แผนก จัดไฟแนนท์" or auth::user()->type == "แผนก รถบ้าน")
-              
-                <div class="float-right">
-                  <small class="badge" style="font-size: 14px;">
-                    <i class="fas fa-sign"></i> วันที่ :
-                    <input type="date" name="Fromdate" value="" class="form-control pr-3" />
-                    ถึงวันที่ :
-                    <input type="date" name="Todate" value="" class="form-control" />&nbsp;
-                    <button type="submit" class="btn btn-info" title="ค้นหา">
-                      <span class="fas fa-search"></span> ค้นหา
-                    </button>
-                  </small>
-                </div>
-
-            @endif
-          </div>
-        </div>
-        </div>
-
-        <div class="card-body">
-
-          <div class="row mb-0">
-            <div class="col-sm-6">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">งานเคลม ({{$countData + $countDataDone}})</h3>
-
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="chart-responsive">
-                        <div id="piechart_3d_Claim" style="width: 100%;height: 410px;"></div>
-                      </div>
+  <div class="content-header">
+    <div class="row justify-content-center">
+      <div class="col-md-12 table-responsive">
+        <div class="card">
+      
+          <div class="card-header">
+            <div class="form-inline">
+              <div class="col-sm-4">
+                <h4 class="m-0 text-dark">ศูนย์บริการซ่อมตัวถังและสี</h4>
+              </div>
+              <div class="col-sm-8">
+                @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก วิเคราะห์" or auth::user()->type == "แผนก จัดไฟแนนท์" or auth::user()->type == "แผนก รถบ้าน")
+                  <form method="get" action="{{ route('HomeBP.show',0) }}">
+                    <div class="float-right">
+                      <small class="badge" style="font-size: 14px;">
+                        <i class="fas fa-sign"></i> วันที่ :
+                        <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: '' }}" class="form-control pr-3" />
+                        ถึงวันที่ :
+                        <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: '' }}" class="form-control" />&nbsp;
+                        <button type="submit" class="btn btn-info" title="ค้นหา">
+                          <span class="fas fa-search"></span> ค้นหา
+                        </button>
+                      </small>
                     </div>
-                  </div>
-                </div>
-                <div class="card-footer bg-light p-0">
-                  <ul class="nav nav-pills flex-column">
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        งานเคลมทั้งหมด
-                        <span class="float-right">
-                          {{$countData + $countDataDone}} คัน
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> มาเคลมใหม่
-                        <span class="float-right text-red">
-                          {{$countNewclaim}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ประกันอนุมัติ
-                        <span class="float-right">
-                          {{$countAnumat}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> อะไหล่ครบ
-                        <span class="float-right">
-                          {{$countAlai}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ซ่อมตัวถัง/พื้น
-                        <span class="float-right">
-                          {{$countTank}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> พ่นสี
-                        <span class="float-right">
-                          {{$countPaint}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ขัดสี QC ก่อนส่งมอบ
-                        <span class="float-right">
-                          {{$countpolishQC}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        ส่งมอบแล้ว
-                        <span class="float-right text-success">
-                          {{$countDataDone}} คัน
-                        </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                  </form>
+                @endif
               </div>
             </div>
-            <div class="col-sm-6">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">รถระหว่างซ่อม</h3>
-
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="chart-responsive">
-                        <div id="piechart_3d_Mechanic" style="width: 100%;height: 410px;"></div>
-                      </div>
-                      <!-- ./chart-responsive -->
-                    </div>
-                  </div>
-                  <!-- /.row -->
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer bg-light p-0">
-                  <ul class="nav nav-pills flex-column">
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        รถระหว่างซ่อมทั้งหมด
-                        <span class="float-right">
-                          {{$countdataMechanic}} คัน
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ถอดชิ้นส่วนงาน
-                        <span class="float-right">
-                          {{$countRemoveParts}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ซ่อมตัวถัง
-                        <span class="float-right">
-                          {{$countRepairTank}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> เตรียมพื้น
-                        <span class="float-right">
-                          {{$countPrepareBG}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> พ่นสี
-                        <span class="float-right">
-                          {{$countPaintColor}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ประกอบชิ้นส่วนงาน
-                        <span class="float-right">
-                          {{$countAssembleParts}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ขัดสี/QC
-                        <span class="float-right">
-                          {{$countPolishColor}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ส่งล้าง
-                        <span class="float-right">
-                          {{$countWash}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> QC ก่อนส่งมอบ
-                        <span class="float-right">
-                          {{$countQCbeforeSend}}
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ปิดงานซ่อม
-                        <span class="float-right">
-                          {{$countRepairDone}}
-                        </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <!-- /.footer -->
-              </div>
-            </div>
-            <!-- <div class="col-sm-3">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">รถส่งมอบ</h3>
-
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="chart-responsive">
-                        <div id="piechart_3d_Done" style="width: 100%;height: 350px;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer bg-light p-0">
-                  <ul class="nav nav-pills flex-column">
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        รถทั้งหมด
-                        <span class="float-right text-danger">
-                          <i class="fas fa-arrow-down text-sm"></i>
-                          12%</span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        ส่งมอบแล้ว
-                        <span class="float-right text-success">
-                          <i class="fas fa-arrow-up text-sm"></i> 4%
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        กำลังดำเนินการ
-                        <span class="float-right text-warning">
-                          <i class="fas fa-arrow-left text-sm"></i> 0%
-                        </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div> -->
           </div>
 
-        </div>
+            <div class="card-body">
 
+              <div class="row mb-0">
+                <div class="col-sm-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">งานเคลม ({{$countData + $countDataDone}})</h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                          <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                    @if($countData != 0)
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="chart-responsive">
+                            <div id="piechart_3d_Claim" style="width: 100%;height: 410px;"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    @endif
+                    <div class="card-footer bg-light p-0">
+                      <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                            งานเคลมทั้งหมด
+                            <span class="float-right">
+                              {{$countData + $countDataDone}} คัน
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> มาเคลมใหม่
+                            <span class="float-right text-red">
+                              {{$countNewclaim}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ประกันอนุมัติ
+                            <span class="float-right">
+                              {{$countAnumat}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> อะไหล่ครบ
+                            <span class="float-right">
+                              {{$countAlai}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ซ่อมตัวถัง/พื้น
+                            <span class="float-right">
+                              {{$countTank}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> พ่นสี
+                            <span class="float-right">
+                              {{$countPaint}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ขัดสี QC ก่อนส่งมอบ
+                            <span class="float-right">
+                              {{$countpolishQC}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ส่งมอบแล้ว
+                            <span class="float-right text-success">
+                              {{$countDataDone}}
+                            </span>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">รถระหว่างซ่อม ({{$countdataMechanic}})</h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                          <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                    @if($countdataMechanic != 0)
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="chart-responsive">
+                            <div id="piechart_3d_Mechanic" style="width: 100%;height: 410px;"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    @endif
+                    <div class="card-footer bg-light p-0">
+                      <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                            รถระหว่างซ่อมทั้งหมด
+                            <span class="float-right">
+                              {{$countdataMechanic}} คัน
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ถอดชิ้นส่วนงาน
+                            <span class="float-right">
+                              {{$countRemoveParts}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ซ่อมตัวถัง
+                            <span class="float-right">
+                              {{$countRepairTank}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> เตรียมพื้น
+                            <span class="float-right">
+                              {{$countPrepareBG}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> พ่นสี
+                            <span class="float-right">
+                              {{$countPaintColor}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ประกอบชิ้นส่วนงาน
+                            <span class="float-right">
+                              {{$countAssembleParts}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ขัดสี/QC
+                            <span class="float-right">
+                              {{$countPolishColor}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ส่งล้าง
+                            <span class="float-right">
+                              {{$countWash}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> QC ก่อนส่งมอบ
+                            <span class="float-right">
+                              {{$countQCbeforeSend}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ปิดงานซ่อม
+                            <span class="float-right">
+                              {{$countRepairDone}}
+                            </span>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- /.footer -->
+                  </div>
+                </div>
+                <!-- <div class="col-sm-3">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">รถส่งมอบ</h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                          <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="chart-responsive">
+                            <div id="piechart_3d_Done" style="width: 100%;height: 350px;"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer bg-light p-0">
+                      <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                            รถทั้งหมด
+                            <span class="float-right text-danger">
+                              <i class="fas fa-arrow-down text-sm"></i>
+                              12%</span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                            ส่งมอบแล้ว
+                            <span class="float-right text-success">
+                              <i class="fas fa-arrow-up text-sm"></i> 4%
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
+                            กำลังดำเนินการ
+                            <span class="float-right text-warning">
+                              <i class="fas fa-arrow-left text-sm"></i> 0%
+                            </span>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+
+            </div>
+
+        </div>
       </div>
     </div>
   </div>
-</div>
+
 
   <script>
       function blinker() {
@@ -323,7 +324,7 @@
       nStr += '';
       x = nStr.split('.');
       x1 = x[0];
-      x2 = x.length > 1 ? '.' + x[1] : '';
+      x2 = x.length > 4 ? '.' + x[1] : '';
       var rgx = /(\d+)(\d{3})/;
       while (rgx.test(x1)) {
         x1 = x1.replace(rgx, '$1' + ',' + '$2');
@@ -350,7 +351,7 @@
       ['ซ่อมตัวถัง/พื้น',{{$countTank}}],
       ['พ่นสี', {{$countPaint}}],
       ['ขัดสี QC ก่อนส่งมอบ',{{$countpolishQC}}],
-      // ['ส่งมอบแล้ว',{{$countDataDone}}],
+      ['ส่งมอบแล้ว',{{$countDataDone}}],
     ]);
 
     var options = {

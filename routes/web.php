@@ -29,7 +29,9 @@ Route::group(['middleware' => 'auth'], function()
 
     //------------------งานอู่สี--------------------//
     route::resource('MasterBP','BodyPaintController');
-    // Route::get('/Regis/Home/{type}', 'RegisController@index')->name('Regis');
+
+    //------------------หน้าแรก--------------------//
+    route::resource('HomeBP','HomeController');
 
     //---------------- logout --------------------//
     Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
