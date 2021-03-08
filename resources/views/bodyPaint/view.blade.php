@@ -346,7 +346,7 @@
                                     @endif
                                   </td>
                                   <td class="text-right">
-                                    <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{1}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                    <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{3}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
                                       <i class="far fa-edit"></i>
                                     </a>
                                   </td>

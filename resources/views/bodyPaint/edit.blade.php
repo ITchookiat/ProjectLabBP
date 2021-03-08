@@ -218,20 +218,24 @@
                     </div>
                     <div class="col-8">
                       <div class="card-tools d-inline float-right">
-                        @if($type == 1)
+                        @if($type == 1 or $type == 3)
                           <button type="submit" class="delete-modal btn btn-success btn-sm">
                               <i class="fas fa-save"></i> อัพเดท
                           </button>
-                          <a class="delete-modal btn btn-danger btn-sm text-white" href="{{ route('MasterBP.index') }}?type={{1}}">
+                          <a class="delete-modal btn btn-danger btn-sm text-white" href="{{ route('MasterBP.index') }}?type={{$type}}">
                               <i class="far fa-window-close"></i> ยกเลิก
                           </a>
+                          @if($type == 3)
+                            <input type="hidden" name="carRepair" value="{{$data->BPCar_carRepair}}"/>
+                            <input type="hidden" name="carDeliver" value="{{$data->BPCar_carDelivered}}"/>
+                          @endif
                         @elseif($type == 2)
                           <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-mechanic" title="เพิ่มการซ่อม"
                               data-backdrop="static" data-keyboard="false"
                               data-link="{{ route('MasterBP.create')}}?type={{10}}&id={{$data->BPCus_id}}">
                               <i class="fas fa-wrench"></i> เพิ่มการซ่อม
                           </button>
-                          <a class="delete-modal btn btn-danger btn-sm text-white" href="{{ route('MasterBP.index') }}?type={{2}}">
+                          <a class="delete-modal btn btn-danger btn-sm text-white" href="{{ route('MasterBP.index') }}?type={{$type}}">
                               <i class="far fa-window-close"></i> ยกเลิก
                           </a>
                         @elseif($type == 4)
@@ -240,7 +244,7 @@
                               data-link="{{ route('MasterBP.store',[$data->BPCus_id]) }}?type={{3}}">
                               <i class="fas fa-wrench"></i> เพิ่มอะไหล่
                           </button>
-                          <a class="delete-modal btn btn-danger btn-sm text-white" href="{{ route('MasterBP.index') }}?type={{4}}">
+                          <a class="delete-modal btn btn-danger btn-sm text-white" href="{{ route('MasterBP.index') }}?type={{$type}}">
                               <i class="far fa-window-close"></i> ยกเลิก
                           </a>
                         @endif
