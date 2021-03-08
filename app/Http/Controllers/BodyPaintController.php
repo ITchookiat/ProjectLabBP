@@ -335,7 +335,7 @@ class BodyPaintController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        if($request->type == 1 or $request->type == 2 or $request->type == 4){ //แก้ไขรายการโดยรวม
+        if($request->type == 1 or $request->type == 2 or $request->type == 3 or $request->type == 4){ //แก้ไขรายการโดยรวม
             $data = DB::table('stock_BP_cuses')
             ->join('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->select('stock_BP_cuses.BPCus_id as Cus_id','stock_BP_cuses.*','stock_BP_cars.*')
@@ -374,11 +374,13 @@ class BodyPaintController extends Controller
 
             $dataPart = DB::table('body_parts')
             ->where('body_parts.BPCus_id',$id)
+            ->orderBy('body_parts.BPPart_id','ASC')
             ->get();
             $countdataPart = count($dataPart);
 
             $dataMechanic = DB::table('body_mechanics')
             ->where('body_mechanics.BPCus_id',$id)
+            ->orderBy('body_mechanics.BPMec_id','ASC')
             ->get();
             $countdataMechanic = count($dataMechanic);
 

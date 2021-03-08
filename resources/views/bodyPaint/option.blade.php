@@ -253,56 +253,28 @@
                         <div class="form-group row mb-3">
                             <label class="col-sm-4 col-form-label text-right"> ชื่อ-สกุล :</label>
                             <div class="col-sm-6 mb-1">
-                            <input type="text" class="form-control" placeholder="ป้อนชื่อสกุล" value="{{$data->BPCus_name}}" readonly/>
+                                <input type="text" class="form-control" placeholder="ป้อนชื่อสกุล" value="{{$data->BPCus_name}}" readonly/>
                             </div>
                             <label class="col-sm-4 col-form-label text-right"> เบอร์ติดต่อ :</label>
                             <div class="col-sm-6 mb-1">
-                            <input type="text" class="form-control" placeholder="ป้อนเบอร์ติดต่อ" value="{{$data->BPCus_phone}}" readonly/>
+                                <input type="text" class="form-control" placeholder="ป้อนเบอร์ติดต่อ" value="{{$data->BPCus_phone}}" readonly/>
                             </div>
                             <label class="col-sm-4 col-form-label text-right">ชนิดงาน : </label>
                             <div class="col-sm-6 mb-1">
-                            <select id="BPclaimlevel" class="form-control" readonly>
-                                <option value="" selected>--- เลือกชนิดงาน ---</option>
-                                <option value="เบา" {{ ($data->BPCus_claimLevel === 'เบา') ? 'selected' : '' }}>เบา</option>
-                                <option value="กลาง" {{ ($data->BPCus_claimLevel === 'กลาง') ? 'selected' : '' }}>กลาง</option>
-                                <option value="หนัก" {{ ($data->BPCus_claimLevel === 'หนัก') ? 'selected' : '' }}>หนัก</option>
-                            </select>
+                                <input type="text" class="form-control" placeholder="ชนิดงาน" value="{{$data->BPCus_claimLevel}}" readonly/>
                             </div>
                             <label class="col-sm-4 col-form-label text-right">ประเภทประกัน :</label>
                             <div class="col-sm-6 mb-1">
-                            <select id="BPclaimtype" class="form-control" readonly>
-                                <option value="" selected>--- เลือกประเภทประกัน ---</option>
-                                <option value="MPI" {{ ($data->BPCus_claimType === 'MPI') ? 'selected' : '' }}>MPI</option>
-                                <option value="Non MPI" {{ ($data->BPCus_claimType === 'Non MPI') ? 'selected' : '' }}>Non MPI</option>
-                            </select>
+                                <input type="text" class="form-control" placeholder="ประเภทประกัน" value="{{$data->BPCus_claimType}}" readonly/>
                             </div>
                             <label class="col-sm-4 col-form-label text-right">บริษัทประกัน :</label>
                             <div class="col-sm-6 mb-1">
-                            <select id="BPclaimcompany" class="form-control" readonly>
-                                <option value="" selected>--- เลือกบริษัทประกัน ---</option>
-                                <option value="วิริยะประกันภัย" {{ ($data->BPCus_claimCompany === 'วิริยะประกันภัย') ? 'selected' : '' }}>วิริยะประกันภัย</option>
-                                <option value="ธนชาตประกันภัย" {{ ($data->BPCus_claimCompany === 'ธนชาตประกันภัย') ? 'selected' : '' }}>ธนชาตประกันภัย</option>
-                                <option value="กรุงเทพประกันภัย" {{ ($data->BPCus_claimCompany === 'กรุงเทพประกันภัย') ? 'selected' : '' }}>กรุงเทพประกันภัย</option>
-                                <option value="เมืองไทยประกันภัย" {{ ($data->BPCus_claimCompany === 'เมืองไทยประกันภัย') ? 'selected' : '' }}>เมืองไทยประกันภัย</option>
-                                <option value="สินมั่นคงประกันภัย" {{ ($data->BPCus_claimCompany === 'สินมั่นคงประกันภัย') ? 'selected' : '' }}>สินมั่นคงประกันภัย</option>
-                                <option value="ทิพยประกันภัย" {{ ($data->BPCus_claimCompany === 'ทิพยประกันภัย') ? 'selected' : '' }}>ทิพยประกันภัย</option>
-                                <option value="ประกันภัยไทยวิวัฒน์" {{ ($data->BPCus_claimCompany === 'ประกันภัยไทยวิวัฒน์') ? 'selected' : '' }}>ประกันภัยไทยวิวัฒน์</option>
-                                <option value="มิตซุย สุมิโตโม อินชัวรันซ์" {{ ($data->BPCus_claimCompany === 'มิตซุย สุมิโตโม อินชัวรันซ์') ? 'selected' : '' }}>มิตซุย สุมิโตโม อินชัวรันซ์</option>
-                                <option value="ไทยศรีประกันภัย" {{ ($data->BPCus_claimCompany === 'ไทยศรีประกันภัย') ? 'selected' : '' }}>ไทยศรีประกันภัย</option>
-                                <option value="สินทรัพย์ประกันภัย" {{ ($data->BPCus_claimCompany === 'สินทรัพย์ประกันภัย') ? 'selected' : '' }}>สินทรัพย์ประกันภัย</option>
-                                <option value="อาคเนย์ประกันภัย" {{ ($data->BPCus_claimCompany === 'อาคเนย์ประกันภัย') ? 'selected' : '' }}>อาคเนย์ประกันภัย</option>
-                                <option value="แอลเอ็มจีประกันภัย" {{ ($data->BPCus_claimCompany === 'แอลเอ็มจีประกันภัย') ? 'selected' : '' }}>แอลเอ็มจีประกันภัย</option>
-                                <option value="คุ้มภัยโตเกียวมารีนประกันภัย" {{ ($data->BPCus_claimCompany === 'คุ้มภัยโตเกียวมารีนประกันภัย') ? 'selected' : '' }}>คุ้มภัยโตเกียวมารีนประกันภัย</option>
-                                <option value="มิตรแท้ประกันภัย" {{ ($data->BPCus_claimCompany === 'มิตรแท้ประกันภัย') ? 'selected' : '' }}>มิตรแท้ประกันภัย</option>
-                                <option value="เอเชียประกันภัย" {{ ($data->BPCus_claimCompany === 'เอเชียประกันภัย') ? 'selected' : '' }}>เอเชียประกันภัย</option>
-                                <option value="เทเวศประกันภัย" {{ ($data->BPCus_claimCompany === 'เทเวศประกันภัย') ? 'selected' : '' }}>เทเวศประกันภัย</option>
-                                <option value="อื่นๆ" {{ ($data->BPCus_claimCompany === 'อื่นๆ') ? 'selected' : '' }}>อื่นๆ</option>
-                            </select>
-                            @if($data->BPCus_claimCompany === 'อื่นๆ')
-                                <input type="text" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}" readonly/>
-                            @else
-                                <input type="text" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}" style="display:none" readonly/>
-                            @endif
+                                <input type="text" class="form-control" placeholder="บริษัทประกัน" value="{{$data->BPCus_claimCompany}}" readonly/>
+                                @if($data->BPCus_claimCompany === 'อื่นๆ')
+                                    <input type="text" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}" readonly/>
+                                @else
+                                    <input type="text" class="form-control" placeholder="ป้อนบริษัทประกัน" value="{{$data->BPCus_claimCompanyother}}" style="display:none" readonly/>
+                                @endif
                             </div>
                             <label class="col-sm-4 col-form-label text-right"> เลขเคลมประกัน :</label>
                             <div class="col-sm-6 mb-1">
