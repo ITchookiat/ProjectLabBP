@@ -257,28 +257,28 @@
                     <div class="col-12 mb-2">
                       <ol class="breadcrumb float-sm-right text-sm">
                           @if($data->BPCar_carRepair != null)
-                            <div class="float-right form-inline pr-2 prem">
-                              <i class="far fa-clock text-lg pr-1" title="วันที่ซ่อมจริง : {{DateThai($data->BPCar_carRepair)}}"></i>
-                                <label class="text-danger">
-                                  @if($data->BPCar_carFinished != null)
-                                    {{-- DateThai($data->BPCar_carRepair) --}}
-                                      @php
-                                          date_default_timezone_set('Asia/Bangkok');
-                                          $ifdate = date('Y-m-d');
-                                      @endphp
-                                      @if($ifdate < $data->BPCar_carFinished)
+                            @if($data->BPCar_carFinished == null)
+                              <div class="float-right form-inline pr-2 prem">
+                                <i class="far fa-clock text-lg pr-1" title="วันที่ซ่อมจริง : {{DateThai($data->BPCar_carRepair)}}"></i>
+                                  <label class="text-danger">
+                                      {{-- DateThai($data->BPCar_carRepair) --}}
                                         @php
-                                          $Cldate = date_create($data->BPCar_carFinished);
-                                          $nowCldate = date_create($ifdate);
-                                          $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                            date_default_timezone_set('Asia/Bangkok');
+                                            $ifdate = date('Y-m-d');
                                         @endphp
-                                        เหลือ {{$ClDateDiff->format('%a วัน')}}
-                                      @else
-                                        เลยเวลาซ่อมแล้ว
-                                      @endif
-                                  @endif
-                                </label>
-                            </div>
+                                        @if($ifdate < $data->BPCar_carRepair)
+                                          @php
+                                            $Cldate = date_create($data->BPCar_carRepair);
+                                            $nowCldate = date_create($ifdate);
+                                            $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                          @endphp
+                                          เหลือ {{$ClDateDiff->format('%a วัน')}}
+                                        @else
+                                          เลยเวลาซ่อมแล้ว
+                                        @endif
+                                  </label>
+                              </div>
+                            @endif
                           @endif
                           {{-- ผู้จัดการ --}}
                           <div class="float-right form-inline pr-1">
@@ -370,14 +370,14 @@
                             </a>
                           </li>
                         @endif
-                        @if($type == 1 or $type == 2)
+                        @if($type == 2)
                           <li class="nav-item">
                             <a class="nav-link {{ (request()->is($tab === '8')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{$type}}&tab={{8}}">
                               <i class="fas fa-gear"></i> รายการซ่อม
                             </a>
                           </li>
                         @endif
-                        @if($type == 1 or $type == 4)
+                        @if($type == 4)
                           <li class="nav-item">
                             <a class="nav-link {{ (request()->is($tab === '7')) ? 'active' : '' }}" href="{{ route('MasterBP.edit',[$data->BPCus_id]) }}?type={{$type}}&tab={{7}}">
                               <i class="fas fa-wrench"></i> รายการอะไหล่

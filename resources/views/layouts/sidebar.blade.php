@@ -89,19 +89,19 @@
                           </a>
                         </li>
                         @endif
-                        @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA")
-                        <li class="nav-item">
-                          <a href="{{ route('MasterBP.index') }}?type={{3}}" class="nav-link {{ (request()->is($type === '3')) ? 'active' : '' }}">
-                            <i class="far fa-dot-circle nav-icon"></i>
-                            <p>รายการรถส่งมอบ</p>
-                          </a>
-                        </li>
-                        @endif
                         @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA" or auth::user()->position == "STAFF")
                         <li class="nav-item">
                           <a href="{{ route('MasterBP.index') }}?type={{4}}" class="nav-link {{ (request()->is($type === '4')) ? 'active' : '' }}">
                             <i class="far fa-dot-circle nav-icon"></i>
                             <p>รายการอะไหล่</p>
+                          </a>
+                        </li>
+                        @endif
+                        @if(auth::user()->position == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "SA")
+                        <li class="nav-item">
+                          <a href="{{ route('MasterBP.index') }}?type={{3}}" class="nav-link {{ (request()->is($type === '3')) ? 'active' : '' }}">
+                            <i class="far fa-dot-circle nav-icon"></i>
+                            <p>รายการรถส่งมอบ</p>
                           </a>
                         </li>
                         @endif
