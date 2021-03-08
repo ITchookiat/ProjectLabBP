@@ -126,8 +126,8 @@
                                 <tr>
                                   <td class="text-center"> 
                                     {{ $key + 1 }} 
-                                    @if($row->BPMec_Status != null)
-                                      @if($row->BPMec_Status != 'QC ก่อนส่งมอบ')
+                                    @if($row->BPCar_carRepair != null)
+                                      @if($row->BPCar_carFinished == null)
                                         <i class="fas fa-wrench text-xs text-red pr-1 prem"></i>
                                       @endif
                                     @endif
@@ -326,7 +326,7 @@
                                 <th class="text-center">ชนิดงาน</th>
                                 <th class="text-center">หมายเหตุ</th>
                                 <th class="text-center">สถานะ</th>
-                                <!-- <th class="text-center" width="30px">#</th> -->
+                                <th class="text-center" width="30px">#</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -345,13 +345,11 @@
                                       <span class="btn btn-xs bg-success text-xs">ส่งมอบรถ</span>
                                     @endif
                                   </td>
-                                  <!-- <td class="text-right">
-                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit" title="แก้ไขรายการ"
-                                      data-backdrop="static" data-keyboard="false"
-                                      data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{2}}">
+                                  <td class="text-right">
+                                    <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{1}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
                                       <i class="far fa-edit"></i>
-                                    </button>
-                                  </td> -->
+                                    </a>
+                                  </td>
                                 </tr>
                                 @endforeach
                             </tbody>
