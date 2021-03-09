@@ -382,7 +382,7 @@
                             </div>
                         </div>
                     </div>
-                    @elseif($viewType == 2)
+                @elseif($viewType == 2)
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -433,6 +433,183 @@
                                                         <td class="text-left">{{($row->BPMec_Note != null)?$row->BPMec_Note:'-'}}</td>
                                                         <td class="text-left"> {{$row->BPMec_UserRespon}}</td>
                                                     </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @elseif($viewType == 3)
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-info">
+                                    <h5 class="text-center"><i class="fas fa-phone-square-alt"></i> รายการโทร
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-inline">
+                                        <table class="table table-bordered table-hover" id="table">
+                                            <thead class="bg-gray-light" >
+                                                <tr>
+                                                    <th class="text-center"><i class="fas fa-phone-square-alt"></i> ประกันอนุมัติ</th>
+                                                    <th class="text-center"><i class="fas fa-phone-square-alt"></i> อะไหล่ครบ</th>
+                                                    <th class="text-center"><i class="fas fa-phone-square-alt"></i> ซ่อมตัวถัง/พื้น</th>
+                                                    <th class="text-center"><i class="fas fa-phone-square-alt"></i> พ่นสี</th>
+                                                    <th class="text-center"><i class="fas fa-phone-square-alt"></i> ขัดสี QC ก่อนส่งมอบ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center text-xs">
+                                                        @foreach($dataCallClaim as $key => $row)
+                                                            <div class="mb-3 btn btn-xs btn-block btn-outline-primary">
+                                                                <span>ครั้งที่ {{$key+1}}</span><br>
+                                                                <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                                <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                            </div>
+                                                        @endforeach
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @foreach($dataCallClaim2 as $key => $row)
+                                                            <div class="mb-3 btn btn-xs btn-block btn-outline-secondary">
+                                                                <span>ครั้งที่ {{$key+1}}</span><br>
+                                                                <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                                <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                            </div>
+                                                        @endforeach
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @foreach($dataCallClaim3 as $key => $row)
+                                                            <div class="mb-3 btn btn-xs btn-block btn-outline-success">
+                                                                <span>ครั้งที่ {{$key+1}}</span><br>
+                                                                <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                                <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                            </div>
+                                                        @endforeach
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @foreach($dataCallClaim4 as $key => $row)
+                                                            <div class="mb-3 btn btn-xs btn-block btn-outline-waring">
+                                                                <span>ครั้งที่ {{$key+1}}</span><br>
+                                                                <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                                <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                            </div>
+                                                        @endforeach
+                                                    </td>
+                                                    <td class="text-left">
+                                                        @foreach($dataCallClaim5 as $key => $row)
+                                                            <div class="mb-3 btn btn-xs btn-block btn-outline-danger">
+                                                                <span>ครั้งที่ {{$key+1}}</span><br>
+                                                                <span>{{DateThai($row->BPCall_date)}}</span><br>
+                                                                <span>{{($row->BPCall_result != null)?$row->BPCall_result:'-'}}</span>
+                                                            </div>
+                                                        @endforeach
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-info">
+                                    <h5 class="text-center"><i class="fas fa-wrench"></i> รายการซ่อม
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-inline">
+                                        <table class="table table-bordered table-hover" id="table">
+                                            <thead class="bg-gray-light" >
+                                                <tr>
+                                                    <th class="text-center">ลำดับ</th>
+                                                    <th class="text-center">สถานะซ่อม</th>
+                                                    <th class="text-center">วันที่เริ่มซ่อม</th>
+                                                    <th class="text-center">วันที่สิ้นสุดซ่อม</th>
+                                                    <th class="text-center">ระยะเวลา</th>
+                                                    <th class="text-center" style="width:250px">หมายเหตุ</th>
+                                                    <th class="text-center">ผู้รับผิดชอบงาน</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($dataMechanic as $key => $row)
+                                                    <tr>
+                                                        <td class="text-center">{{$key+1}}</td>
+                                                        <td class="text-center">{{$row->BPMec_Status}}</td>
+                                                        <td class="text-center">{{DateThai($row->BPMec_StartDate)}}</td>
+                                                        <td class="text-center">
+                                                        @if($row->BPMec_StopDate != null)
+                                                            {{DateThai($row->BPMec_StopDate)}}
+                                                        @else
+                                                            -
+                                                        @endif
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @if($row->BPMec_StartDate != null and $row->BPMec_StopDate == null)
+                                                                @php
+                                                                    $Cldate = date_create($row->BPMec_StartDate);
+                                                                    $nowCldate = date_create($ifdate);
+                                                                    $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                                @endphp
+                                                                <font color="red">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                            @elseif($row->BPMec_StartDate != null and $row->BPMec_StopDate != null)
+                                                                @php
+                                                                    $Cldate = date_create($row->BPMec_StartDate);
+                                                                    $nowCldate = date_create($row->BPMec_StopDate);
+                                                                    $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                                @endphp
+                                                                <font color="blue">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                            @endif
+                                                        </td>
+                                                        <td class="text-left">{{($row->BPMec_Note != null)?$row->BPMec_Note:'-'}}</td>
+                                                        <td class="text-left"> {{$row->BPMec_UserRespon}}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-info">
+                                    <h5 class="text-center"><i class="fas fa-gears"></i> รายการอะไหล่
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-inline">
+                                        <table class="table table-bordered table-hover" id="table">
+                                            <thead class="bg-gray-light" >
+                                                <tr>
+                                                    <th class="text-center">ลำดับ</th>
+                                                    <th class="text-center">วันที่</th>
+                                                    <th class="text-center">เลขที่ใบประเมิณ</th>
+                                                    <th class="text-center">จำนวน</th>
+                                                    <th class="text-center">สถานะ</th>
+                                                    <th class="text-center">หมายเหตุ</th>
+                                                    <th class="text-center">ผู้เพิ่มอะไหล่</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($dataPart as $key => $row)
+                                                <tr>
+                                                    <td class="text-center">{{$key+1}}</td>
+                                                    <td class="text-center">{{DateThai($row->BPPart_date)}}</td>
+                                                    <td class="text-center">{{$row->BPPart_assessment}}</td>
+                                                    <td class="text-center">{{$row->BPPart_quantity}}</td>
+                                                    <td class="text-center">{{($row->BPPart_status != null)?$row->BPPart_status:'-'}}</td>
+                                                    <td class="text-left">{{($row->BPPart_note != null)?$row->BPPart_note:'-'}}</td>
+                                                    <td class="text-left">{{$row->BPPart_user}}</td>
+                                                </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>

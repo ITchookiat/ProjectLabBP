@@ -260,7 +260,6 @@ class BodyPaintController extends Controller
      */
     public function show(Request $request, $id)
     {
-        if($request->type == 1 or $request->type == 2 or $request->type == 4){
             $data = DB::table('stock_BP_cuses')
             ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
             ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPMec_id')
@@ -311,20 +310,6 @@ class BodyPaintController extends Controller
             return view('bodyPaint.option',
                 compact('data','dataCallClaim','dataCallClaim2','dataCallClaim3','dataCallClaim4','dataCallClaim5',
                 'dataPart','dataImage','dataMechanic','type','viewType'));
-        }
-        // elseif($request->type == 2){
-        //     $data = DB::table('stock_BP_cuses')
-        //     ->leftjoin('stock_BP_cars','stock_BP_cuses.BPCus_id','=','stock_BP_cars.BPCus_id')
-        //     ->leftjoin('body_mechanics','stock_BP_cuses.BPCus_id','=','body_mechanics.BPMec_id')
-        //     ->select('stock_BP_cuses.BPCus_id as Cus_id','stock_BP_cuses.*','stock_BP_cars.*','body_mechanics.*','body_mechanics.BPCus_id as MCus_id')
-        //     ->where('stock_BP_cuses.BPCus_id',$id)
-        //     ->first();
-        //     dd($data);
-
-        //     $type = 9;
-        //     return view('bodyPaint.option',
-        //         compact('data','type'));
-        // }
     }
 
     /**

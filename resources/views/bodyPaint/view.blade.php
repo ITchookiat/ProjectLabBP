@@ -324,9 +324,9 @@
                                 <th class="text-center">ชื่อ-สกุล</th>
                                 <th class="text-center">ป้ายทะเบียน</th>
                                 <th class="text-center">ชนิดงาน</th>
-                                <th class="text-center">หมายเหตุ</th>
+                                <th class="text-center" width="250px">หมายเหตุ</th>
                                 <th class="text-center">สถานะ</th>
-                                <th class="text-center" width="30px">#</th>
+                                <th class="text-center" width="70px">#</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -346,6 +346,11 @@
                                     @endif
                                   </td>
                                   <td class="text-right">
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-view" title="ดูรายการ"
+                                      data-backdrop="static" data-keyboard="false"
+                                      data-link="{{ route('MasterBP.show',[$row->Cus_id]) }}?type={{3}}">
+                                      <i class="far fa-eye"></i>
+                                    </button>
                                     <a href="{{ route('MasterBP.edit',[$row->Cus_id]) }}?type={{3}}&tab={{6}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
                                       <i class="far fa-edit"></i>
                                     </a>
