@@ -299,7 +299,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <form method="get" action="{{ route('MasterBP.index') }}">
-                        <input type="hidden" name="type" value="1" />                      
+                        <input type="hidden" name="type" value="3" />                      
                         <div class="info-box-content">
                           <div class="form-inline float-right">
                             <small class="badge badge-warning" style="font-size: 14px;">
