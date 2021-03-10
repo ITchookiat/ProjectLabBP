@@ -23,6 +23,7 @@ class CreateBodyMechanicsTable extends Migration
 
             $table->string('BPMec_Note')->nullable();
             $table->string('BPMec_UserUpdate')->nullable();
+            $table->string('BPMec_DoneDate')->nullable();
             $table->timestamps();
         });
     }

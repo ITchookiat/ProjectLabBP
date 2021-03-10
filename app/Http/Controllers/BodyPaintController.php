@@ -236,14 +236,27 @@ class BodyPaintController extends Controller
                     $user->BPMec_StopDate = date('Y-m-d');
                 $user->update();
             }
-            $Mechanic = new BodyMechanic([
-                'BPCus_id' => $request->get('BPCus_id'),
-                'BPMec_Status' => $request->get('BPMecstatus'),
-                'BPMec_StartDate' => $request->get('BPmechanicdate'),
-                'BPMec_UserRespon' => $request->get('BPMecrespon'),
-                'BPMec_Note' => $request->get('BPMechanicnote'),
-                'BPMec_UserUpdate' => $request->get('BPMecuser'),
-            ]);
+
+            if($request->get('BPMecstatus') == 'ปิดงานซ่อม'){
+                $Mechanic = new BodyMechanic([
+                    'BPCus_id' => $request->get('BPCus_id'),
+                    'BPMec_Status' => $request->get('BPMecstatus'),
+                    'BPMec_StartDate' => $request->get('BPmechanicdate'),
+                    'BPMec_UserRespon' => $request->get('BPMecrespon'),
+                    'BPMec_Note' => $request->get('BPMechanicnote'),
+                    'BPMec_UserUpdate' => $request->get('BPMecuser'),
+                    'BPMec_DoneDate' => date('Y-m-d'),
+                ]);
+            }else{
+                $Mechanic = new BodyMechanic([
+                    'BPCus_id' => $request->get('BPCus_id'),
+                    'BPMec_Status' => $request->get('BPMecstatus'),
+                    'BPMec_StartDate' => $request->get('BPmechanicdate'),
+                    'BPMec_UserRespon' => $request->get('BPMecrespon'),
+                    'BPMec_Note' => $request->get('BPMechanicnote'),
+                    'BPMec_UserUpdate' => $request->get('BPMecuser'),
+                ]);
+            }
             $Mechanic->save();
             
         }
@@ -294,10 +307,12 @@ class BodyPaintController extends Controller
 
             $dataPart = DB::table('body_parts')
             ->where('body_parts.BPCus_id',$id)
+            ->orderBy('body_parts.BPPart_id','ASC')
             ->get();
 
             $dataMechanic = DB::table('body_mechanics')
             ->where('body_mechanics.BPCus_id',$id)
+            ->orderBy('body_mechanics.BPMec_id','ASC')
             ->get();
 
             $dataImage = DB::table('body_images')

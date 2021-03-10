@@ -267,7 +267,11 @@
                                     @endif
                                   </td> -->
                                   <td class="text-center">
-                                    <span class="btn btn-xs bg-danger text-xs">{{($row->BPMec_Status != null)?$row->BPMec_Status:'-'}}</span>
+                                    @if($row->BPMec_Status == 'ปิดงานซ่อม')
+                                      <span class="btn btn-xs bg-success text-xs">{{($row->BPMec_Status != null)?$row->BPMec_Status:'-'}}</span>
+                                    @else
+                                      <span class="btn btn-xs bg-danger text-xs">{{($row->BPMec_Status != null)?$row->BPMec_Status:'-'}}</span>
+                                    @endif
                                   </div>
                                   <td class="text-right">
                                       <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-view" title="ดูรายการ"
