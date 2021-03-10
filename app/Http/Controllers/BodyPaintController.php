@@ -283,26 +283,31 @@ class BodyPaintController extends Controller
             $dataCallClaim = DB::table('body_calls') //งานโทรอนุมัติประกัน
             ->where('body_calls.BPCus_id',$id)
             ->where('body_calls.BPCall_type',1)
+            ->orderBy('body_calls.BPCall_id','ASC')
             ->get();
 
             $dataCallClaim2 = DB::table('body_calls') //งานโทรอะไหล่ครบ
             ->where('body_calls.BPCus_id',$id)
             ->where('body_calls.BPCall_type',2)
+            ->orderBy('body_calls.BPCall_id','ASC')
             ->get();
 
             $dataCallClaim3 = DB::table('body_calls') //งานโทรซ่อมตัวถัง
             ->where('body_calls.BPCus_id',$id)
             ->where('body_calls.BPCall_type',3)
+            ->orderBy('body_calls.BPCall_id','ASC')
             ->get();
 
             $dataCallClaim4 = DB::table('body_calls') //งานโทรพ่นสี
             ->where('body_calls.BPCus_id',$id)
             ->where('body_calls.BPCall_type',4)
+            ->orderBy('body_calls.BPCall_id','ASC')
             ->get();
 
             $dataCallClaim5 = DB::table('body_calls') //งานโทรขัดสี ก่อนส่งมอบ
             ->where('body_calls.BPCus_id',$id)
             ->where('body_calls.BPCall_type',5)
+            ->orderBy('body_calls.BPCall_id','ASC')
             ->get();
 
             $dataPart = DB::table('body_parts')
@@ -345,30 +350,35 @@ class BodyPaintController extends Controller
             $dataCallClaim = DB::table('body_calls') //งานโทรอนุมัติประกัน
             ->where('body_calls.BPCus_id',$id)
             ->where('body_calls.BPCall_type',1)
+            ->orderBy('body_calls.BPCall_id','ASC')
             ->get();
             $countDataCallClaim = count($dataCallClaim);
 
             $dataCallClaim2 = DB::table('body_calls') //งานโทรอะไหล่ครบ
             ->where('body_calls.BPCus_id',$id)
             ->where('body_calls.BPCall_type',2)
+            ->orderBy('body_calls.BPCall_id','ASC')
             ->get();
             $countDataCallClaim2 = count($dataCallClaim2);
 
             $dataCallClaim3 = DB::table('body_calls') //งานโทรซ่อมตัวถัง
             ->where('body_calls.BPCus_id',$id)
             ->where('body_calls.BPCall_type',3)
+            ->orderBy('body_calls.BPCall_id','ASC')
             ->get();
             $countDataCallClaim3 = count($dataCallClaim3);
 
             $dataCallClaim4 = DB::table('body_calls') //งานโทรพ่นสี
             ->where('body_calls.BPCus_id',$id)
             ->where('body_calls.BPCall_type',4)
+            ->orderBy('body_calls.BPCall_id','ASC')
             ->get();
             $countDataCallClaim4 = count($dataCallClaim4);
 
             $dataCallClaim5 = DB::table('body_calls') //งานโทรขัดสี ก่อนส่งมอบ
             ->where('body_calls.BPCus_id',$id)
             ->where('body_calls.BPCall_type',5)
+            ->orderBy('body_calls.BPCall_id','ASC')
             ->get();
             $countDataCallClaim5 = count($dataCallClaim5);
 
