@@ -414,30 +414,30 @@
                                                         @endif
                                                         </td>
                                                         <td class="text-center">
-                                                        @if($row->BPMec_Status == 'ปิดงานซ่อม')
-                                                            @php
-                                                                $Cldate = date_create($row->BPMec_StartDate);
-                                                                $nowCldate = date_create($row->BPMec_DoneDate);
-                                                                $ClDateDiff = date_diff($Cldate,$nowCldate);
-                                                            @endphp
-                                                            <font color="green">{{$ClDateDiff->format('%a วัน')}}</font>
-                                                        @else
-                                                            @if($row->BPMec_StartDate != null and $row->BPMec_StopDate == null)
+                                                            @if($row->BPMec_Status == 'ปิดงานซ่อม')
                                                                 @php
                                                                     $Cldate = date_create($row->BPMec_StartDate);
-                                                                    $nowCldate = date_create($ifdate);
+                                                                    $nowCldate = date_create($row->BPMec_DoneDate);
                                                                     $ClDateDiff = date_diff($Cldate,$nowCldate);
                                                                 @endphp
-                                                                <font color="red">{{$ClDateDiff->format('%a วัน')}}</font>
-                                                            @elseif($row->BPMec_StartDate != null and $row->BPMec_StopDate != null)
-                                                                @php
-                                                                    $Cldate = date_create($row->BPMec_StartDate);
-                                                                    $nowCldate = date_create($row->BPMec_StopDate);
-                                                                    $ClDateDiff = date_diff($Cldate,$nowCldate);
-                                                                @endphp
-                                                                <font color="blue">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                                <font color="green">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                            @else
+                                                                @if($row->BPMec_StartDate != null and $row->BPMec_StopDate == null)
+                                                                    @php
+                                                                        $Cldate = date_create($row->BPMec_StartDate);
+                                                                        $nowCldate = date_create($ifdate);
+                                                                        $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                                    @endphp
+                                                                    <font color="red">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                                @elseif($row->BPMec_StartDate != null and $row->BPMec_StopDate != null)
+                                                                    @php
+                                                                        $Cldate = date_create($row->BPMec_StartDate);
+                                                                        $nowCldate = date_create($row->BPMec_StopDate);
+                                                                        $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                                    @endphp
+                                                                    <font color="blue">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                                @endif
                                                             @endif
-                                                        @endif
                                                         </td>
                                                         <td class="text-left">{{($row->BPMec_Note != null)?$row->BPMec_Note:'-'}}</td>
                                                         <td class="text-left"> {{$row->BPMec_UserRespon}}</td>
@@ -560,20 +560,29 @@
                                                         @endif
                                                         </td>
                                                         <td class="text-center">
-                                                            @if($row->BPMec_StartDate != null and $row->BPMec_StopDate == null)
+                                                            @if($row->BPMec_Status == 'ปิดงานซ่อม')
                                                                 @php
                                                                     $Cldate = date_create($row->BPMec_StartDate);
-                                                                    $nowCldate = date_create($ifdate);
+                                                                    $nowCldate = date_create($row->BPMec_DoneDate);
                                                                     $ClDateDiff = date_diff($Cldate,$nowCldate);
                                                                 @endphp
-                                                                <font color="red">{{$ClDateDiff->format('%a วัน')}}</font>
-                                                            @elseif($row->BPMec_StartDate != null and $row->BPMec_StopDate != null)
-                                                                @php
-                                                                    $Cldate = date_create($row->BPMec_StartDate);
-                                                                    $nowCldate = date_create($row->BPMec_StopDate);
-                                                                    $ClDateDiff = date_diff($Cldate,$nowCldate);
-                                                                @endphp
-                                                                <font color="blue">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                                <font color="green">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                            @else
+                                                                @if($row->BPMec_StartDate != null and $row->BPMec_StopDate == null)
+                                                                    @php
+                                                                        $Cldate = date_create($row->BPMec_StartDate);
+                                                                        $nowCldate = date_create($ifdate);
+                                                                        $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                                    @endphp
+                                                                    <font color="red">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                                @elseif($row->BPMec_StartDate != null and $row->BPMec_StopDate != null)
+                                                                    @php
+                                                                        $Cldate = date_create($row->BPMec_StartDate);
+                                                                        $nowCldate = date_create($row->BPMec_StopDate);
+                                                                        $ClDateDiff = date_diff($Cldate,$nowCldate);
+                                                                    @endphp
+                                                                    <font color="blue">{{$ClDateDiff->format('%a วัน')}}</font>
+                                                                @endif
                                                             @endif
                                                         </td>
                                                         <td class="text-left">{{($row->BPMec_Note != null)?$row->BPMec_Note:'-'}}</td>
