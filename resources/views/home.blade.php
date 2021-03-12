@@ -173,6 +173,14 @@
                         </li>
                         <li class="nav-item">
                           <a href="#" class="nav-link">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> รอดำเนินการ
+                            <span class="float-right">
+                              {{$countdataMechanic - ($countRemoveParts + $countRepairTank + $countPrepareBG + $countPaintColor + $countAssembleParts + $countPolishColor + $countWash + $countQCbeforeSend + $countRepairDone)}}
+                            </span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="#" class="nav-link">
                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right text-xs"></i> ถอดชิ้นส่วนงาน
                             <span class="float-right">
                               {{$countRemoveParts}}
